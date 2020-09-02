@@ -11,9 +11,9 @@ use yii\bootstrap\ActiveForm;
 use yii\base\Module;
 
 use app\services\SettingService;
-// use app\models\{
-//     Setting
-// };
+use app\models\{
+    Setting
+};
 
 class SettingController extends Controller 
 {
@@ -35,9 +35,41 @@ class SettingController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index', [
+        $clientId = Yii::$app->request->post('clientId') ?? Yii::$app->session->get('clientId');
 
+        if ($clientId) {
+            Yii::$app->session->set('clientId', $clientId);
+        }
+
+        $setting = $this->settingService->getSetting($clientId ?? '');
+
+        return $this->render('index', [
+            'setting' => $setting
         ]);
+    }
+
+    /**
+     * Сохранение настроек модуля
+     * 
+     * @return string
+     */
+
+    public function actionSave()
+    {
+        if ($setting_id = Yii::$app->request->post('Setting')['id']) {
+            $setting = $this->settingService->getSettingById($setting_id);
+        } else {    
+            $setting = new Setting();
+        }
+
+        if ($setting->load(Yii::$app->request->post()) && $setting->validate() && Yii::$app->request->post('submit')) {
+            $this->settingService->save($setting);
+
+            return $this->redirect(['/setting/index']);
+        }
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return ActiveForm::validate($setting);
     }
 
 }

@@ -58,6 +58,10 @@ $config = [
         'retail' => [
             'class' => app\components\Retail::class
         ],
+        'logsis' => [
+            'class' => app\components\Logsis::class,
+            'host' => 'http://cab.logsis.ru/apiv2'
+        ]
     ],
     'params' => $params,
 ];

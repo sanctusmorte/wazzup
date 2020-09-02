@@ -1,0 +1,246 @@
+<?php
+
+namespace app\models;
+
+use Yii;
+use yii\helpers\ArrayHelper;
+use yii\behaviors\TimestampBehavior;
+
+/**
+ * This is the model class for table "setting".
+ *
+ * @property int $id
+ * @property string $client_id
+ * @property string $retail_api_url
+ * @property string $retail_api_key
+ * @property string $apikey
+ * @property float|null $cost_delivery
+ * @property float|null $markup
+ * @property int|null $is_payment_type
+ * @property string|null $tax_product
+ * @property string|null $tax_delivery
+ * @property string|null $prefix_shop
+ * @property int|null $is_active
+ * @property int|null $is_freeze
+ * @property int|null $is_first_active
+ * @property int|null $is_single_cost
+ * @property int|null $is_partial_redemption
+ * @property int|null $is_fitting
+ * @property int|null $is_sms
+ * @property int|null $is_open
+ * @property int|null $is_additional_call
+ * @property int|null $is_return_doc
+ * @property int|null $is_skid
+ * @property int|null $created_at
+ * @property int|null $updated_at
+ *
+ * @property OrderStatus[] $orderStatuses
+ * @property Shop[] $shops
+ */
+class Setting extends \yii\db\ActiveRecord
+{
+    const STATUS_ACTIVE = 1;
+    const STATUS_DISABLE = 0;
+
+    const STATUS_FREEZE = 1;
+    const STATUS_UNFREEZE = 0;
+
+    const STATUS_FIRST_ACTIVE = 1;
+    const STATUS_FIRST_DISABLE = 0;
+
+    public $shop_ids;
+    
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return '{{%setting}}';
+    }
+
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['client_id', 'retail_api_url', 'retail_api_key', 'apikey'], 'required'],
+            [['cost_delivery', 'markup'], 'number'],
+            [['is_active', 'is_freeze', 'is_first_active', 'is_payment_type', 'is_assessed_value', 'is_single_cost', 'is_partial_redemption', 'is_fitting', 'is_sms', 'is_open', 'is_additional_call', 'is_return_doc', 'is_skid', 'created_at', 'updated_at'], 'integer'],
+            [['client_id'], 'string', 'max' => 32],
+            [['retail_api_url', 'retail_api_key', 'apikey', 'prefix_shop', 'tax_product', 'tax_delivery'], 'string', 'max' => 255],
+            [['client_id'], 'unique'],
+            [['retail_api_url'], 'unique'],
+            ['retail_api_url', 'validateApiUrl'],
+            ['retail_api_key', 'validateApiKey'],
+            ['apikey', 'validateApiLogsis'],
+            [['shop_ids'], 'safe']
+        ];
+    }
+
+    /**
+     * Валидация аккаунта retailCRM
+     */
+
+    public function validateApiUrl()
+    {
+        if (substr($this->retail_api_url, -1) == '/') {
+            $this->retail_api_url = mb_substr($this->retail_api_url, 0, -1);
+        }
+
+        if (self::find()->where(['retail_api_url' => $this->retail_api_url])->andWhere(['!=', 'client_id', $this->client_id])->one()) {
+            $this->addError('retail_api_url',  'Данный аккаунт уже зарегистрирован в системе.');
+        }
+    }
+
+    /**
+     * Валидация ключа доступа
+     */
+
+    public function validateApiKey()
+    {
+        if ($this->retail_api_url && $this->retail_api_key) {
+
+            $credentials = Yii::$app->retail->credentials([
+                'retailApiUrl' => $this->retail_api_url,
+                'retailApiKey' => $this->retail_api_key
+            ]);
+
+            if ($credentials) {
+                if (isset($credentials['credentials']) && $credentials['credentials']) {
+
+                    if (!$this->searchArray($credentials['credentials'], '/api/integration-modules/{code}')) {
+                        $this->addError('retail_api_key',  'Недоступен метод /api/integration-modules/{code}');
+                    }
+                    if (!$this->searchArray($credentials['credentials'], '/api/integration-modules/{code}/edit')) {
+                        $this->addError('retail_api_key',  'Недоступен метод /api/integration-modules/{code}/edit');
+                    }
+                    if (!$this->searchArray($credentials['credentials'], '/api/reference/sites')) {
+                        $this->addError('retail_api_key',  'Недоступен метод /api/reference/sites');
+                    }
+                } else {
+                    $this->addError('retail_api_key',  'Недоступен метод /api/reference/sites.');
+                }
+            } else {
+                $this->addError('retail_api_key',  'Некорректно указана ссылка на retailCRM или ключ доступа к api.');
+            }
+        }
+    }
+
+    /**
+     * Валидация токена Logsis
+     */
+
+    public function validateApiLogsis()
+    {
+        $response = Yii::$app->logsis->testApiKey($this->apikey);
+
+        if ($response['status'] !== '200') {
+            $this->addError('apikey',  'Некорректно указан токен для Logsis.'); 
+        }
+    }
+
+    /**
+     * Поиск элемента в массиве
+     * @param array
+     * @param string
+     * @return boolean
+     */
+
+    private function searchArray(array $credentials, string $param): bool
+    {
+        foreach ($credentials as $credential) {
+            if ($credential == $param) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'client_id' => 'Client ID',
+            'retail_api_url' => 'Ссылка на retailCRM вида: https://YOUR-DOMAIN.retailcrm.ru',
+            'retail_api_key' => 'API-ключ',
+            'apikey' => 'API-ключ',
+            'cost_delivery' => 'Фиксированная стоимость стоимости доставки',
+            'markup' => 'Наценка',
+            'prefix_shop' => 'Префикс магазина',
+            'is_payment_type' => 'Прием денежных средств по умолчанию',
+            'is_assessed_value' => 'Устанавливать в заявке оценочную стоимость в размере стоимости товаров',
+            'tax_product' => 'Вид налога на товар',
+            'tax_delivery' => 'Вид налога на доставку',
+            'shop_ids' => 'Магазины',
+            'is_active' => 'Is Active',
+            'is_freeze' => 'Is Freeze',
+            'is_first_active' => 'Is First Active',
+            'is_single_cost' => 'Устанавливать в заявке оценочную стоимость в размере стоимости товаров',
+            'is_partial_redemption' => 'Частичный выкуп',
+            'is_fitting' => 'Примерка товаров',
+            'is_sms' => 'SMS информирование',
+            'is_open' => 'Возможность вскрытия заказа',
+            'is_additional_call' => 'Дополнительный звонок клиенту',
+            'is_return_doc' => 'Возврат накладных / документов, вложенных в заказ',
+            'is_skid' => 'Занос/подъем КГТ до квартиры',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ];
+    }
+
+    /**
+     * Gets query for [[OrderStatuses]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrderStatuses()
+    {
+        return $this->hasMany(OrderStatus::className(), ['setting_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Shops]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShops()
+    {
+        return $this->hasMany(Shop::className(), ['setting_id' => 'id']);
+    }
+
+    public function getArrayShops()
+    {
+        return ArrayHelper::map($this->hasMany(Shop::className(), ['setting_id' => 'id'])->asArray()->all(), 'id', 'name');
+    }
+
+    public function getSettingShop()
+    {
+        return $this->hasOne(Shop::className(), ['id' => 'shop_id'])->viaTable('{{%setting_shop}}', ['setting_id' => 'id']);
+    }
+
+    public function getSettingShops()
+    {
+        return $this->hasMany(Shop::className(), ['id' => 'shop_id'])->viaTable('{{%setting_shop}}', ['setting_id' => 'id']);
+    }
+
+    public function getShopValues()
+    {
+        if ($shops = $this->settingShops) {
+
+            return ArrayHelper::getColumn($shops, 'id');
+        }
+
+        return [];
+    }
+
+}
