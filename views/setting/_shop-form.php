@@ -20,6 +20,6 @@
                 {input}
             </div>",
         ])->dropDownList($setting->getArrayShops(), ['value' => $setting->getShopValues(), 'class' => 'form-control select2', 'multiple' => true]); ?>
-
+        
     </div>
 </div>

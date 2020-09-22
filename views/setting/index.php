@@ -31,6 +31,9 @@
             <li class="nav-item <?= $disable ?>">
                 <a class="nav-link" id="setting-tab" data-toggle="pill" href="#setting" role="tab">Общие настройки</a>
             </li>
+            <li class="nav-item <?= $disable ?>">
+                <a class="nav-link" id="setting-status-tab" data-toggle="pill" href="#setting-status" role="tab">Настройки статусов</a>
+            </li>
         </ul>
 
         <?php $form = ActiveForm::begin([
@@ -68,6 +71,16 @@
                     <div class="row">
                         <div class="col-md-12">
                             <?= $this->render('_setting-form', [
+                                'setting' => $setting,
+                                'form' => $form
+                            ]); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="setting-status" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?= $this->render('_setting-status', [
                                 'setting' => $setting,
                                 'form' => $form
                             ]); ?>

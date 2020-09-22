@@ -15,6 +15,11 @@
     <div class="card-body">
 
         <div class="row">
+
+            <div class="col-md-12">
+                <h4>Настройки заявки в заказе по умолчанию.</h4>
+            </div>
+
             <div class="col-md-6">
                 <?= $form->field($setting, 'cost_delivery', [
                     'template' => "<div class=\"form-group\">
@@ -40,8 +45,6 @@
                                         {error}               
                                     </div>",
                 ])->textInput(['placeholder' => $setting->getAttributeLabel('markup')]); ?>
-
-                
             </div>
         </div>
 

@@ -49,7 +49,20 @@ class Setting extends \yii\db\ActiveRecord
     const STATUS_FIRST_DISABLE = 0;
 
     public $shop_ids;
-    
+    public $order_statuses;
+
+    const ORDER_STATUS_LOGSIS = [
+        1 => 'Новый заказ',
+        2 => 'Подтвержден',
+        3 => 'На складе',
+        4 => 'На доставке', 
+        5 => 'Доставлен',
+        6 => 'Частичный отказ',
+        7 => 'Полный отказ',
+        8 => 'Отмена',
+        9 => 'На пути в город доставки'
+     ];
+
     /**
      * {@inheritdoc}
      */
@@ -81,7 +94,7 @@ class Setting extends \yii\db\ActiveRecord
             ['retail_api_url', 'validateApiUrl'],
             ['retail_api_key', 'validateApiKey'],
             ['apikey', 'validateApiLogsis'],
-            [['shop_ids'], 'safe']
+            [['shop_ids', 'order_statuses'], 'safe']
         ];
     }
 
@@ -193,6 +206,7 @@ class Setting extends \yii\db\ActiveRecord
             'is_additional_call' => 'Дополнительный звонок клиенту',
             'is_return_doc' => 'Возврат накладных / документов, вложенных в заказ',
             'is_skid' => 'Занос/подъем КГТ до квартиры',
+            'order_statuses' => 'Статус в retailCRM',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -233,6 +247,16 @@ class Setting extends \yii\db\ActiveRecord
         return $this->hasMany(Shop::className(), ['id' => 'shop_id'])->viaTable('{{%setting_shop}}', ['setting_id' => 'id']);
     }
 
+    public function getRetailToLogsisStatus()
+    {
+        return $this->hasMany(RetailToLogsisStatus::className(), ['setting_id' => 'id']);
+    }
+
+    public function getArrayOrderStatuses()
+    {
+        return ArrayHelper::map($this->hasMany(OrderStatus::className(), ['setting_id' => 'id'])->asArray()->all(), 'id', 'name');
+    }
+
     public function getShopValues()
     {
         if ($shops = $this->settingShops) {
@@ -242,5 +266,4 @@ class Setting extends \yii\db\ActiveRecord
 
         return [];
     }
-
 }

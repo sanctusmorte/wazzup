@@ -17,7 +17,8 @@ use app\models\{
     Setting,
     Shop, 
     OrderStatus,
-    SettingShop
+    SettingShop,
+    RetailToLogsisStatus
 };
 
 class SettingService extends Component 
@@ -88,6 +89,8 @@ class SettingService extends Component
                 }
             }
 
+            if ($orderStatuses = $setting->order_statuses) $this->synchStatusSave($setting, $orderStatuses);
+            
             $this->getShops($setting);
             $this->getOrderStatus($setting);
             // $this->moduleEdit($setting);
@@ -138,6 +141,34 @@ class SettingService extends Component
 
                 if ($shop->validate()) $shop->save();
             }
+        }
+        return true;
+    }
+
+    /**
+     * Сохранение статусов сопоставления
+     * 
+     * @param object $setting
+     * @param array $order_statuses
+     * @return boolean
+     */
+
+    private function synchStatusSave(Setting $setting, array $orderStatuses): bool
+    {
+        foreach ($orderStatuses as $key => $orderStatus) {
+
+            if ($retailToLogsisStatus = RetailToLogsisStatus::find()->where(['setting_id' => $setting->id])->andWhere(['logsis_status_id' => $key])->one()) {
+                $retailToLogsisStatus->order_status_id = $orderStatus;
+                $retailToLogsisStatus->logsis_status_id = $key;
+            } else {
+                $retailToLogsisStatus = new RetailToLogsisStatus([
+                    'setting_id' => $setting->id,
+                    'order_status_id' => $orderStatus,
+                    'logsis_status_id' => $key
+                ]);
+            }
+
+            if ($retailToLogsisStatus->validate()) $retailToLogsisStatus->save();
         }
         return true;
     }
