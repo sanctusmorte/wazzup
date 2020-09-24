@@ -28,7 +28,11 @@ class DeliveryController extends ApiRestController
 
     public function actionCalculate()
     {
-        echo "<pre>"; print_r(Yii::$app->request->post()); die;
+        return [
+            'success' => false,
+            'errorMsg' => '___ test',
+            'errors' => Yii::$app->request->post()
+        ];
     }
 
 }

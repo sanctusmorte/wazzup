@@ -24,6 +24,9 @@ use app\models\{
 class DeliveryService extends Component 
 {
 
-    
+    public function caclulate()
+    {
+        
+    }
 
 }
