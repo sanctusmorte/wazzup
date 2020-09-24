@@ -28,10 +28,7 @@ class DeliveryController extends ApiRestController
 
     public function actionCalculate()
     {
-        return [
-            'success' => false,
-            'errorMsg' => 'Ошибка ошибка'
-        ];
+        echo "<pre>"; print_r(Yii::$app->request->post()); die;
     }
 
 }
