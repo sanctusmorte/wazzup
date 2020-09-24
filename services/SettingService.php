@@ -93,7 +93,7 @@ class SettingService extends Component
             
             $this->getShops($setting);
             $this->getOrderStatus($setting);
-            // $this->moduleEdit($setting);
+            $this->moduleEdit($setting);
 
             $transaction->commit();
 
@@ -110,6 +110,21 @@ class SettingService extends Component
 
             return false;
         }
+    }
+    
+    /**
+     * Фоновое обновление настроек
+     * 
+     * @param object $setting
+     * @return boolean
+     */
+
+    public function backgroundUpdateSetting(Setting $setting): bool
+    {
+        $this->getShops($setting);
+        $this->getOrderStatus($setting);
+
+        return true;
     }
 
     /**
@@ -201,46 +216,40 @@ class SettingService extends Component
                         'save' => '/delivery/save',
                         'get' => '/delivery/get-info',
                         'delete' => '/delivery/delete',
-                        // 'print' => '',
-                        // 'shipmentPointList' => '',
-                        // 'shipmentSave' => '',
-                        // 'shipmentDelete' => ''
+                        'shipmentSave' => '/delivery/shipment-save',
+                        'shipmentDelete' => '/delivery/shipment-delete'
+                    ],
+                    'payerType' => [									// Допустимые типы плательщиков за доставку;
+                        'sender',                                       // sender - магазин может брать деньги с покупателя за доставку и потом расплачивается со службой доставки)
+    //                    'receiver',                                   // receiver - покупатель сам расплачивается напрямую со службой доставки
                     ],
                     'requiredFields' => [
-                        'lastName',
-                        'patronymic',
-                        'phone',
-                        'email',
-                        'deliveryAddress' => [
-                            'regionId',
-                            'cityId',
-                            'street',
-                            'streetId',
-                            'flat',
-                            'deliveryAddress.regionId',
-                            'deliveryAddress.cityId',
-                            'deliveryAddress.street',
-                            'deliveryAddress.streetId',
-                            'deliveryAddress.flat'
-                        ]
+                        'lastName', 									// Фамилия покупателя
+                        'patronymic', 									// Отчество покупателя
+                        'phone', 										// Телефон покупателя
+                        'email', 										// E-mail покупателя
+                        'length', 										// Длина
+                        'width', 										// Ширина
+                        'height', 										// Высота
+                        'deliveryAddress.regionId',
+                        'deliveryAddress.cityId',
+                        'deliveryAddress.street',
+                        'deliveryAddress.streetId',
+                        'deliveryAddress.flat'
                     ],
-                    'payerType' => 'receiver',
-                    'statusList' => [
-                        
-                    ]
+                    'statusList' => Setting::getLogsisStatusList(),
+                    'deliveryDataFieldList' => $setting->getDeliveryDataFieldList()
                 ],
             ]
         ];
 
-        // if (
-            $response = Yii::$app->retail->moduleEdit($this->getRetailAuthData($setting), $moduleData);
+        echo "<pre>"; print_r($moduleData); die;
 
-            echo "<pre>"; print_r($response); die;
-        // ) {
-            // return true;
-        // } else {
-            // return false;
-        // }
+        if ($response = Yii::$app->retail->moduleEdit($this->getRetailAuthData($setting), $moduleData)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

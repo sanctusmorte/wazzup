@@ -42,8 +42,9 @@ class SettingController extends Controller
         if ($clientId) {
             Yii::$app->session->set('clientId', $clientId);
         }
-
+        
         $setting = $this->settingService->getSetting($clientId ?? '');
+        if (!$setting->isNewRecord) $this->settingService->backgroundUpdateSetting($setting);
 
         return $this->render('index', [
             'setting' => $setting

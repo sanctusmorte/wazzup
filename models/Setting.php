@@ -266,4 +266,156 @@ class Setting extends \yii\db\ActiveRecord
 
         return [];
     }
+
+    /**
+     * Формирование статусов 
+     * 
+     * @return array
+     */
+
+    public static function getLogsisStatusList(): array 
+    {
+        $statusList = [];
+
+        foreach (self::ORDER_STATUS_LOGSIS as $key => $status) {
+            $statusList[] = [
+                'code' => "$key",
+                'name' => $status,
+                'isEditable' => false,
+            ];
+        }
+
+        return $statusList;
+    }
+
+    /**
+     * Формирование массива с данными
+     * 
+     * @return array
+     */
+
+    public function getDeliveryDataFieldList()
+    {
+        return [
+            [
+                'code' => 'cost_delivery',
+                'label' => $this->getAttributeLabel('cost_delivery'),
+                'hint' => $this->getAttributeLabel('cost_delivery'),
+                'type' => 'text',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'markup',
+                'label' => $this->getAttributeLabel('markup'),
+                'hint' => $this->getAttributeLabel('markup'),
+                'type' => 'text',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'prefix_shop',
+                'label' => $this->getAttributeLabel('prefix_shop'),
+                'hint' => $this->getAttributeLabel('prefix_shop'),
+                'type' => 'text',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'is_single_cost',
+                'label' => $this->getAttributeLabel('is_single_cost'),
+                'hint' => $this->getAttributeLabel('is_single_cost'),
+                'type' => 'checkbox',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'is_partial_redemption',
+                'label' => $this->getAttributeLabel('is_partial_redemption'),
+                'hint' => $this->getAttributeLabel('is_partial_redemption'),
+                'type' => 'checkbox',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'is_fitting',
+                'label' => $this->getAttributeLabel('is_fitting'),
+                'hint' => $this->getAttributeLabel('is_fitting'),
+                'type' => 'checkbox',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'is_sms',
+                'label' => $this->getAttributeLabel('is_sms'),
+                'hint' => $this->getAttributeLabel('is_sms'),
+                'type' => 'checkbox',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'is_open',
+                'label' => $this->getAttributeLabel('is_open'),
+                'hint' => $this->getAttributeLabel('is_open'),
+                'type' => 'checkbox',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'is_additional_call',
+                'label' => $this->getAttributeLabel('is_additional_call'),
+                'hint' => $this->getAttributeLabel('is_additional_call'),
+                'type' => 'checkbox',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'is_return_doc',
+                'label' => $this->getAttributeLabel('is_return_doc'),
+                'hint' => $this->getAttributeLabel('is_return_doc'),
+                'type' => 'checkbox',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'is_skid',
+                'label' => $this->getAttributeLabel('is_skid'),
+                'hint' => $this->getAttributeLabel('is_skid'),
+                'type' => 'checkbox',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'is_payment_type',
+                'label' => $this->getAttributeLabel('is_payment_type'),
+                'hint' => $this->getAttributeLabel('is_payment_type'),
+                'type' => 'checkbox',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'is_assessed_value',
+                'label' => $this->getAttributeLabel('is_assessed_value'),
+                'hint' => $this->getAttributeLabel('is_assessed_value'),
+                'type' => 'checkbox',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ]
+        ];
+    }
+    
 }
+
