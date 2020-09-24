@@ -28,7 +28,7 @@ class DeliveryController extends ApiRestController
 
     public function actionCalculate()
     {
-        mail('baksheev.a.a@makeforu.ru' , 'TUT TEST IDET', print_r(Yii::$app->request->post(), true));
+        \Yii::info('Retail crm request: ' . var_export(Yii::$app->request->post(), true), 'crm_info');
 
         return [
             'success' => false,
