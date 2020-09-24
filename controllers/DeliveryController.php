@@ -28,10 +28,11 @@ class DeliveryController extends ApiRestController
 
     public function actionCalculate()
     {
+        mail('baksheev.a.a@makeforu.ru' , 'TUT TEST IDET', print_r(Yii::$app->request->post(), true));
+
         return [
             'success' => false,
-            'errorMsg' => '___ test',
-            'errors' => Yii::$app->request->post()
+            'errorMsg' => '___ test'
         ];
     }
 
