@@ -238,6 +238,7 @@ class SettingService extends Component
                         'deliveryAddress.flat'
                     ],
                     'statusList' => Setting::getLogsisStatusList(),
+                    'statuses' => $setting->getStatuses(),
                     'deliveryDataFieldList' => $setting->getDeliveryDataFieldList()
                 ],
             ]

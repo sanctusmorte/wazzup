@@ -38,7 +38,7 @@ class LogsisHelper
                 'equipment' => $setting->is_partial_redemption,
                 'fitting' => $setting->is_fitting,
                 'opening' => $setting->is_open,
-                'packaging' => $setting->is_packing,
+                'packaging' => $setting->is_packaging,
                 'returned_doc' => $setting->is_return_doc,
                 'skid_kgt' => $setting->is_skid,
                 'sms' => $setting->is_sms

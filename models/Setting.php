@@ -91,6 +91,8 @@ class Setting extends \yii\db\ActiveRecord
             [['is_active', 'is_freeze', 'is_first_active', 'is_payment_type', 'is_assessed_value', 'is_single_cost', 'is_partial_redemption', 'is_fitting', 'is_sms', 'is_open', 'is_additional_call', 'is_return_doc', 'is_skid', 'is_nds', 'is_cargo_lift', 'is_partial_return', 'is_packaging', 'created_at', 'updated_at'], 'integer'],
             [['client_id'], 'string', 'max' => 32],
             [['retail_api_url', 'retail_api_key', 'apikey', 'prefix_shop', 'tax_product', 'tax_delivery'], 'string', 'max' => 255],
+            ['retail_api_url', 'match', 'pattern' => '/^https:\/\/.+\.retailcrm\.+[a-zA-Z]+$/i','message' => 'Формат ссылки должен быть https://YOUR-DOMAIN.retailcrm.DOMAIN'],
+            ['retail_api_url', 'url', 'validSchemes' => ['https']],
             [['client_id'], 'unique'],
             [['retail_api_url'], 'unique'],
             ['retail_api_url', 'validateApiUrl'],
@@ -300,13 +302,13 @@ class Setting extends \yii\db\ActiveRecord
      * @return array
      */
 
-    public function getDeliveryDataFieldList()
+    public function getDeliveryDataFieldList(): array
     {
         return [
             [
                 'code' => 'cost_delivery',
                 'label' => $this->getAttributeLabel('cost_delivery'),
-                'hint' => $this->getAttributeLabel('cost_delivery'),
+                // 'hint' => $this->getAttributeLabel('cost_delivery'),
                 'type' => 'text',
                 'required' => false,
                 'affectsCost' => true,
@@ -315,7 +317,7 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'markup',
                 'label' => $this->getAttributeLabel('markup'),
-                'hint' => $this->getAttributeLabel('markup'),
+                // 'hint' => $this->getAttributeLabel('markup'),
                 'type' => 'text',
                 'required' => false,
                 'affectsCost' => true,
@@ -324,7 +326,7 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'prefix_shop',
                 'label' => $this->getAttributeLabel('prefix_shop'),
-                'hint' => $this->getAttributeLabel('prefix_shop'),
+                // 'hint' => $this->getAttributeLabel('prefix_shop'),
                 'type' => 'text',
                 'required' => false,
                 'affectsCost' => true,
@@ -333,7 +335,7 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'is_single_cost',
                 'label' => $this->getAttributeLabel('is_single_cost'),
-                'hint' => $this->getAttributeLabel('is_single_cost'),
+                // 'hint' => $this->getAttributeLabel('is_single_cost'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,
@@ -342,7 +344,7 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'is_partial_redemption',
                 'label' => $this->getAttributeLabel('is_partial_redemption'),
-                'hint' => $this->getAttributeLabel('is_partial_redemption'),
+                // 'hint' => $this->getAttributeLabel('is_partial_redemption'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,
@@ -351,7 +353,7 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'is_fitting',
                 'label' => $this->getAttributeLabel('is_fitting'),
-                'hint' => $this->getAttributeLabel('is_fitting'),
+                // 'hint' => $this->getAttributeLabel('is_fitting'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,
@@ -360,7 +362,7 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'is_sms',
                 'label' => $this->getAttributeLabel('is_sms'),
-                'hint' => $this->getAttributeLabel('is_sms'),
+                // 'hint' => $this->getAttributeLabel('is_sms'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,
@@ -369,7 +371,7 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'is_open',
                 'label' => $this->getAttributeLabel('is_open'),
-                'hint' => $this->getAttributeLabel('is_open'),
+                // 'hint' => $this->getAttributeLabel('is_open'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,
@@ -378,7 +380,7 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'is_additional_call',
                 'label' => $this->getAttributeLabel('is_additional_call'),
-                'hint' => $this->getAttributeLabel('is_additional_call'),
+                // 'hint' => $this->getAttributeLabel('is_additional_call'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,
@@ -387,7 +389,7 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'is_return_doc',
                 'label' => $this->getAttributeLabel('is_return_doc'),
-                'hint' => $this->getAttributeLabel('is_return_doc'),
+                // 'hint' => $this->getAttributeLabel('is_return_doc'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,
@@ -396,7 +398,7 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'is_skid',
                 'label' => $this->getAttributeLabel('is_skid'),
-                'hint' => $this->getAttributeLabel('is_skid'),
+                // 'hint' => $this->getAttributeLabel('is_skid'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,
@@ -405,7 +407,7 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'is_payment_type',
                 'label' => $this->getAttributeLabel('is_payment_type'),
-                'hint' => $this->getAttributeLabel('is_payment_type'),
+                // 'hint' => $this->getAttributeLabel('is_payment_type'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,
@@ -414,7 +416,7 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'is_assessed_value',
                 'label' => $this->getAttributeLabel('is_assessed_value'),
-                'hint' => $this->getAttributeLabel('is_assessed_value'),
+                // 'hint' => $this->getAttributeLabel('is_assessed_value'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,
@@ -423,7 +425,7 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'is_nds',
                 'label' => $this->getAttributeLabel('is_nds'),
-                'hint' => $this->getAttributeLabel('is_nds'),
+                // 'hint' => $this->getAttributeLabel('is_nds'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,
@@ -432,7 +434,7 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'is_cargo_lift',
                 'label' => $this->getAttributeLabel('is_cargo_lift'),
-                'hint' => $this->getAttributeLabel('is_cargo_lift'),
+                // 'hint' => $this->getAttributeLabel('is_cargo_lift'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,
@@ -441,7 +443,7 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'is_partial_return',
                 'label' => $this->getAttributeLabel('is_partial_return'),
-                'hint' => $this->getAttributeLabel('is_partial_return'),
+                // 'hint' => $this->getAttributeLabel('is_partial_return'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,
@@ -450,13 +452,33 @@ class Setting extends \yii\db\ActiveRecord
             [
                 'code' => 'is_packaging',
                 'label' => $this->getAttributeLabel('is_packaging'),
-                'hint' => $this->getAttributeLabel('is_packaging'),
+                // 'hint' => $this->getAttributeLabel('is_packaging'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,
                 'editable' => true,
             ]
         ];
+    }
+
+    /**
+     * Формирование массива с сопоставленными статусами
+     * 
+     * @return array
+     */
+
+    public function getStatuses(): array
+    {
+        $statuses = [];
+
+        foreach ($this->retailToLogsisStatus as $status) {
+            $statuses[] = [
+                'code' => $status->orderStatus->code,
+                'trackingStatusCode' => $status->logsis_status_id
+            ];
+        }
+
+        return $statuses;
     }
     
 }
