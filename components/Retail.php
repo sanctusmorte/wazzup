@@ -114,7 +114,7 @@ class Retail extends Component
 
         try{
             $response = $client->request->integrationModulesEdit($data);
-
+            echo "<pre>"; print_r($response); die;
             if ($response->isSuccessful()) { 
                 return true;
             } else {

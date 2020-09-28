@@ -221,7 +221,7 @@ class SettingService extends Component
                     ],
                     'payerType' => [									// Допустимые типы плательщиков за доставку;
                         'sender',                                       // sender - магазин может брать деньги с покупателя за доставку и потом расплачивается со службой доставки)
-    //                    'receiver',                                   // receiver - покупатель сам расплачивается напрямую со службой доставки
+                        'receiver',                                   // receiver - покупатель сам расплачивается напрямую со службой доставки
                     ],
                     'requiredFields' => [
                         'lastName', 									// Фамилия покупателя
@@ -241,6 +241,7 @@ class SettingService extends Component
                     'deliveryDataFieldList' => $setting->getDeliveryDataFieldList(),
                     'settings' => [
                         'statuses' => $setting->getStatuses(),
+                        'shipmentExtraData' => $setting->getDefaultShipmentExtraData()
                     ]
                 ],
             ]

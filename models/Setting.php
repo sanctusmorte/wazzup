@@ -480,6 +480,25 @@ class Setting extends \yii\db\ActiveRecord
 
         return $statuses;
     }
+
+    /**
+     * Формирование массива выбранных полей для 
+     */
+
+    public function getDefaultShipmentExtraData(): array 
+    {
+        $shipmentExtraData = [
+            'cost_delivery' => $this->cost_delivery,
+            'markup' => $this->markup,
+            'prefix_shop' => $this->prefix_shop,
+            'is_payment_type' => $this->is_payment_type,
+            'is_assessed_value' => $this->is_assessed_value,
+        ];
+
+        // echo "<pre>"; print_r($shipmentExtraData); die;
+
+        return $shipmentExtraData;
+    }
     
 }
 
