@@ -45,6 +45,9 @@ class DeliveryService extends Component
         $calculateData = LogsisHelper::generateCalculateData($setting, $calculate);
         
         $response = Yii::$app->logsis->calculate($calculateData);
+
+        Yii::info(print_r($calculateData, true), 'calculateData');
+        Yii::info(print_r($response, true), 'response_logsis');
         
         if (isset($response['Error']) && $response['Error']) {
             return [
@@ -59,7 +62,7 @@ class DeliveryService extends Component
                         'code' => 1,
                         'name' => 'Доставка Logsis',
                         'type' => 'courier',
-                        'cost' => 200
+                        'cost' => $response['total']
                     ]
                 ]
             ];
