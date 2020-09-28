@@ -53,11 +53,14 @@ class DeliveryService extends Component
             ];
         } else {
             return [
-                [
-                    'code' => 1,
-                    'name' => 'Доставка Logsis',
-                    'type' => 'courier',
-                    'cost' => $response['total']
+                'success' => true,
+                'result' => [
+                    [
+                        'code' => 1,
+                        'name' => 'Доставка Logsis',
+                        'type' => 'courier',
+                        'cost' => $response['total']
+                    ]
                 ]
             ];
         }
