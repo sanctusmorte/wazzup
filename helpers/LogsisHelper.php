@@ -25,10 +25,10 @@ class LogsisHelper
             'cod_card' => 0,
             'cod_cash' => $calculate['declaredValue'] ?? '',
             'os' => $calculate['declaredValue'] ?? '',
-            'weight' => $calculate['packages'][0]['weight'],
-            'dimension_side1' => $calculate['packages'][0]['width'] ?? '',
-            'dimension_side2' => $calculate['packages'][0]['height'] ?? '',
-            'dimension_side3' => $calculate['packages'][0]['length'] ?? '',
+            'weight' => ($weight = $calculate['packages'][0]['weight'] ?? false) ? self::convertingWeight($weight) : '',
+            'dimension_side1' => ($width = $calculate['packages'][0]['width'] ?? false) ? self::convertingCabarites($width) : '',
+            'dimension_side2' => ($height = $calculate['packages'][0]['height'] ?? false) ? self::convertingCabarites($height) : '',
+            'dimension_side3' => ($length = $calculate['packages'][0]['length'] ?? false) ? self::convertingCabarites($length) : '',
             'is_return' => $calculate['extraData']['is_partial_return'] ?? $setting->is_partial_return,
             'floor' => '',
             'cargo_lift' => $calculate['extraData']['is_cargo_lift'] ?? $setting->is_cargo_lift,
@@ -44,6 +44,30 @@ class LogsisHelper
                 'sms' => $calculate['is_sms'] ?? $setting->is_sms
             ]
         ];
+    }
+
+    /**
+     * Перевод габаритов из мм в см (в retailCRM мм, в Logsis см)
+     * 
+     * @param float|int
+     * @return float|int
+     */
+
+    private static function convertingCabarites($value)
+    {
+        return $value / 10;
+    }
+
+    /**
+     * Перевод граммов в кг (в retailCRM г, в Logsis кг)
+     * 
+     * @param float|int
+     * @return float|int
+     */
+
+    private static function convertingWeight($value)
+    {
+        return $value / 1000;
     }
 
     /**
