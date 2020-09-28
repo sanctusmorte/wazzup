@@ -287,9 +287,9 @@ class Setting extends \yii\db\ActiveRecord
 
         foreach (self::ORDER_STATUS_LOGSIS as $key => $status) {
             $statusList[] = [
-                'code' => "$key",
+                'code' => $key,
                 'name' => $status,
-                'isEditable' => false,
+                'isEditable' => true,
             ];
         }
 
@@ -474,7 +474,7 @@ class Setting extends \yii\db\ActiveRecord
         foreach ($this->retailToLogsisStatus as $status) {
             $statuses[] = [
                 'code' => $status->orderStatus->code,
-                'trackingStatusCode' => (string)$status->logsis_status_id
+                'trackingStatusCode' => $status->logsis_status_id
             ];
         }
 
@@ -487,19 +487,27 @@ class Setting extends \yii\db\ActiveRecord
      * @return array
      */
 
-    public function getDefaultShipmentExtraData(): array 
+    public function getDefaultDeliveryExtraData(): array 
     {
-        $shipmentExtraData = [
-            // 'cost_delivery' => $this->cost_delivery,
-            // 'markup' => $this->markup,
-            // 'prefix_shop' => $this->prefix_shop,
-            // 'is_payment_type' => $this->is_payment_type,
-            // 'is_assessed_value' => $this->is_assessed_value,
+        return [
+            'cost_delivery' => $this->cost_delivery,
+            'markup' => $this->markup,
+            'prefix_shop' => $this->prefix_shop,
+            'is_payment_type' => ($this->is_payment_type) ? true : false,
+            'is_assessed_value' => ($this->is_assessed_value) ? true : false,
+            'is_single_cost' => ($this->is_single_cost) ? true : false,
+            'is_partial_redemption' => ($this->is_partial_redemption) ? true : false,
+            'is_fitting' => ($this->is_fitting) ? true : false,
+            'is_sms' => ($this->is_sms) ? true : false,
+            'is_open' => ($this->is_open) ? true : false,
+            'is_additional_call' => ($this->is_additional_call) ? true : false,
+            'is_return_doc' => ($this->is_return_doc) ? true : false,
+            'is_skid' => ($this->is_skid) ? true : false,
+            'is_nds' => ($this->is_nds) ? true : false,
+            'is_cargo_lift' => ($this->is_cargo_lift) ? true : false,
+            'is_partial_return' => ($this->is_partial_return) ? true : false,
+            'is_packaging' => ($this->is_packaging) ? true : false
         ];
-
-        // echo "<pre>"; print_r($shipmentExtraData); die;
-
-        return $shipmentExtraData;
     }
     
 }

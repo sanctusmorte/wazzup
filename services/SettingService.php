@@ -241,11 +241,13 @@ class SettingService extends Component
                     'deliveryDataFieldList' => $setting->getDeliveryDataFieldList(),
                     'settings' => [
                         'statuses' => $setting->getStatuses(),
-                        // 'shipmentExtraData' => $setting->getDefaultShipmentExtraData()
-                    ]
+                        'deliveryExtraData' => $setting->getDefaultDeliveryExtraData()
+                    ],
                 ],
             ]
         ];
+
+        // echo "<pre>"; print_r($moduleData); die;
 
         if ($response = Yii::$app->retail->moduleEdit($this->getRetailAuthData($setting), $moduleData)) {
             return true;
