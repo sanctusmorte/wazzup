@@ -18,7 +18,7 @@ class LogsisHelper
 
     public static function generateCalculateData(Setting $setting, array $calculate): array
     {
-        $q = [
+        return [
             'apikey' => $setting->apikey,
             'nds' =>  $setting->is_nds,
             'address' => self::generateAddress($calculate),
@@ -29,26 +29,21 @@ class LogsisHelper
             'dimension_side1' => $calculate['packages'][0]['width'] ?? '',
             'dimension_side2' => $calculate['packages'][0]['height'] ?? '',
             'dimension_side3' => $calculate['packages'][0]['length'] ?? '',
-            'is_return' => $setting->is_partial_return,
+            'is_return' => $calculate['extraData']['is_partial_return'] ?? $setting->is_partial_return,
             'floor' => '',
-            'cargo_lift' => $setting->is_cargo_lift,
+            'cargo_lift' => $calculate['extraData']['is_cargo_lift'] ?? $setting->is_cargo_lift,
             'options' => [
                 'buyback' => '',
-                'call' => $setting->is_additional_call,
-                'equipment' => $setting->is_partial_redemption,
-                'fitting' => $setting->is_fitting,
-                'opening' => $setting->is_open,
-                'packaging' => $setting->is_packaging,
-                'returned_doc' => $setting->is_return_doc,
-                'skid_kgt' => $setting->is_skid,
-                'sms' => $setting->is_sms
+                'call' => $calculate['is_additional_call'] ?? $setting->is_additional_call,
+                'equipment' => $calculate['is_partial_redemption'] ?? $setting->is_partial_redemption,
+                'fitting' => $calculate['is_fitting'] ?? $setting->is_fitting,
+                'opening' => $calculate['is_open'] ?? $setting->is_open,
+                'packaging' => $calculate['is_packaging'] ?? $setting->is_packaging,
+                'returned_doc' => $calculate['is_return_doc'] ?? $setting->is_return_doc,
+                'skid_kgt' => $calculate['is_skid'] ?? $setting->is_skid,
+                'sms' => $calculate['is_sms'] ?? $setting->is_sms
             ]
         ];
-
-        // return $q;
-        // echo "<pre>"; print_r($q); die;
-        echo "<pre>"; print_r($setting);
-        echo "<pre>"; print_r($calculate); die;
     }
 
     /**

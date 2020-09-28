@@ -311,7 +311,7 @@ class Setting extends \yii\db\ActiveRecord
                 // 'hint' => $this->getAttributeLabel('cost_delivery'),
                 'type' => 'text',
                 'required' => false,
-                'affectsCost' => true,
+                'affectsCost' => false,
                 'editable' => true,
             ],
             [
@@ -320,7 +320,7 @@ class Setting extends \yii\db\ActiveRecord
                 // 'hint' => $this->getAttributeLabel('markup'),
                 'type' => 'text',
                 'required' => false,
-                'affectsCost' => true,
+                'affectsCost' => false,
                 'editable' => true,
             ],
             [
@@ -329,7 +329,7 @@ class Setting extends \yii\db\ActiveRecord
                 // 'hint' => $this->getAttributeLabel('prefix_shop'),
                 'type' => 'text',
                 'required' => false,
-                'affectsCost' => true,
+                'affectsCost' => false,
                 'editable' => true,
             ],
             [

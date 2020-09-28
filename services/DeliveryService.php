@@ -46,7 +46,14 @@ class DeliveryService extends Component
         
         $response = Yii::$app->logsis->calculate($calculateData);
         
-        echo "<pre>"; print_r($response); die;
+        return [
+            [
+                'code' => 1,
+                'name' => 'Доставка Logsis',
+                'type' => 'courier',
+                'cost' => $response['total']
+            ]
+        ];
     }
 
     /**
