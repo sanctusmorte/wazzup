@@ -46,15 +46,20 @@ class DeliveryService extends Component
         
         $response = Yii::$app->logsis->calculate($calculateData);
 
-        Yii::info(print_r($calculateData, true), 'calculateData');
-        Yii::info(print_r($response, true), 'response_logsis');
-        
-        if (isset($response['Error']) && $response['Error']) {
+        // Yii::info(print_r($calculateData, true), 'calculateData');
+        // Yii::info(print_r($response, true), 'response_logsis');
+
+        if ($response['status'] == 400) {
             return [
                 'success' => false,
-                'errorMsg' => $response['Error']
+                'errorMsg' => 'Ошибка при обращении к калькулятору'
+            ];  
+        } elseif ($response['status'] == 402) {
+            return [
+                'success' => false,
+                'errorMsg' => $response['response']['message']
             ];
-        } else {
+        } elseif ($response['status'] == 200) {
             return [
                 'success' => true,
                 'result' => [
@@ -62,9 +67,14 @@ class DeliveryService extends Component
                         'code' => 1,
                         'name' => 'Доставка Logsis',
                         'type' => 'courier',
-                        'cost' => $response['total']
+                        'cost' => $response['response']['total']
                     ]
                 ]
+            ];
+        } else {
+            return [
+                'success' => false,
+                'errorMsg' => 'Получен некорректный ответ от Logsis. Повторите попытку.'
             ];
         }
     }

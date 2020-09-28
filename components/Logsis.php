@@ -97,7 +97,7 @@ class Logsis extends Component
 
         list($code, $response) = $this->makeRequest('POST', $url, $data);
 
-        return $response['response'];
+        return $response;
     }
 
 }
