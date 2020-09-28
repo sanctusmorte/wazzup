@@ -59,7 +59,7 @@ class DeliveryService extends Component
                         'code' => 1,
                         'name' => 'Доставка Logsis',
                         'type' => 'courier',
-                        'cost' => $response['total']
+                        'cost' => 200
                     ]
                 ]
             ];
