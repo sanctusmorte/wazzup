@@ -239,10 +239,10 @@ class SettingService extends Component
                     ],
                     'statusList' => Setting::getLogsisStatusList(),
                     'deliveryDataFieldList' => $setting->getDeliveryDataFieldList(),
-                    'settings' => [
-                        'statuses' => $setting->getStatuses(),
-                        'shipmentExtraData' => $setting->getDefaultShipmentExtraData()
-                    ]
+                    // 'settings' => [
+                    //     'statuses' => $setting->getStatuses(),
+                    //     'shipmentExtraData' => $setting->getDefaultShipmentExtraData()
+                    // ]
                 ],
             ]
         ];

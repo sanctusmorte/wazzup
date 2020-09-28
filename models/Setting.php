@@ -483,6 +483,8 @@ class Setting extends \yii\db\ActiveRecord
 
     /**
      * Формирование массива выбранных полей для 
+     * 
+     * @return array
      */
 
     public function getDefaultShipmentExtraData(): array 
