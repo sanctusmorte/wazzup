@@ -239,9 +239,9 @@ class SettingService extends Component
                     ],
                     'statusList' => Setting::getLogsisStatusList(),
                     'deliveryDataFieldList' => $setting->getDeliveryDataFieldList(),
-                    'settings' => [
-                        'statuses' => $setting->getStatuses(),
-                    ]
+                    // 'settings' => [
+                    //     'statuses' => $setting->getStatuses(),
+                    // ]
                 ],
             ]
         ];
