@@ -80,4 +80,22 @@ class Logsis extends Component
         return $response;
     }
 
+    /**
+     * Расчет стоимости доставки
+     * 
+     * @param array $data 
+     * @return array
+     */
+
+    public function calculate(array $data)
+    {
+        $url = 'http://api.logsis.ru/api/v1/public/calculate';
+
+        list($code, $response) = $this->makeRequest('POST', $url, $data);
+
+        echo "<pre>"; print_r($code);
+        echo "<pre>"; print_r($response);
+        die;
+    }
+
 }

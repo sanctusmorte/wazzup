@@ -36,6 +36,10 @@ class m200827_113825_create_setting_table extends Migration
             'is_additional_call' => $this->boolean()->defaultValue(false),
             'is_return_doc' => $this->boolean()->defaultValue(false),
             'is_skid' => $this->boolean()->defaultValue(false),
+            'is_nds' => $this->boolean()->defaultValue(false),
+            'is_cargo_lift' => $this->boolean()->defaultValue(false),
+            'is_partial_return' => $this->boolean()->defaultValue(false),
+            'is_packaging' => $this->boolean()->defaultValue(false), 
             'created_at' => $this->integer(),
             'updated_at' => $this->integer()
         ]);

@@ -31,6 +31,8 @@ use yii\behaviors\TimestampBehavior;
  * @property int|null $is_additional_call
  * @property int|null $is_return_doc
  * @property int|null $is_skid
+ * @property int|null $is_cargo_lift
+ * @property int|null $is_partial_return
  * @property int|null $created_at
  * @property int|null $updated_at
  *
@@ -86,7 +88,7 @@ class Setting extends \yii\db\ActiveRecord
         return [
             [['client_id', 'retail_api_url', 'retail_api_key', 'apikey'], 'required'],
             [['cost_delivery', 'markup'], 'number'],
-            [['is_active', 'is_freeze', 'is_first_active', 'is_payment_type', 'is_assessed_value', 'is_single_cost', 'is_partial_redemption', 'is_fitting', 'is_sms', 'is_open', 'is_additional_call', 'is_return_doc', 'is_skid', 'created_at', 'updated_at'], 'integer'],
+            [['is_active', 'is_freeze', 'is_first_active', 'is_payment_type', 'is_assessed_value', 'is_single_cost', 'is_partial_redemption', 'is_fitting', 'is_sms', 'is_open', 'is_additional_call', 'is_return_doc', 'is_skid', 'is_nds', 'is_cargo_lift', 'is_partial_return', 'is_packaging', 'created_at', 'updated_at'], 'integer'],
             [['client_id'], 'string', 'max' => 32],
             [['retail_api_url', 'retail_api_key', 'apikey', 'prefix_shop', 'tax_product', 'tax_delivery'], 'string', 'max' => 255],
             [['client_id'], 'unique'],
@@ -206,6 +208,10 @@ class Setting extends \yii\db\ActiveRecord
             'is_additional_call' => 'Дополнительный звонок клиенту',
             'is_return_doc' => 'Возврат накладных / документов, вложенных в заказ',
             'is_skid' => 'Занос/подъем КГТ до квартиры',
+            'is_nds' => 'Начислять НДС',
+            'is_cargo_lift' => 'Грузовой лифт',
+            'is_partial_return' => 'Частичный возврат',
+            'is_packaging' => 'Упаковка заказа',
             'order_statuses' => 'Статус в retailCRM',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -409,6 +415,42 @@ class Setting extends \yii\db\ActiveRecord
                 'code' => 'is_assessed_value',
                 'label' => $this->getAttributeLabel('is_assessed_value'),
                 'hint' => $this->getAttributeLabel('is_assessed_value'),
+                'type' => 'checkbox',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'is_nds',
+                'label' => $this->getAttributeLabel('is_nds'),
+                'hint' => $this->getAttributeLabel('is_nds'),
+                'type' => 'checkbox',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'is_cargo_lift',
+                'label' => $this->getAttributeLabel('is_cargo_lift'),
+                'hint' => $this->getAttributeLabel('is_cargo_lift'),
+                'type' => 'checkbox',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'is_partial_return',
+                'label' => $this->getAttributeLabel('is_partial_return'),
+                'hint' => $this->getAttributeLabel('is_partial_return'),
+                'type' => 'checkbox',
+                'required' => false,
+                'affectsCost' => true,
+                'editable' => true,
+            ],
+            [
+                'code' => 'is_packaging',
+                'label' => $this->getAttributeLabel('is_packaging'),
+                'hint' => $this->getAttributeLabel('is_packaging'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,

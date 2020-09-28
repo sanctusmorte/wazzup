@@ -120,6 +120,38 @@
                 </div>",
                 'value' => 1,
             ]); ?>
+
+            <?= $form->field($setting, 'is_nds')->checkbox([
+                'template' => "<div class=\"icheck-primary d-inline\">
+                    {input}
+                    {label}
+                </div>",
+                'value' => 1,
+            ]); ?>
+
+            <?= $form->field($setting, 'is_cargo_lift')->checkbox([
+                'template' => "<div class=\"icheck-primary d-inline\">
+                    {input}
+                    {label}
+                </div>",
+                'value' => 1,
+            ]); ?>
+
+            <?= $form->field($setting, 'is_partial_return')->checkbox([
+                'template' => "<div class=\"icheck-primary d-inline\">
+                    {input}
+                    {label}
+                </div>",
+                'value' => 1,
+            ]); ?>
+            
+            <?= $form->field($setting, 'is_packaging')->checkbox([
+                'template' => "<div class=\"icheck-primary d-inline\">
+                    {input}
+                    {label}
+                </div>",
+                'value' => 1,
+            ]); ?>
         </div>
     </div>
 </div>

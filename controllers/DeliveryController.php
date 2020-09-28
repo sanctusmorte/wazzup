@@ -18,7 +18,14 @@ use app\models\{
 
 class DeliveryController extends ApiRestController 
 {
+    private $deliveryService;
 
+    public function __construct($id, Module $module, $config = [], DeliveryService $deliveryService)
+    {
+        $this->deliveryService = $deliveryService;
+
+        parent::__construct($id, $module, $config);
+    }
 
     /**
      * Рассчет стоимости доставки 
@@ -26,14 +33,11 @@ class DeliveryController extends ApiRestController
      * @return array
      */
 
-    public function actionCalculate()
+    public function actionCalculate(): array
     {
         \Yii::info('Retail crm request: ' . var_export(Yii::$app->request->post(), true), 'crm_info');
 
-        return [
-            'success' => false,
-            'errorMsg' => '___ test'
-        ];
+        return $this->deliveryService->calculate();
     }
 
 }
