@@ -241,7 +241,7 @@ class SettingService extends Component
                     'deliveryDataFieldList' => $setting->getDeliveryDataFieldList(),
                     'settings' => [
                         'statuses' => $setting->getStatuses(),
-                        'shipmentExtraData' => $setting->getDefaultShipmentExtraData()
+                        // 'shipmentExtraData' => $setting->getDefaultShipmentExtraData()
                     ]
                 ],
             ]
