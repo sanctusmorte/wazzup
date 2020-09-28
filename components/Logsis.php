@@ -97,10 +97,6 @@ class Logsis extends Component
 
         list($code, $response) = $this->makeRequest('POST', $url, $data);
 
-        // if ($code !== 200) {
-        //     throw new ServerErrorHttpException($response['Error']);
-        // }
-
         return $response['response'];
     }
 
