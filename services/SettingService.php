@@ -243,8 +243,6 @@ class SettingService extends Component
             ]
         ];
 
-        echo "<pre>"; print_r($moduleData); die;
-
         if ($response = Yii::$app->retail->moduleEdit($this->getRetailAuthData($setting), $moduleData)) {
             return true;
         } else {
