@@ -474,7 +474,7 @@ class Setting extends \yii\db\ActiveRecord
         foreach ($this->retailToLogsisStatus as $status) {
             $statuses[] = [
                 'code' => $status->orderStatus->code,
-                'trackingStatusCode' => $status->logsis_status_id
+                'trackingStatusCode' => (string)$status->logsis_status_id
             ];
         }
 
@@ -488,11 +488,11 @@ class Setting extends \yii\db\ActiveRecord
     public function getDefaultShipmentExtraData(): array 
     {
         $shipmentExtraData = [
-            'cost_delivery' => $this->cost_delivery,
-            'markup' => $this->markup,
-            'prefix_shop' => $this->prefix_shop,
-            'is_payment_type' => $this->is_payment_type,
-            'is_assessed_value' => $this->is_assessed_value,
+            // 'cost_delivery' => $this->cost_delivery,
+            // 'markup' => $this->markup,
+            // 'prefix_shop' => $this->prefix_shop,
+            // 'is_payment_type' => $this->is_payment_type,
+            // 'is_assessed_value' => $this->is_assessed_value,
         ];
 
         // echo "<pre>"; print_r($shipmentExtraData); die;
