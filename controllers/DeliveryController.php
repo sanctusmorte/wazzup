@@ -2,7 +2,10 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
+use yii\filters\{
+    AccessControl,
+    VerbFilter
+};
 use yii\web\{
     Controller,
     Response
