@@ -63,7 +63,7 @@ class DeliveryController extends ApiRestController
         Yii::info(print_r(Yii::$app->request->post()), 'save_logsis');
 
         return [
-            'success' => false,
+            'success' => true,
             'errorMsg' => 'Ошибка сохранения'
         ];
     }
