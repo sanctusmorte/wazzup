@@ -49,7 +49,7 @@ class DeliveryService extends Component
         if ($response['status'] == 400) {
             return [
                 'success' => false,
-                'errorMsg' => 'Ошибка при обращении к калькулятору'
+                'errorMsg' => 'Ошибка при обращении к калькулятору.'
             ];  
         } elseif ($response['status'] == 402) {
             return [
@@ -86,7 +86,7 @@ class DeliveryService extends Component
     private function changeMessage(string $message): string 
     {
         if (strpos($message, 'Не найден тариф для кладра') !== false) {
-            return 'Служба доставки не доставляет по указанному адресу';
+            return 'Служба доставки не доставляет по указанному адресу.';
         }
 
         return $message;
