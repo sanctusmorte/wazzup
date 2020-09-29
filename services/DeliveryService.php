@@ -54,7 +54,7 @@ class DeliveryService extends Component
         } elseif ($response['status'] == 402) {
             return [
                 'success' => false,
-                'errorMsg' => $response['response']['message']
+                'errorMsg' => $this->changeMessage($response['response']['message'])
             ];
         } elseif ($response['status'] == 200) {
             return [
@@ -74,6 +74,22 @@ class DeliveryService extends Component
                 'errorMsg' => 'Получен некорректный ответ от Logsis. Повторите попытку.'
             ];
         }
+    }
+
+    /**
+     * Замена сообщения 
+     * 
+     * @param string $message
+     * @return string
+     */
+
+    private function changeMessage(string $message): string 
+    {
+        if (strpos($message, 'Не найден тариф для кладра') !== false) {
+            return 'Служба доставки не доставляет по указанному адресу';
+        }
+
+        return $message;
     }
 
     /**
