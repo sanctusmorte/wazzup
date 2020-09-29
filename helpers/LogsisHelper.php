@@ -47,6 +47,208 @@ class LogsisHelper
     }
 
     /**
+     * Генерация данных для передачи заказа в Logsis
+     * 
+     * @param object $setting
+     * @param array $save
+     * @return array
+     */
+
+    public static function generateSaveData(Setting $setting, array $save): array
+    {
+        $q = [
+            'key' => $setting->apikey,
+            'inner_n' => $save['orderNumber'],
+            'delivery_date' => $save['delivery']['deliveryDate'], // TODO вынести в валидацию
+            'delivery_time' => 1, // TODO вынести в валидацию
+            'target_name' => self::getCustomerName($save),
+            'target_contacts' => $save['customer']['phones'][0] ?? '',
+            'target_email' => $save['customer']['email'] ?? '',
+            'os' => self::getDeclarated($save),
+            'np' => ($save['delivery']['withCod'] ?? false) ? 1 : 0,
+            'price_client' => self::getPriceClient($save),
+            'price_client_delivery' => $save['delivery']['cost'] ?? 0,
+            'order_weight' => ($weight = $save['packages'][0]['weight'] ?? false) ? self::convertingWeight($weight) : 0.5,
+            'places_count' =>  ($items = $save['packages'][0]['items'] ?? false) ? count($items) : 1,
+            'dimension_side1' => ($width = $save['packages'][0]['width'] ?? false) ? self::convertingCabarites($width) : 10,
+            'dimension_side2' => ($height = $save['packages'][0]['height'] ?? false) ? self::convertingCabarites($height) : 10,
+            'dimension_side3' => ($length = $save['packages'][0]['length'] ?? false) ? self::convertingCabarites($length) : 10,
+            'city' => $save['delivery']['deliveryAddress']['city'] ?? '',
+            'addr' => self::getAddr($save),
+            'sms' => $save['delivery']['extraData']['is_sms'] ?? $setting->is_sms,
+            'open_option' => ($save['delivery']['extraData']['is_open'] ?? $setting->is_open) ? 1 : 3,
+            'call_option' => ($save['delivery']['extraData']['is_additional_call'] ?? $setting->is_additional_call) ? 1 : 0,
+            'docs_option' => ($save['delivery']['extraData']['is_return_doc'] ?? $setting->is_return_doc) ? 1 : 0,
+            'partial_option' => ($save['delivery']['extraData']['is_partial_redemption'] ?? $setting->is_partial_redemption) ? 1 : 0,
+            'dress_fitting_option' => ($save['delivery']['extraData']['is_fitting'] ?? $setting->is_fitting) ? 1 : 0,
+            'lifting_option' => ($save['delivery']['extraData']['is_skid'] ?? $setting->is_skid) ? 1 : 0,
+            'cargo_lift' => ($save['delivery']['extraData']['is_cargo_lift'] ?? $setting->is_cargo_lift) ? 1 : 0,
+            'goods' => self::getGoods($save)
+        ];
+
+        return $q;
+    }
+
+    /**
+     * Формирование товаров
+     * 
+     * @param array $data
+     * @return array
+     */
+
+    private static function getGoods(array $data): array 
+    {
+        $goods = [];
+
+        foreach ($data['packages'] as $package) {
+            foreach ($package['items'] as $item) {
+
+                $goods[] = [
+                    'articul' => '',
+                    'artname' => $item['name'],
+                    'count' => $item['quantity'],
+                    'weight' => 0.1, // в retailCRM нет веса товара
+                    'price' => $item['cost'],
+                    'nds' => ($vatRate = $item['vatRate'] ?? false) ? self::getNdsCode($item['vatRate']) : 2
+                ];
+            }
+        }
+
+        return $goods;
+    }
+
+    /**
+     * Получение кода для налога в Logsis
+     * 
+     * @param string $vatRate
+     * @return integer
+     */
+
+    private static function getNdsCode(string $vatRate): int
+    {
+        switch ($vatRate) {
+            case 'vat0':
+                $nds = 6;
+                break;
+            case 'vat10':
+                $nds = 3;
+                break;
+            case 'vat20':
+                $nds = 7;
+                break;
+            case 'vat110':
+                $nds = 5;
+                break;
+            case 'vat120':
+                $nds = 8;
+                break;
+            default:
+                $nds = 2;
+                break;
+        }
+
+        return $nds;
+    }
+
+    /**
+     * Формирование строки адреса для передачи в Logsis
+     * 
+     * @param array $data
+     * @return string
+     */
+
+    private static function getAddr(array $data): string 
+    {
+        $addr = '';
+
+        if ($data['delivery']['deliveryAddress']['cityType']) {
+            $addr .= $data['delivery']['deliveryAddress']['cityType'] . ' ';
+        }
+
+        if ($data['delivery']['deliveryAddress']['city']) {
+            $addr .= $data['delivery']['deliveryAddress']['city'] . ', ';
+        }
+
+        if ($data['delivery']['deliveryAddress']['street']) {
+            $addr .= $data['delivery']['deliveryAddress']['street'] . ', ';
+        }
+
+        if ($data['delivery']['deliveryAddress']['building']) {
+            $addr .= $data['delivery']['deliveryAddress']['building'];
+        }
+
+        return $addr;
+    }
+
+    /**
+     * Получение суммы наложенного платежа
+     * 
+     * @param array $data
+     * @return int|float
+     */
+
+    private static function getPriceClient(array $data)
+    {
+        $price_client = 0;
+
+        foreach ($data['packages'] as $package) {
+            foreach ($package['items'] as $item) {
+                $price_client += $item['cod']*$item['quantity'];
+            }
+        }
+
+        if (isset($data['delivery']['cod']) && $data['delivery']['cod']) {
+            $price_client += $data['delivery']['cod'];
+        }
+
+        return $price_client;
+    }
+
+    /**
+     *  Получение оценочной стоимости заказа retailCRM
+     * 
+     * @param array $data
+     * @return int|float
+     */
+
+    private static function getDeclarated(array $data)
+    {   
+        $declarated = 0;
+
+        foreach ($data['packages'][0]['items'] ?? false as $item) {
+            $declarated += $item['declaredValue'] ?? 0;
+        }
+
+        return $declarated;
+    }
+
+    /**
+     * Получение имени из данных заказа retailCRM
+     * 
+     * @param array $data
+     * @return string
+     */
+
+    private static function getCustomerName(array $data): string
+    {
+        $name = '';
+
+        if (isset($data['customer']['firstName']) && $data['customer']['firstName']) {
+            $name .= $data['customer']['firstName'];
+        }
+
+        if (isset($data['customer']['patronymic']) && $data['customer']['patronymic']) {
+            $name .= " " . $data['customer']['patronymic'];
+        }
+
+        if (isset($data['customer']['lastName']) && $data['customer']['lastName']) {
+            $name .= " " . $data['customer']['lastName'];
+        }
+
+        return $name;
+    }
+
+    /**
      * Перевод габаритов из мм в см (в retailCRM мм, в Logsis см)
      * 
      * @param float|int

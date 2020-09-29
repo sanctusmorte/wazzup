@@ -35,7 +35,7 @@ class DeliveryService extends Component
     {
         $setting = $this->getSetting(Yii::$app->request->post('clientId'));
         $calculate = Json::decode(Yii::$app->request->post('calculate'));
-
+        echo "<pre>"; print_r($calculate); die;
         $access = $this->accesssCheck($setting);
         if ($access['success'] == false) return $access;
 
@@ -74,6 +74,54 @@ class DeliveryService extends Component
                 'errorMsg' => 'Получен некорректный ответ от Logsis. Повторите попытку.'
             ];
         }
+    }
+
+    /**
+     * Передача заказа в Logsis
+     * 
+     * @return array
+     */
+
+    public function save(): array
+    {
+        $setting = $this->getSetting(Yii::$app->request->post('clientId'));
+        $save = Json::decode(Yii::$app->request->post('save'));
+
+        $access = $this->accesssCheck($setting);
+        if ($access['success'] == false) return $access;
+
+        $accessShop = $this->accessShop($save['site'], $setting);
+        if ($accessShop['success'] == false) return $accessShop;
+
+        $saveData = LogsisHelper::generateSaveData($setting, $save);
+
+        $response = Yii::$app->logsis->createorder($saveData);
+
+        echo "<pre>"; print_r($response); die;
+    }
+
+    /**
+     * Проверка магазина на доступность модуля
+     * 
+     * @param string $code
+     * @param object $setting
+     * @return array
+     */
+
+    private function accessShop(string $code, Setting $setting): array
+    {
+        foreach ($setting->settingShops as $shop) {
+            if ($code == $shop->code) {
+                return [
+                    'success' => true
+                ];
+            }
+        }
+
+        return [
+            'success' => false,
+            'errorMsg' => 'Для данного магазина модуль не доступен.'
+        ];
     }
 
     /**

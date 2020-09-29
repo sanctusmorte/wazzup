@@ -166,6 +166,7 @@ class Setting extends \yii\db\ActiveRecord
 
     /**
      * Поиск элемента в массиве
+     * 
      * @param array
      * @param string
      * @return boolean

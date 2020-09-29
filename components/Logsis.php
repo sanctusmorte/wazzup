@@ -77,10 +77,6 @@ class Logsis extends Component
 
         list($code, $response) = $this->makeRequest('GET', $url);
 
-        if ($code !== 200) {
-            throw new ServerErrorHttpException($response['Error']);
-        }
-
         return $response;
     }
 
@@ -91,7 +87,7 @@ class Logsis extends Component
      * @return array
      */
 
-    public function calculate(array $data)
+    public function calculate(array $data): array
     {
         $url = 'http://api.logsis.ru/api/v1/public/calculate';
 
@@ -100,4 +96,19 @@ class Logsis extends Component
         return $response;
     }
 
+    /**
+     * Создание заказа 
+     * 
+     * @param array $data
+     * @return array
+     */
+
+    public function createorder(array $data): array
+    {
+        $url = $this->host . '/createorder';
+
+        list($code, $response) = $this->makeRequest('POST', $url, $data);
+
+        return $response;
+    }
 }
