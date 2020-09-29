@@ -27,6 +27,19 @@ class DeliveryController extends ApiRestController
         parent::__construct($id, $module, $config);
     }
 
+    public function behaviors() 
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'calculate' => ['post'],
+                    'save' => ['post'],
+                ],
+            ],
+        ];
+    }
+
     /**
      * Рассчет стоимости доставки 
      * 
@@ -35,9 +48,21 @@ class DeliveryController extends ApiRestController
 
     public function actionCalculate(): array
     {
-        \Yii::info('Retail crm request: ' . var_export(Yii::$app->request->post(), true), 'crm_info');
-
         return $this->deliveryService->calculate();
+    }
+
+    /**
+     * Сохранение доставки
+     */
+
+    public function actionSave(): array
+    {
+        Yii::info(print_r(Yii::$app->request->post()), 'save_logsis');
+
+        return [
+            'success' => false,
+            'errorMsg' => 'Ошибка сохранения'
+        ];
     }
 
 }
