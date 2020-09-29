@@ -46,9 +46,6 @@ class DeliveryService extends Component
         
         $response = Yii::$app->logsis->calculate($calculateData);
 
-        // Yii::info(print_r($calculateData, true), 'calculateData');
-        // Yii::info(print_r($response, true), 'response_logsis');
-
         if ($response['status'] == 400) {
             return [
                 'success' => false,
