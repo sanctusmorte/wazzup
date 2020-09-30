@@ -33,7 +33,7 @@ class Logsis extends Component
      * @return array
      */
 
-    public function makeRequest(string $method, string $url, array $body = []): array
+    private function makeRequest(string $method, string $url, array $body = []): array
     {
         $headers = [
             'Content-Type: application/json; charset=utf-8'
@@ -53,6 +53,44 @@ class Logsis extends Component
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
+        $response = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        curl_close($ch);
+
+        return [
+            $http_code,
+            Json::decode($response, true)
+        ];
+    }
+
+    /**
+     * Отправка POST запроста
+     * 
+     * @param string $url
+     * @param array $body
+     * @return array
+     */
+
+    private function makeRequestPost(string $url, array $body = []): array
+    {
+        $ch = curl_init();
+
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => http_build_query($body),
+            CURLOPT_HTTPHEADER => [
+                "Content-Type: application/x-www-form-urlencoded"
+            ],
+        ]);
+        
         $response = curl_exec($ch);
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
@@ -107,7 +145,16 @@ class Logsis extends Component
     {
         $url = $this->host . '/createorder';
 
-        list($code, $response) = $this->makeRequest('POST', $url, $data);
+        list($code, $response) = $this->makeRequestPost($url, $data);   
+
+        return $response;
+    }
+
+    public function confirmorder(array $data): array
+    {
+        $url = $this->host . '/confirmorder';
+
+        list($code, $response) = $this->makeRequestPost($url, $data);   
 
         return $response;
     }

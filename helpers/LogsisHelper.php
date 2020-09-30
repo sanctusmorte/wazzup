@@ -90,6 +90,24 @@ class LogsisHelper
     }
 
     /**
+     * Формирование данных для подтверждения заказа в Logsis
+     * 
+     * @param object $setting
+     * @param array $data
+     * @return array
+     */
+
+
+    public static function generateConfirmOrderData(Setting $setting, array $data): array
+    {
+        return [
+            'key' => $setting->apikey,
+            'inner_n' => $data['inner_track'],
+            'order_id' => $data['order_id']
+        ];
+    }
+
+    /**
      * Формирование товаров
      * 
      * @param array $data

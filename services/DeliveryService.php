@@ -35,7 +35,7 @@ class DeliveryService extends Component
     {
         $setting = $this->getSetting(Yii::$app->request->post('clientId'));
         $calculate = Json::decode(Yii::$app->request->post('calculate'));
-        echo "<pre>"; print_r($calculate); die;
+
         $access = $this->accesssCheck($setting);
         if ($access['success'] == false) return $access;
 
@@ -95,9 +95,34 @@ class DeliveryService extends Component
 
         $saveData = LogsisHelper::generateSaveData($setting, $save);
 
-        $response = Yii::$app->logsis->createorder($saveData);
+        $responseCreateOrder = Yii::$app->logsis->createorder($saveData);
+        
+        if ($responseCreateOrder['status'] !== '200') {
+            return [
+                'success' => false,
+                'errorMsg' => $responseCreateOrder['response']['Error']
+            ];
+        } 
+        
+        $confirmData =  LogsisHelper::generateConfirmOrderData($setting, $responseCreateOrder['response']);
+        $responseConfirmOrder = Yii::$app->logsis->confirmorder($confirmData);
 
-        echo "<pre>"; print_r($response); die;
+        if ($responseConfirmOrder['status'] !== '200') {
+            return [
+                'success' => false,
+                'errorMsg' => $responseConfirmOrder['response']['Error']
+            ];
+        } else {
+            return [
+                'success' => true,
+                'result' => [
+                    'deliveryId' => $responseConfirmOrder['response']['order_id'],
+                    'trackNumber' => $responseCreateOrder['response']['inner_track'],
+                    'cost' => $responseCreateOrder['response']['price_delivery'],
+                    'status' => 2
+                ]
+            ];
+        }
     }
 
     /**
