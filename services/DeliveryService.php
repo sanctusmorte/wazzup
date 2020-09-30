@@ -142,7 +142,12 @@ class DeliveryService extends Component
                 'success' => false,
                 'errorMsg' => 'Не указана дата доставки.'
             ];
-        } 
+        } elseif ($data['delivery']['deliveryDate'] < Yii::$app->formatter->asDate(time(), 'php:Y-m-d')) {
+            return [
+                'success' => false,
+                'errorMsg' => 'Дата доставки не может быть меньше текущей даты.'
+            ];
+        }
 
         return [
             'success' => true
