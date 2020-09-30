@@ -93,6 +93,9 @@ class DeliveryService extends Component
         $accessShop = $this->accessShop($save['site'], $setting);
         if ($accessShop['success'] == false) return $accessShop;
 
+        $validateData = $this->validateSaveData($save);
+        if ($validateData['success'] == false) return $validateData;
+
         $saveData = LogsisHelper::generateSaveData($setting, $save);
 
         $responseCreateOrder = Yii::$app->logsis->createorder($saveData);
@@ -123,6 +126,27 @@ class DeliveryService extends Component
                 ]
             ];
         }
+    }
+
+    /**
+     * Проверка данных
+     * 
+     * @param array $data
+     * @return array
+     */
+
+    private function validateSaveData(array $data): array
+    {
+        if (!isset($data['delivery']['deliveryDate']) || empty($data['delivery']['deliveryDate'])) {
+            return [
+                'success' => false,
+                'errorMsg' => 'Не указана дата доставки.'
+            ];
+        } 
+
+        return [
+            'success' => true
+        ];
     }
 
     /**
