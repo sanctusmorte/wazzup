@@ -8,6 +8,18 @@ use app\models\Setting;
 
 class LogsisHelper 
 {
+    const TIME_MOSCOW = [
+        1 => '10-14',
+        2 => '10-18',
+        3 => '14-18',
+        4 => '18-22'
+    ];
+
+    const TIME_SPB = [
+        11 => '12-18',
+        12 => '18-22',
+        13 => '12-22'
+    ];
 
     /**
      * Генерация данных для метода calculate
@@ -56,11 +68,11 @@ class LogsisHelper
 
     public static function generateSaveData(Setting $setting, array $save): array
     {
-        $q = [
+        return [
             'key' => $setting->apikey,
             'inner_n' => $save['orderNumber'],
-            'delivery_date' => $save['delivery']['deliveryDate'], // TODO вынести в валидацию
-            'delivery_time' => 1, // TODO вынести в валидацию
+            'delivery_date' => $save['delivery']['deliveryDate'],
+            'delivery_time' => self::getDeliveryTime($save), 
             'target_name' => self::getCustomerName($save),
             'target_contacts' => $save['customer']['phones'][0] ?? '',
             'target_email' => $save['customer']['email'] ?? '',
@@ -85,8 +97,6 @@ class LogsisHelper
             'cargo_lift' => ($save['delivery']['extraData']['is_cargo_lift'] ?? $setting->is_cargo_lift) ? 1 : 0,
             'goods' => self::getGoods($save)
         ];
-
-        return $q;
     }
 
     /**
@@ -108,6 +118,108 @@ class LogsisHelper
     }
 
     /**
+     * Получение времени доставкт 
+     * 
+     * @param array $data 
+     * @return int
+     */
+
+    private static function getDeliveryTime(array $data): int 
+    {   
+        $timeFrom = self::getRegValue($data['delivery']['deliveryTime']['from'], "/[0-9]+/");
+        $timeTo = self::getRegValue($data['delivery']['deliveryTime']['to'], "/[0-9]+/");
+
+        if (in_array($data['delivery']['deliveryAddress']['region'], ['Москва город', 'Московская область'])) {
+            
+            return self::getTime(self::TIME_MOSCOW, $timeFrom, $timeTo);
+        } elseif (in_array($data['delivery']['deliveryAddress']['region'], ['Санкт-Петербург город'])) {
+            
+            return self::getTime(self::TIME_SPB, $timeFrom, $timeTo);
+        }
+
+        return 2;
+    }
+
+    /**
+     * Получение  времени из массива 
+     * 
+     * @param array $time
+     * @param integer $from
+     * @param integer $to
+     * @return integer 
+     */
+
+    private static function getTime($time, $from, $to): int
+    {
+        $fromArr = [];
+        $toArr = [];
+
+        foreach ($time as $key => $value) {
+            $explode = explode('-', $value);
+
+            $fromArr[] = $explode[0];
+            $toArr[] = $explode[1];
+        }
+        
+        $minFrom = self::getMinValueInArray($fromArr, $from);
+        $minTo = self::getMinValueInArray($toArr, $to); 
+        $timeFlip = array_flip($time);
+
+        if ($minFrom == $minTo) {
+            foreach ($time as $key => $value) {
+                $explode = explode('-', $value);
+    
+                if ($explode[1] == $minTo) {
+                    return $key;
+                } 
+                return 2;
+            }
+        } else {
+            return $timeFlip[$minFrom."-".$minTo] ?? 2;
+        }
+    }
+
+    /**
+     * Получение ближайшего значения в массиве
+     * 
+     * @param array $x
+     * @param int $y
+     * @return int
+     */
+
+    private static function getMinValueInArray(array $x, int $y)
+    {
+        $x[]=$y;
+        sort($x);
+
+        for ($i=0, $return=$x[0]; $i<count($x)-1; $i++) {
+            if ($x[$i+1]==$y) {
+                if ($i+1>=count($x) || $y-$x[$i] < $x[$i+2]-$y) $return=$x[$i];
+                else $return=$x[$i+2];
+                break;
+            }
+            
+        }
+
+        return $return;
+    }
+
+    /**
+     * Применение регулярного выражения
+     * 
+     * @param string
+     * @param string|null
+     * @return string|boolean
+     */
+
+    private static function getRegValue($str, $reg) 
+    {
+        preg_match("$reg", $str, $matches);
+
+        return $matches[0] ?? false;
+    }
+
+    /**
      * Формирование товаров
      * 
      * @param array $data
@@ -125,7 +237,7 @@ class LogsisHelper
                     'articul' => '',
                     'artname' => $item['name'],
                     'count' => $item['quantity'],
-                    'weight' => 0.1, // в retailCRM нет веса товара
+                    'weight' => 0.1,
                     'price' => $item['cost'],
                     'nds' => ($vatRate = $item['vatRate'] ?? false) ? self::getNdsCode($item['vatRate']) : 2
                 ];

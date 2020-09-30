@@ -147,6 +147,16 @@ class DeliveryService extends Component
                 'success' => false,
                 'errorMsg' => 'Дата доставки не может быть меньше текущей даты.'
             ];
+        } elseif (!isset($data['delivery']['deliveryTime']['from']) || empty($data['delivery']['deliveryTime']['from'])) {
+            return [
+                'success' => false,
+                'errorMsg' => 'Необходимо указать время доставки.'
+            ];
+        } elseif (!isset($data['delivery']['deliveryTime']['to']) || empty($data['delivery']['deliveryTime']['to'])) {
+            return [
+                'success' => false,
+                'errorMsg' => 'Необходимо указать время доставки.'
+            ];
         }
 
         return [
