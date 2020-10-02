@@ -150,9 +150,38 @@ class Logsis extends Component
         return $response;
     }
 
+    /**
+     * Подтверждение заказа
+     * 
+     * @param array $data
+     * @return array
+     */
+
     public function confirmorder(array $data): array
     {
         $url = $this->host . '/confirmorder';
+
+        list($code, $response) = $this->makeRequestPost($url, $data);   
+
+        return $response;
+    }
+
+    /**
+     * Массовое получение статусов
+     * 
+     * @param array $data
+     * @return array
+     */
+
+    public function getstatusv3(array $data): array
+    {
+        $url = $this->host . '/getstatusv3';
+
+        $url .= '?' . http_build_query(['key' => $data['key']]);
+
+        $url .= '&' . http_build_query(['from' => $data['from']]);
+
+        $url .= '&' . http_build_query(['to' => $data['to']]);
 
         list($code, $response) = $this->makeRequestPost($url, $data);   
 

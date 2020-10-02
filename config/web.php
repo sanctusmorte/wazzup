@@ -9,7 +9,10 @@ $config = [
     'basePath' => dirname(__DIR__),
     'name' => 'Logsis',
     'language' => 'ru-RU',
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        'queue'
+    ],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -61,7 +64,12 @@ $config = [
         'logsis' => [
             'class' => app\components\Logsis::class,
             'host' => 'http://cab.logsis.ru/apiv2'
-        ]
+        ],
+        'queue' => [
+            'class' => \yii\queue\file\Queue::class,
+            'path' => '@app/runtime/queue',
+            'as log' => \yii\queue\LogBehavior::class,
+        ],
     ],
     'params' => $params,
 ];

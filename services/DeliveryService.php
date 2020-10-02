@@ -129,6 +129,27 @@ class DeliveryService extends Component
     }
 
     /**
+     * Обновление статусов из Logsis в retailCRM
+     * 
+     * @return boolean
+     */
+
+    public function tracking(): bool
+    {
+        if ($settings = Setting::find()->where(['is_active' => Setting::STATUS_ACTIVE])->andWhere(['is_freeze' => Setting::STATUS_UNFREEZE])->all()) {
+            foreach ($settings as $setting) {
+
+                Yii::$app->queue->push(new \app\jobs\TrackingJob([
+                    '_setting' => $setting
+                ]));
+            }
+        }
+
+
+        return true;
+    }
+
+    /**
      * Проверка данных
      * 
      * @param array $data

@@ -100,6 +100,22 @@ class LogsisHelper
     }
 
     /**
+     * Генерация данных для массового получения статусо из Logsis
+     * 
+     * @param object $setting
+     * @return array
+     */
+
+    public static function generateStatusData(Setting $setting): array
+    {
+        return [
+            'key' => $setting->apikey,
+            'from' => Yii::$app->formatter->asDateTime(time(), 'php:Y-m-d 00:00:00'),
+            'to' => Yii::$app->formatter->asDateTime(time(), 'php:Y-m-d 23:59:59'),
+        ];
+    }
+
+    /**
      * Формирование данных для подтверждения заказа в Logsis
      * 
      * @param object $setting

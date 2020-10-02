@@ -38,6 +38,7 @@ class DeliveryController extends ApiRestController
                 'actions' => [
                     'calculate' => ['post'],
                     'save' => ['post'],
+                    'tracking' => ['get']
                 ],
             ],
         ];
@@ -65,4 +66,14 @@ class DeliveryController extends ApiRestController
         return $this->deliveryService->save();
     }
 
+    /**
+     * Обмен статусов заказов из Logsis в retailCRM
+     * 
+     * @return boolean
+     */
+
+    public function actionTracking(): bool
+    {
+        return $this->deliveryService->tracking();
+    }
 }

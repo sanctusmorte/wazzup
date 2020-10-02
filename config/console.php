@@ -6,7 +6,11 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic-console',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        'queue',
+        'logsis'
+    ],
     'controllerNamespace' => 'app\commands',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -25,16 +29,21 @@ $config = [
                 ],
             ],
         ],
+        'queue' => [
+            'class' => \yii\queue\file\Queue::class,
+            'path' => '@app/runtime/queue',
+            'as log' => \yii\queue\LogBehavior::class,
+        ],
+        'logsis' => [
+            'class' => app\components\Logsis::class,
+            'host' => 'http://cab.logsis.ru/apiv2'
+        ],
+        'retail' => [
+            'class' => app\components\Retail::class
+        ],
         'db' => $db,
     ],
     'params' => $params,
-    /*
-    'controllerMap' => [
-        'fixture' => [ // Fixture generation command line.
-            'class' => 'yii\faker\FixtureController',
-        ],
-    ],
-    */
 ];
 
 if (YII_ENV_DEV) {

@@ -261,6 +261,11 @@ class Setting extends \yii\db\ActiveRecord
         return $this->hasMany(RetailToLogsisStatus::className(), ['setting_id' => 'id']);
     }
 
+    public function getRetailToLogsisStatusByLogsisStatusId(int $logsis_status_id)
+    {
+        return $this->hasOne(RetailToLogsisStatus::className(), ['setting_id' => 'id'])->where(['logsis_status_id' => $logsis_status_id])->one();
+    }
+
     public function getArrayOrderStatuses()
     {
         return ArrayHelper::map($this->hasMany(OrderStatus::className(), ['setting_id' => 'id'])->asArray()->all(), 'id', 'name');
@@ -508,6 +513,20 @@ class Setting extends \yii\db\ActiveRecord
             'is_cargo_lift' => ($this->is_cargo_lift) ? true : false,
             'is_partial_return' => ($this->is_partial_return) ? true : false,
             'is_packaging' => ($this->is_packaging) ? true : false
+        ];
+    }
+
+    /**
+     * Получение данных авторизации
+     * 
+     * @return array
+     */
+
+    public function getRetailAuthData(): array
+    {
+        return [
+            'retailApiUrl' => $this->retail_api_url,
+            'retailApiKey' => $this->retail_api_key
         ];
     }
     
