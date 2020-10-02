@@ -64,7 +64,7 @@ class DeliveryService extends Component
                         'code' => 1,
                         'name' => 'Доставка Logsis',
                         'type' => 'courier',
-                        'cost' => $response['response']['total']
+                        'cost' => $this->getCalculateTotal($setting, $response['response']['total'])
                     ]
                 ]
             ];
@@ -147,6 +147,21 @@ class DeliveryService extends Component
 
 
         return true;
+    }
+
+    /**
+     * Определение конечно стоимости доставки
+     * 
+     * @param object $setting
+     * @param int|float
+     * @return int|float
+     */
+
+    private function getCalculateTotal(Setting $setting, $total)
+    {
+        if ($setting->cost_delivery) return $cost_delivery;
+        elseif ($setting->markup) return $total + $total * $setting->markup / 100;
+        else return $total;
     }
 
     /**
