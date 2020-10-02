@@ -87,12 +87,15 @@ class Setting extends \yii\db\ActiveRecord
     {
         return [
             [['client_id', 'retail_api_url', 'retail_api_key', 'apikey'], 'required'],
-            [['cost_delivery', 'markup'], 'number'],
+            [['cost_delivery'], 'number'],
             [['is_active', 'is_freeze', 'is_first_active', 'is_payment_type', 'is_assessed_value', 'is_single_cost', 'is_partial_redemption', 'is_fitting', 'is_sms', 'is_open', 'is_additional_call', 'is_return_doc', 'is_skid', 'is_nds', 'is_cargo_lift', 'is_partial_return', 'is_packaging', 'created_at', 'updated_at'], 'integer'],
             [['client_id'], 'string', 'max' => 32],
             [['retail_api_url', 'retail_api_key', 'apikey', 'prefix_shop', 'tax_product', 'tax_delivery'], 'string', 'max' => 255],
-            ['retail_api_url', 'match', 'pattern' => '/^https:\/\/.+\.retailcrm\.+[a-zA-Z]+$/i','message' => 'Формат ссылки должен быть https://YOUR-DOMAIN.retailcrm.DOMAIN'],
+            ['retail_api_url', 'match', 'pattern' => '/^https:\/\/.+\.retailcrm\.+[a-zA-Z]+$/i', 'message' => 'Формат ссылки должен быть https://YOUR-DOMAIN.retailcrm.DOMAIN'],
             ['retail_api_url', 'url', 'validSchemes' => ['https']],
+            [['markup'], 'number', 'min' => 1, 'max' => 100],
+            [['prefix_shop'], 'string', 'min' => 1, 'max' => 5],
+            ['prefix_shop', 'match', 'pattern' => '/^[a-zA-Z]+$/i', 'message' => 'Префикс содержит некорректные символы.'],
             [['client_id'], 'unique'],
             [['retail_api_url'], 'unique'],
             ['retail_api_url', 'validateApiUrl'],
@@ -193,7 +196,7 @@ class Setting extends \yii\db\ActiveRecord
             'retail_api_key' => 'API-ключ',
             'apikey' => 'API-ключ',
             'cost_delivery' => 'Фиксированная стоимость стоимости доставки',
-            'markup' => 'Наценка',
+            'markup' => 'Наценка % (от стоимости доставки)',
             'prefix_shop' => 'Префикс магазина',
             'is_payment_type' => 'Прием денежных средств по умолчанию',
             'is_assessed_value' => 'Устанавливать в заявке оценочную стоимость в размере стоимости товаров',
@@ -311,33 +314,6 @@ class Setting extends \yii\db\ActiveRecord
     public function getDeliveryDataFieldList(): array
     {
         return [
-            [
-                'code' => 'cost_delivery',
-                'label' => $this->getAttributeLabel('cost_delivery'),
-                // 'hint' => $this->getAttributeLabel('cost_delivery'),
-                'type' => 'text',
-                'required' => false,
-                'affectsCost' => false,
-                'editable' => true,
-            ],
-            [
-                'code' => 'markup',
-                'label' => $this->getAttributeLabel('markup'),
-                // 'hint' => $this->getAttributeLabel('markup'),
-                'type' => 'text',
-                'required' => false,
-                'affectsCost' => false,
-                'editable' => true,
-            ],
-            [
-                'code' => 'prefix_shop',
-                'label' => $this->getAttributeLabel('prefix_shop'),
-                // 'hint' => $this->getAttributeLabel('prefix_shop'),
-                'type' => 'text',
-                'required' => false,
-                'affectsCost' => false,
-                'editable' => true,
-            ],
             [
                 'code' => 'is_single_cost',
                 'label' => $this->getAttributeLabel('is_single_cost'),
@@ -496,9 +472,6 @@ class Setting extends \yii\db\ActiveRecord
     public function getDefaultDeliveryExtraData(): array 
     {
         return [
-            'cost_delivery' => $this->cost_delivery,
-            'markup' => $this->markup,
-            'prefix_shop' => $this->prefix_shop,
             'is_payment_type' => ($this->is_payment_type) ? true : false,
             'is_assessed_value' => ($this->is_assessed_value) ? true : false,
             'is_single_cost' => ($this->is_single_cost) ? true : false,
