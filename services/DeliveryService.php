@@ -159,8 +159,9 @@ class DeliveryService extends Component
 
     private function getCalculateTotal(Setting $setting, $total)
     {
-        if ($setting->cost_delivery) return $cost_delivery;
-        elseif ($setting->markup) return $total + $total * $setting->markup / 100;
+        if ($setting->cost_delivery && !$setting->markup) return $cost_delivery;
+        elseif ($setting->markup && !$setting->cost_delivery) return $total + $total * $setting->markup / 100;
+        elseif($setting->markup && $setting->cost_delivery) return $setting->cost_delivery + $setting->cost_delivery * $setting->markup / 100;
         else return $total;
     }
 
