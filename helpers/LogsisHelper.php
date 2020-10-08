@@ -87,6 +87,7 @@ class LogsisHelper
             'dimension_side3' => ($length = $save['packages'][0]['length'] ?? false) ? self::convertingCabarites($length) : 10,
             'city' => $save['delivery']['deliveryAddress']['city'] ?? '',
             'addr' => self::getAddr($save),
+            'post_code' => $save['delivery']['deliveryAddress']['index'] ?? '',
             'sms' => $save['delivery']['extraData']['is_sms'] ?? $setting->is_sms,
             'open_option' => ($save['delivery']['extraData']['is_open'] ?? $setting->is_open) ? 1 : 3,
             'call_option' => ($save['delivery']['extraData']['is_additional_call'] ?? $setting->is_additional_call) ? 1 : 0,
