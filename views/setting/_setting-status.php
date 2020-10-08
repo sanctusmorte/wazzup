@@ -36,7 +36,7 @@
                                         {label}
                                         {input}
                                     </div>",
-                                ])->dropDownList($setting->getArrayOrderStatuses(), ['value' => $arrayRetailToLogsisStatus[1] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
+                                ])->dropDownList($setting->getArrayOrderStatuses(), ['prompt' => 'Выберите статус..', 'value' => $arrayRetailToLogsisStatus[1] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
                             </td>
                         </tr>
                         <tr>
@@ -48,7 +48,7 @@
                                         {label}
                                         {input}
                                     </div>",
-                                ])->dropDownList($setting->getArrayOrderStatuses(), ['value' => $arrayRetailToLogsisStatus[2] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
+                                ])->dropDownList($setting->getArrayOrderStatuses(), ['prompt' => 'Выберите статус..', 'value' => $arrayRetailToLogsisStatus[2] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
                             </td>
                         </tr>
                         <tr>
@@ -60,7 +60,7 @@
                                         {label}
                                         {input}
                                     </div>",
-                                ])->dropDownList($setting->getArrayOrderStatuses(), ['value' => $arrayRetailToLogsisStatus[3] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
+                                ])->dropDownList($setting->getArrayOrderStatuses(), ['prompt' => 'Выберите статус..', 'value' => $arrayRetailToLogsisStatus[3] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
                             </td>
                         </tr>
                         <tr>
@@ -72,7 +72,7 @@
                                         {label}
                                         {input}
                                     </div>",
-                                ])->dropDownList($setting->getArrayOrderStatuses(), ['value' => $arrayRetailToLogsisStatus[4] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
+                                ])->dropDownList($setting->getArrayOrderStatuses(), ['prompt' => 'Выберите статус..', 'value' => $arrayRetailToLogsisStatus[4] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
                             </td>
                         </tr>
                         <tr>
@@ -84,7 +84,7 @@
                                         {label}
                                         {input}
                                     </div>",
-                                ])->dropDownList($setting->getArrayOrderStatuses(), ['value' =>$arrayRetailToLogsisStatus[5] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
+                                ])->dropDownList($setting->getArrayOrderStatuses(), ['prompt' => 'Выберите статус..', 'value' =>$arrayRetailToLogsisStatus[5] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
                             </td>
                         </tr>
                         <tr>
@@ -96,7 +96,7 @@
                                         {label}
                                         {input}
                                     </div>",
-                                ])->dropDownList($setting->getArrayOrderStatuses(), ['value' => $arrayRetailToLogsisStatus[6] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
+                                ])->dropDownList($setting->getArrayOrderStatuses(), ['prompt' => 'Выберите статус..', 'value' => $arrayRetailToLogsisStatus[6] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
                             </td>
                         </tr>
                         <tr>
@@ -108,7 +108,7 @@
                                         {label}
                                         {input}
                                     </div>",
-                                ])->dropDownList($setting->getArrayOrderStatuses(), ['value' => $arrayRetailToLogsisStatus[7] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
+                                ])->dropDownList($setting->getArrayOrderStatuses(), ['prompt' => 'Выберите статус..', 'value' => $arrayRetailToLogsisStatus[7] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
                             </td>
                         </tr>
                         <tr>
@@ -120,7 +120,7 @@
                                         {label}
                                         {input}
                                     </div>",
-                                ])->dropDownList($setting->getArrayOrderStatuses(), ['value' => $arrayRetailToLogsisStatus[8] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
+                                ])->dropDownList($setting->getArrayOrderStatuses(), ['prompt' => 'Выберите статус..', 'value' => $arrayRetailToLogsisStatus[8] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
                             </td>
                         </tr>
                         <tr>
@@ -132,7 +132,7 @@
                                         {label}
                                         {input}
                                     </div>",
-                                ])->dropDownList($setting->getArrayOrderStatuses(), ['value' => $arrayRetailToLogsisStatus[9] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
+                                ])->dropDownList($setting->getArrayOrderStatuses(), ['prompt' => 'Выберите статус..', 'value' => $arrayRetailToLogsisStatus[9] ?? null, 'class' => 'form-control select2', 'multiple' => false])->label(false); ?>
                             </td>
                         </tr>             
                     </tbody>

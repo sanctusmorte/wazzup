@@ -16,7 +16,7 @@ class TrackingJob extends \yii\base\BaseObject implements \yii\queue\Job
         $updateOrders = [];
 
         if ($response['status'] == 200) {
-
+            
             foreach ($response['response'] as $key => $orderStatus) {
 
                 $ordersListResponse = $this->getRetailOrders($orderStatus['inner_id'], $orderStatus['order_id']);

@@ -81,7 +81,7 @@ class LogsisHelper
             'price_client' => self::getPriceClient($save),
             'price_client_delivery' => $save['delivery']['cost'] ?? 0,
             'order_weight' => ($weight = $save['packages'][0]['weight'] ?? false) ? self::convertingWeight($weight) : 0.5,
-            'places_count' =>  ($items = $save['packages'][0]['items'] ?? false) ? count($items) : 1,
+            'places_count' => 1,
             'dimension_side1' => ($width = $save['packages'][0]['width'] ?? false) ? self::convertingCabarites($width) : 10,
             'dimension_side2' => ($height = $save['packages'][0]['height'] ?? false) ? self::convertingCabarites($height) : 10,
             'dimension_side3' => ($length = $save['packages'][0]['length'] ?? false) ? self::convertingCabarites($length) : 10,

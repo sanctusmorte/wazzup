@@ -172,18 +172,25 @@ class SettingService extends Component
     {
         foreach ($orderStatuses as $key => $orderStatus) {
 
-            if ($retailToLogsisStatus = RetailToLogsisStatus::find()->where(['setting_id' => $setting->id])->andWhere(['logsis_status_id' => $key])->one()) {
+            $retailToLogsisStatus = RetailToLogsisStatus::find()->where(['setting_id' => $setting->id])->andWhere(['logsis_status_id' => $key])->one();
+
+            if ($retailToLogsisStatus && $orderStatus) {
                 $retailToLogsisStatus->order_status_id = $orderStatus;
                 $retailToLogsisStatus->logsis_status_id = $key;
-            } else {
+
+                if ($retailToLogsisStatus->validate()) $retailToLogsisStatus->save();
+            } elseif($retailToLogsisStatus && !$orderStatus) {
+                
+                $retailToLogsisStatus->delete();
+            } elseif ($orderStatus) {
                 $retailToLogsisStatus = new RetailToLogsisStatus([
                     'setting_id' => $setting->id,
                     'order_status_id' => $orderStatus,
                     'logsis_status_id' => $key
                 ]);
-            }
 
-            if ($retailToLogsisStatus->validate()) $retailToLogsisStatus->save();
+                if ($retailToLogsisStatus->validate()) $retailToLogsisStatus->save();
+            }
         }
         return true;
     }
