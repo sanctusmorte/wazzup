@@ -147,10 +147,10 @@ class LogsisHelper
         $timeTo = self::getRegValue($data['delivery']['deliveryTime']['to'], "/[0-9]+/");
 
         if (in_array($data['delivery']['deliveryAddress']['region'], ['Москва город', 'Московская область'])) {
-            
+
             return self::getTime(self::TIME_MOSCOW, $timeFrom, $timeTo);
         } elseif (in_array($data['delivery']['deliveryAddress']['region'], ['Санкт-Петербург город'])) {
-            
+
             return self::getTime(self::TIME_SPB, $timeFrom, $timeTo);
         }
 
@@ -209,13 +209,12 @@ class LogsisHelper
         $x[]=$y;
         sort($x);
 
-        for ($i=0, $return=$x[0]; $i<count($x)-1; $i++) {
+        for ($i=0, $return=$x[0]; $i < count($x)-1; $i++) {
             if ($x[$i+1]==$y) {
                 if ($i+1>=count($x) || $y-$x[$i] < $x[$i+2]-$y) $return=$x[$i];
                 else $return=$x[$i+2];
                 break;
             }
-            
         }
 
         return $return;
@@ -308,12 +307,20 @@ class LogsisHelper
     {
         $addr = '';
 
+        if (isset($data['delivery']['deliveryAddress']['index']) && $data['delivery']['deliveryAddress']['index']) {
+            $addr .= $data['delivery']['deliveryAddress']['index'] . ', ';
+        }
+
         if (isset($data['delivery']['deliveryAddress']['cityType']) && $data['delivery']['deliveryAddress']['cityType']) {
             $addr .= $data['delivery']['deliveryAddress']['cityType'] . ' ';
         }
 
         if (isset($data['delivery']['deliveryAddress']['city']) && $data['delivery']['deliveryAddress']['city']) {
             $addr .= $data['delivery']['deliveryAddress']['city'] . ', ';
+        }
+
+        if (isset($data['delivery']['deliveryAddress']['streetType']) && $data['delivery']['deliveryAddress']['streetType']) {
+            $addr .= $data['delivery']['deliveryAddress']['streetType'] . ' ';
         }
 
         if (isset($data['delivery']['deliveryAddress']['street']) && $data['delivery']['deliveryAddress']['street']) {

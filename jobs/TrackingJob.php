@@ -17,7 +17,7 @@ class TrackingJob extends \yii\base\BaseObject implements \yii\queue\Job
 
         if ($response['status'] == 200) {
             
-            foreach ($response['response'] as $key => $orderStatus) {
+            foreach ($response['response'] ?? [] as $key => $orderStatus) {
 
                 if ($prefix_shop = $this->_setting->prefix_shop) {
                     $number = str_replace($prefix_shop, '', $orderStatus['inner_id']);
