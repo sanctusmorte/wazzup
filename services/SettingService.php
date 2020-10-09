@@ -39,7 +39,7 @@ class SettingService extends Component
             'client_id' => $this->generateClientId()
         ]);
     }
-
+ 
     /**
      * Получение настроек по идентификатору
      * 
@@ -228,7 +228,12 @@ class SettingService extends Component
                     ],
                     'payerType' => [									// Допустимые типы плательщиков за доставку;
                         'sender',                                       // sender - магазин может брать деньги с покупателя за доставку и потом расплачивается со службой доставки)
-                        'receiver',                                   // receiver - покупатель сам расплачивается напрямую со службой доставки
+                        'receiver',                                     // receiver - покупатель сам расплачивается напрямую со службой доставки
+                    ],
+                    'codAvailable' => true,
+                    'allowTrackNumber' => true,							// boolean		Передавать дополнительно трек номер помимо идентификатора доставки
+                    'availableCountries' => [							// Список ISO кодов стран (ISO 3166-1 alpha-2) с которыми работает доставка. Если массив пустой, то нет ограничения на страны
+                        'RU'
                     ],
                     'requiredFields' => [
                         'lastName', 									// Фамилия покупателя
