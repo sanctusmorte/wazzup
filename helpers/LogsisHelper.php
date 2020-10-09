@@ -70,7 +70,7 @@ class LogsisHelper
     {
         return [
             'key' => $setting->apikey,
-            'inner_n' => $save['orderNumber'],
+            'inner_n' =>  ($setting->prefix_shop) ? $setting->prefix_shop . $save['orderNumber'] : $save['orderNumber'],
             'delivery_date' => $save['delivery']['deliveryDate'],
             'delivery_time' => self::getDeliveryTime($save), 
             'target_name' => self::getCustomerName($save),

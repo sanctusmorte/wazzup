@@ -94,7 +94,7 @@ class Setting extends \yii\db\ActiveRecord
             ['retail_api_url', 'match', 'pattern' => '/^https:\/\/.+\.retailcrm\.+[a-zA-Z]+$/i', 'message' => 'Формат ссылки должен быть https://YOUR-DOMAIN.retailcrm.DOMAIN'],
             ['retail_api_url', 'url', 'validSchemes' => ['https']],
             [['markup'], 'number', 'min' => 1, 'max' => 100],
-            [['prefix_shop'], 'string', 'min' => 1, 'max' => 5],
+            [['prefix_shop'], 'string', 'min' => 2, 'max' => 5],
             ['prefix_shop', 'match', 'pattern' => '/^[a-zA-Z]+$/i', 'message' => 'Префикс содержит некорректные символы.'],
             [['client_id'], 'unique'],
             [['retail_api_url'], 'unique'],

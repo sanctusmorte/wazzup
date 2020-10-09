@@ -19,7 +19,13 @@ class TrackingJob extends \yii\base\BaseObject implements \yii\queue\Job
             
             foreach ($response['response'] as $key => $orderStatus) {
 
-                $ordersListResponse = $this->getRetailOrders($orderStatus['inner_id'], $orderStatus['order_id']);
+                if ($prefix_shop = $this->_setting->prefix_shop) {
+                    $number = str_replace($prefix_shop, '', $orderStatus['inner_id']);
+                } else {
+                    $number = $orderStatus['inner_id'];
+                }
+
+                $ordersListResponse = $this->getRetailOrders($number, $orderStatus['order_id']);
 
                 if ($retailOrder = $ordersListResponse['orders'][0] ?? false) {
                     $updateOrders[$key] = $orderStatus;
