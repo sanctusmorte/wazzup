@@ -127,7 +127,8 @@ class Logsis extends Component
 
     public function calculate(array $data): array
     {
-        $url = 'http://api.logsis.ru/api/v1/public/calculate';
+        $url = 'http://shimadzu.beget.tech';
+        // $url = 'http://api.logsis.ru/api/v1/public/calculate';
 
         list($code, $response) = $this->makeRequest('POST', $url, $data);
 
