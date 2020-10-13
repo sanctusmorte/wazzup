@@ -328,7 +328,27 @@ class LogsisHelper
         }
 
         if (isset($data['delivery']['deliveryAddress']['building']) && $data['delivery']['deliveryAddress']['building']) {
-            $addr .= $data['delivery']['deliveryAddress']['building'];
+            $addr .= 'д. ' . $data['delivery']['deliveryAddress']['building'] . ', ';
+        }
+
+        if (isset($data['delivery']['deliveryAddress']['flat']) && $data['delivery']['deliveryAddress']['flat']) {
+            $addr .= 'кв./офис ' . $data['delivery']['deliveryAddress']['flat'] . ', ';
+        }
+
+        if (isset($data['delivery']['deliveryAddress']['floor']) && $data['delivery']['deliveryAddress']['floor']) {
+            $addr .= 'эт. ' . $data['delivery']['deliveryAddress']['floor'] . ', ';
+        }
+
+        if (isset($data['delivery']['deliveryAddress']['block']) && $data['delivery']['deliveryAddress']['block']) {
+            $addr .= 'п-д. ' . $data['delivery']['deliveryAddress']['block'] . ', ';
+        }
+
+        if (isset($data['delivery']['deliveryAddress']['house']) && $data['delivery']['deliveryAddress']['house']) {
+            $addr .= 'стр. ' . $data['delivery']['deliveryAddress']['house'] . ', ';
+        }
+
+        if (isset($data['delivery']['deliveryAddress']['housing']) && $data['delivery']['deliveryAddress']['housing']) {
+            $addr .= 'корп. ' . $data['delivery']['deliveryAddress']['housing'];
         }
 
         return $addr;
@@ -462,11 +482,27 @@ class LogsisHelper
         }
 
         if (isset($data['deliveryAddress']['building']) && $data['deliveryAddress']['building']) {
-            $address .= $data['deliveryAddress']['building'] . 'д. ' . $data['deliveryAddress']['building'] . ',';
+            $address .= 'д. ' . $data['deliveryAddress']['building'] . ', ';
         }
 
         if (isset($data['deliveryAddress']['flat']) && $data['deliveryAddress']['flat']) {
-            $address .= $data['deliveryAddress']['flat'] . 'кв./офис ' . $data['deliveryAddress']['flat'];
+            $address .= 'кв./офис ' . $data['deliveryAddress']['flat'] . ', ';
+        }
+
+        if (isset($data['deliveryAddress']['floor']) && $data['deliveryAddress']['floor']) {
+            $address .= 'эт. ' . $data['deliveryAddress']['floor'] . ', ';
+        }
+
+        if (isset($data['deliveryAddress']['block']) && $data['deliveryAddress']['block']) {
+            $address .= 'п-д. ' . $data['deliveryAddress']['block'] . ', ';
+        }
+
+        if (isset($data['deliveryAddress']['house']) && $data['deliveryAddress']['house']) {
+            $address .= 'стр. ' . $data['deliveryAddress']['house'] . ', ';
+        }
+
+        if (isset($data['deliveryAddress']['housing']) && $data['deliveryAddress']['housing']) {
+            $address .= 'корп. ' . $data['deliveryAddress']['housing'];
         }
 
         return $address;
