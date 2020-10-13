@@ -237,7 +237,6 @@ class SettingService extends Component
                     ],
                     'requiredFields' => [
                         'lastName', 									// Фамилия покупателя
-                        'patronymic', 									// Отчество покупателя
                         'phone', 										// Телефон покупателя
                         'email', 										// E-mail покупателя
                         'length', 										// Длина
@@ -245,8 +244,6 @@ class SettingService extends Component
                         'height', 										// Высота
                         'deliveryAddress.regionId',
                         'deliveryAddress.cityId',
-                        // 'deliveryAddress.street',
-                        // 'deliveryAddress.streetId',
                         'deliveryAddress.flat'
                     ],
                     'statusList' => Setting::getLogsisStatusList(),
