@@ -21,14 +21,6 @@
             </div>
 
             <div class="col-md-6">
-                <?= $form->field($setting, 'cost_delivery', [
-                    'template' => "<div class=\"form-group\">
-                                        {label}
-                                        {input}
-                                        {error}               
-                                    </div>",
-                ])->textInput(['placeholder' => $setting->getAttributeLabel('cost_delivery')]); ?>
-
                 <?= $form->field($setting, 'prefix_shop', [
                     'template' => "<div class=\"form-group\">
                                         {label}

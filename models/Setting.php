@@ -52,6 +52,8 @@ class Setting extends \yii\db\ActiveRecord
 
     public $shop_ids;
     public $order_statuses;
+    public $payment_types;
+    public $payment_types_cod;
 
     const ORDER_STATUS_LOGSIS = [
         1 => 'Новый заказ',
@@ -101,7 +103,7 @@ class Setting extends \yii\db\ActiveRecord
             ['retail_api_url', 'validateApiUrl'],
             ['retail_api_key', 'validateApiKey'],
             ['apikey', 'validateApiLogsis'],
-            [['shop_ids', 'order_statuses'], 'safe']
+            [['shop_ids', 'order_statuses', 'payment_types', 'payment_types_cod'], 'safe']
         ];
     }
 
@@ -267,6 +269,26 @@ class Setting extends \yii\db\ActiveRecord
     public function getRetailToLogsisStatusByLogsisStatusId(int $logsis_status_id)
     {
         return $this->hasOne(RetailToLogsisStatus::className(), ['setting_id' => 'id'])->where(['logsis_status_id' => $logsis_status_id])->one();
+    }
+
+    public function getPaymentTypes()
+    {
+        return $this->hasMany(PaymentType::className(), ['setting_id' => 'id']);
+    }
+
+    public function getPaymentType()
+    {
+        return $this->hasOne(PaymentType::className(), ['setting_id' => 'id']);
+    }
+
+    public function getPaymentTypesSetting()
+    {
+        return $this->hasMany(PaymentTypeSetting::className(), ['setting_id' => 'id']);
+    }
+
+    public function getPaymentTypeSetting()
+    {
+        return $this->hasOne(PaymentTypeSetting::className(), ['setting_id' => 'id']);
     }
 
     public function getArrayOrderStatuses()
@@ -461,6 +483,27 @@ class Setting extends \yii\db\ActiveRecord
         }
 
         return $statuses;
+    }
+
+    /**
+     * Формирование массива с типами оплат
+     * 
+     * @return array
+     */
+
+    public function getDefaultPaymentTypes(): array
+    {
+        $paymentTypes = [];
+
+        foreach ($this->paymentTypesSetting as $paymentTypeSetting) {
+            $paymentTypes[] = [
+                'code' => $paymentTypeSetting->paymentType->code,
+                'active' => ($paymentTypeSetting->active) ? true : false,
+                'cod' => ($paymentTypeSetting->cod) ? true : false
+            ];
+        }
+
+        return $paymentTypes;
     }
 
     /**

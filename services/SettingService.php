@@ -18,7 +18,9 @@ use app\models\{
     Shop, 
     OrderStatus,
     SettingShop,
-    RetailToLogsisStatus
+    RetailToLogsisStatus,
+    PaymentType,
+    PaymentTypeSetting
 };
 
 class SettingService extends Component 
@@ -90,9 +92,11 @@ class SettingService extends Component
             }
 
             if ($orderStatuses = $setting->order_statuses) $this->synchStatusSave($setting, $orderStatuses);
-            
+            if ($setting->payment_types && $setting->payment_types_cod) $this->synchPaymentTypeSave($setting);
+
             $this->getShops($setting);
             $this->getOrderStatus($setting);
+            $this->getPaymentType($setting);
             $this->moduleEdit($setting);
 
             $transaction->commit();
@@ -123,6 +127,7 @@ class SettingService extends Component
     {
         $this->getShops($setting);
         $this->getOrderStatus($setting);
+        $this->getPaymentType($setting);
 
         return true;
     }
@@ -161,6 +166,40 @@ class SettingService extends Component
     }
 
     /**
+     * Получение типов оплат
+     * 
+     * @param object $setting
+     * @return boolean
+     */
+
+    private function getPaymentType(Setting $setting): bool
+    {
+        if ($retailPaymentTypes = Yii::$app->retail->paymentTypesList($this->getRetailAuthData($setting))) {
+            foreach ($retailPaymentTypes as $retailPaymentType) {
+                $paymentType = PaymentType::find()->where(['setting_id' => $setting->id])->andWhere(['code' => $retailPaymentType['code']])->one();
+
+                if ($paymentType && $retailPaymentType['active']) {
+                    $paymentType->name = $retailPaymentType['name'];
+
+                    if ($paymentType->validate()) $paymentType->save();
+                } elseif ($paymentType && !$retailPaymentType['active']) {
+                    $paymentType->delete();
+                } elseif ($retailPaymentType['active']) {
+                    $paymentType = new PaymentType([
+                        'setting_id' => $setting->id,
+                        'name' => $retailPaymentType['name'],
+                        'code' => $retailPaymentType['code']
+                    ]);
+
+                    if ($paymentType->validate()) $paymentType->save();
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Сохранение статусов сопоставления
      * 
      * @param object $setting
@@ -192,6 +231,42 @@ class SettingService extends Component
                 if ($retailToLogsisStatus->validate()) $retailToLogsisStatus->save();
             }
         }
+        return true;
+    }
+
+    /**
+     * Сохранение сопоставления типов оплат
+     * 
+     * @param object $setting
+     * @return boolean
+     */
+
+    private function synchPaymentTypeSave(Setting $setting): bool
+    {
+        foreach ($setting->payment_types as $key => $payment_type) 
+        {
+            $paymentTypeSetting = PaymentTypeSetting::find()->where(['setting_id' => $setting->id])->andWhere(['payment_type_id' => $key])->one();
+
+            if ($paymentTypeSetting && $payment_type) {
+                $paymentTypeSetting->active = $payment_type;
+                $paymentTypeSetting->cod = $setting->payment_types_cod[$key] ?? 0;
+
+                if ($paymentTypeSetting->validate()) $paymentTypeSetting->save();
+            } elseif ($paymentTypeSetting && !$payment_type) {
+
+                $paymentTypeSetting->delete();
+            } elseif ($payment_type) {
+                $paymentTypeSetting = new PaymentTypeSetting([
+                    'setting_id' => $setting->id,
+                    'payment_type_id' => $key,
+                    'active' => $payment_type,
+                    'cod' => $setting->payment_types_cod[$key] ?? 0
+                ]);
+
+                if ($paymentTypeSetting->validate()) $paymentTypeSetting->save();
+            }
+        }
+
         return true;
     }
 
@@ -244,13 +319,16 @@ class SettingService extends Component
                         'height', 										// Высота
                         'deliveryAddress.regionId',
                         'deliveryAddress.cityId',
-                        'deliveryAddress.flat'
+                        'deliveryAddress.flat',
+                        'deliveryTime.from',
+                        'deliveryTime.to'
                     ],
                     'statusList' => Setting::getLogsisStatusList(),
                     'deliveryDataFieldList' => $setting->getDeliveryDataFieldList(),
                     'settings' => [
                         'statuses' => $setting->getStatuses(),
-                        'deliveryExtraData' => $setting->getDefaultDeliveryExtraData()
+                        'deliveryExtraData' => $setting->getDefaultDeliveryExtraData(),
+                        'paymentTypes' => $setting->getDefaultPaymentTypes()
                     ],
                 ],
             ]
