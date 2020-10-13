@@ -245,8 +245,8 @@ class SettingService extends Component
                         'height', 										// Высота
                         'deliveryAddress.regionId',
                         'deliveryAddress.cityId',
-                        'deliveryAddress.street',
-                        'deliveryAddress.streetId',
+                        // 'deliveryAddress.street',
+                        // 'deliveryAddress.streetId',
                         'deliveryAddress.flat'
                     ],
                     'statusList' => Setting::getLogsisStatusList(),
