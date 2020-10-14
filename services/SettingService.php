@@ -320,7 +320,6 @@ class SettingService extends Component
                         'height', 										// Высота
                         'deliveryAddress.regionId',
                         'deliveryAddress.cityId',
-                        'deliveryAddress.flat',
                         'deliveryTime.from',
                         'deliveryTime.to'
                     ],
