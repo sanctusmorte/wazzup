@@ -305,6 +305,7 @@ class SettingService extends Component
                         'sender',                                       // sender - магазин может брать деньги с покупателя за доставку и потом расплачивается со службой доставки)
                         'receiver',                                     // receiver - покупатель сам расплачивается напрямую со службой доставки
                     ],
+                    'duplicateOrderProductSupported' => true,
                     'codAvailable' => true,
                     'allowTrackNumber' => true,							// boolean		Передавать дополнительно трек номер помимо идентификатора доставки
                     'availableCountries' => [							// Список ISO кодов стран (ISO 3166-1 alpha-2) с которыми работает доставка. Если массив пустой, то нет ограничения на страны

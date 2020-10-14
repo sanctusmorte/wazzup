@@ -147,6 +147,12 @@ class Setting extends \yii\db\ActiveRecord
                     if (!$this->searchArray($credentials['credentials'], '/api/reference/sites')) {
                         $this->addError('retail_api_key',  'Недоступен метод /api/reference/sites');
                     }
+                    if (!$this->searchArray($credentials['credentials'], '/api/reference/payment-types')) {
+                        $this->addError('retail_api_key',  'Недоступен метод /api/reference/payment-types');
+                    }
+                    if (!$this->searchArray($credentials['credentials'], '/api/orders/statuses')) {
+                        $this->addError('retail_api_key',  'Недоступен метод /api/orders/statuses');
+                    }
                 } else {
                     $this->addError('retail_api_key',  'Недоступен метод /api/reference/sites.');
                 }

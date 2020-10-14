@@ -76,6 +76,7 @@ class LogsisHelper
             'target_name' => self::getCustomerName($save),
             'target_contacts' => $save['customer']['phones'][0] ?? '',
             'target_email' => $save['customer']['email'] ?? '',
+            'target_notes' => self::getTargetNotes($save),
             'os' => self::getDeclarated($save),
             'np' => ($save['delivery']['withCod'] ?? false) ? 1 : 0,
             'price_client' => self::getPriceClient($save),
@@ -328,30 +329,44 @@ class LogsisHelper
         }
 
         if (isset($data['delivery']['deliveryAddress']['building']) && $data['delivery']['deliveryAddress']['building']) {
-            $addr .= 'д. ' . $data['delivery']['deliveryAddress']['building'] . ', ';
-        }
-
-        if (isset($data['delivery']['deliveryAddress']['flat']) && $data['delivery']['deliveryAddress']['flat']) {
-            $addr .= 'кв./офис ' . $data['delivery']['deliveryAddress']['flat'] . ', ';
-        }
-
-        if (isset($data['delivery']['deliveryAddress']['floor']) && $data['delivery']['deliveryAddress']['floor']) {
-            $addr .= 'эт. ' . $data['delivery']['deliveryAddress']['floor'] . ', ';
-        }
-
-        if (isset($data['delivery']['deliveryAddress']['block']) && $data['delivery']['deliveryAddress']['block']) {
-            $addr .= 'п-д. ' . $data['delivery']['deliveryAddress']['block'] . ', ';
-        }
-
-        if (isset($data['delivery']['deliveryAddress']['house']) && $data['delivery']['deliveryAddress']['house']) {
-            $addr .= 'стр. ' . $data['delivery']['deliveryAddress']['house'] . ', ';
-        }
-
-        if (isset($data['delivery']['deliveryAddress']['housing']) && $data['delivery']['deliveryAddress']['housing']) {
-            $addr .= 'корп. ' . $data['delivery']['deliveryAddress']['housing'];
+            $addr .= 'д. ' . $data['delivery']['deliveryAddress']['building'];
         }
 
         return $addr;
+    }
+
+    /**
+     * Сотавления комментария
+     * 
+     * @param array $data
+     * @return string
+     */
+
+    private static function getTargetNotes(array $data): string 
+    {
+        $notes = '';
+
+        if (isset($data['delivery']['deliveryAddress']['flat']) && $data['delivery']['deliveryAddress']['flat']) {
+            $notes .= 'кв./офис ' . $data['delivery']['deliveryAddress']['flat'] . ', ';
+        }
+
+        if (isset($data['delivery']['deliveryAddress']['floor']) && $data['delivery']['deliveryAddress']['floor']) {
+            $notes .= 'эт. ' . $data['delivery']['deliveryAddress']['floor'] . ', ';
+        }
+
+        if (isset($data['delivery']['deliveryAddress']['block']) && $data['delivery']['deliveryAddress']['block']) {
+            $notes .= 'п-д. ' . $data['delivery']['deliveryAddress']['block'] . ', ';
+        }
+
+        if (isset($data['delivery']['deliveryAddress']['house']) && $data['delivery']['deliveryAddress']['house']) {
+            $notes .= 'стр. ' . $data['delivery']['deliveryAddress']['house'] . ', ';
+        }
+
+        if (isset($data['delivery']['deliveryAddress']['housing']) && $data['delivery']['deliveryAddress']['housing']) {
+            $notes .= 'корп. ' . $data['delivery']['deliveryAddress']['housing'];
+        }
+
+        return $notes;
     }
 
     /**
@@ -478,31 +493,7 @@ class LogsisHelper
         }
 
         if (isset($data['deliveryAddress']['street']) && $data['deliveryAddress']['street']) {
-            $address .= $data['deliveryAddress']['street'] . ', ';
-        }
-
-        if (isset($data['deliveryAddress']['building']) && $data['deliveryAddress']['building']) {
-            $address .= 'д. ' . $data['deliveryAddress']['building'] . ', ';
-        }
-
-        if (isset($data['deliveryAddress']['flat']) && $data['deliveryAddress']['flat']) {
-            $address .= 'кв./офис ' . $data['deliveryAddress']['flat'] . ', ';
-        }
-
-        if (isset($data['deliveryAddress']['floor']) && $data['deliveryAddress']['floor']) {
-            $address .= 'эт. ' . $data['deliveryAddress']['floor'] . ', ';
-        }
-
-        if (isset($data['deliveryAddress']['block']) && $data['deliveryAddress']['block']) {
-            $address .= 'п-д. ' . $data['deliveryAddress']['block'] . ', ';
-        }
-
-        if (isset($data['deliveryAddress']['house']) && $data['deliveryAddress']['house']) {
-            $address .= 'стр. ' . $data['deliveryAddress']['house'] . ', ';
-        }
-
-        if (isset($data['deliveryAddress']['housing']) && $data['deliveryAddress']['housing']) {
-            $address .= 'корп. ' . $data['deliveryAddress']['housing'];
+            $address .= $data['deliveryAddress']['street'];
         }
 
         return $address;
