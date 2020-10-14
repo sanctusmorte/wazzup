@@ -96,6 +96,7 @@ class Logsis extends Component
 
         curl_close($ch);
 
+        Yii::info('body make request: ' . print_r($body, true));
         Yii::info($url . ' : ' . print_r($response, true));
 
         return [
