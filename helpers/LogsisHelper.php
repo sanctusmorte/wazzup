@@ -73,7 +73,7 @@ class LogsisHelper
             'inner_n' =>  ($setting->prefix_shop) ? $setting->prefix_shop . $save['orderNumber'] : $save['orderNumber'],
             'delivery_date' => $save['delivery']['deliveryDate'],
             'delivery_time' => self::getDeliveryTime($save), 
-            'target_name' => self::getCustomerName($save),
+            'target_name' => self::getCustomerName($save['customer'] ?? []),
             'target_contacts' => $save['customer']['phones'][0] ?? '',
             'target_email' => $save['customer']['email'] ?? '',
             'target_notes' => self::getTargetNotes($save),
@@ -87,7 +87,7 @@ class LogsisHelper
             'dimension_side2' => ($height = $save['packages'][0]['height'] ?? false) ? self::convertingCabarites($height) : 10,
             'dimension_side3' => ($length = $save['packages'][0]['length'] ?? false) ? self::convertingCabarites($length) : 10,
             'city' => $save['delivery']['deliveryAddress']['city'] ?? '',
-            'addr' => self::getAddr($save),
+            'addr' => self::getAddr($save['delivery']['deliveryAddress'] ?? []),
             'post_code' => $save['delivery']['deliveryAddress']['index'] ?? '',
             'sms' => $save['delivery']['extraData']['is_sms'] ?? $setting->is_sms,
             'open_option' => ($save['delivery']['extraData']['is_open'] ?? $setting->is_open) ? 1 : 3,
@@ -118,6 +118,32 @@ class LogsisHelper
     }
 
     /**
+     * Генерация данных для забора товаров
+     * 
+     * @param object $setting
+     * @param array $shipmentSave
+     * @return array
+     */
+
+    public static function generateShipmentSaveData(Setting $setting, array $shipmentSave): array 
+    {
+        return [
+            'key' => $setting->apikey,
+            'inner_n' => '',
+            'city' => $shipmentSave['address']['city'],
+            'addr' => self::getAddr($shipmentSave['address']),
+            'target_name' => self::getCustomerName($shipmentSave['manager'] ?? []),
+            'target_contacts' => $shipmentSave['manager']['phone'] ?? '',
+            'date' => $shipmentSave['date'] ?? '',
+            'time1' => $shipmentSave['time']['from'] ?? '',
+            'time2' => $shipmentSave['time']['to'] ?? '',
+            'notes' => $shipmentSave['comment'] ?? '',
+            'weight' => self::getWeight($shipmentSave['orders'] ?? []),
+            'capacity' => self::getCapacity($shipmentSave['orders'] ?? [])
+        ];
+    }
+
+    /**
      * Формирование данных для подтверждения заказа в Logsis
      * 
      * @param object $setting
@@ -133,6 +159,49 @@ class LogsisHelper
             'inner_n' => $data['inner_track'],
             'order_id' => $data['order_id']
         ];
+    }
+
+    /**
+     * Получение веса из заказов выгрузки
+     * 
+     * @param array $orders
+     * @return integer|float
+     */
+
+    private static function getWeight(array $orders)
+    {
+        $weight = 0;
+
+        foreach ($orders as $order) {
+            $weight += $order['packages'][0]['weight'] ?? 0;
+        }
+
+        if ($weight > 0) return self::convertingWeight($weight);
+
+        return $weight;
+    }
+
+    /**
+     * Подсчет объема 
+     * 
+     * @param array $orders
+     * @return integer|float
+     */
+
+    private static function getCapacity(array $orders)
+    {
+        $capacity = 0;
+
+        foreach ($orders as $order) {
+
+            $width = ($value = $order['packages'][0]['width'] ?? false) ? self::convertingCabarites($value) : 0;
+            $length = ($value = $order['packages'][0]['length'] ?? false) ? self::convertingCabarites($value) : 0;
+            $height = ($value = $order['packages'][0]['height'] ?? false) ? self::convertingCabarites($value) : 0;
+
+            $capacity += $length * $width * $height;
+        }
+
+        return $capacity;
     }
 
     /**
@@ -308,28 +377,28 @@ class LogsisHelper
     {
         $addr = '';
 
-        if (isset($data['delivery']['deliveryAddress']['index']) && $data['delivery']['deliveryAddress']['index']) {
-            $addr .= $data['delivery']['deliveryAddress']['index'] . ', ';
+        if (isset($data['index']) && $data['index']) {
+            $addr .= $data['index'] . ', ';
         }
 
-        if (isset($data['delivery']['deliveryAddress']['cityType']) && $data['delivery']['deliveryAddress']['cityType']) {
-            $addr .= $data['delivery']['deliveryAddress']['cityType'] . ' ';
+        if (isset($data['cityType']) && $data['cityType']) {
+            $addr .= $data['cityType'] . ' ';
         }
 
-        if (isset($data['delivery']['deliveryAddress']['city']) && $data['delivery']['deliveryAddress']['city']) {
-            $addr .= $data['delivery']['deliveryAddress']['city'] . ', ';
+        if (isset($data['city']) && $data['city']) {
+            $addr .= $data['city'] . ', ';
         }
 
-        if (isset($data['delivery']['deliveryAddress']['streetType']) && $data['delivery']['deliveryAddress']['streetType']) {
-            $addr .= $data['delivery']['deliveryAddress']['streetType'] . ' ';
+        if (isset($data['streetType']) && $data['streetType']) {
+            $addr .= $data['streetType'] . ' ';
         }
 
-        if (isset($data['delivery']['deliveryAddress']['street']) && $data['delivery']['deliveryAddress']['street']) {
-            $addr .= $data['delivery']['deliveryAddress']['street'] . ', ';
+        if (isset($data['street']) && $data['street']) {
+            $addr .= $data['street'] . ', ';
         }
 
-        if (isset($data['delivery']['deliveryAddress']['building']) && $data['delivery']['deliveryAddress']['building']) {
-            $addr .= 'д. ' . $data['delivery']['deliveryAddress']['building'];
+        if (isset($data['building']) && $data['building']) {
+            $addr .= 'д. ' . $data['building'];
         }
 
         return $addr;
@@ -422,16 +491,16 @@ class LogsisHelper
     {
         $name = '';
 
-        if (isset($data['customer']['firstName']) && $data['customer']['firstName']) {
-            $name .= $data['customer']['firstName'];
+        if (isset($data['firstName']) && $data['firstName']) {
+            $name .= $data['firstName'];
         }
 
-        if (isset($data['customer']['patronymic']) && $data['customer']['patronymic']) {
-            $name .= " " . $data['customer']['patronymic'];
+        if (isset($data['patronymic']) && $data['patronymic']) {
+            $name .= " " . $data['patronymic'];
         }
 
-        if (isset($data['customer']['lastName']) && $data['customer']['lastName']) {
-            $name .= " " . $data['customer']['lastName'];
+        if (isset($data['lastName']) && $data['lastName']) {
+            $name .= " " . $data['lastName'];
         }
 
         return $name;
@@ -446,7 +515,9 @@ class LogsisHelper
 
     private static function convertingCabarites($value)
     {
-        return $value / 10;
+        if ($value > 0) return $value / 10;
+        
+        return $value;
     }
 
     /**

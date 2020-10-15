@@ -192,4 +192,20 @@ class Logsis extends Component
 
         return $response;
     }
+
+    /**
+     * Создание заявки на забор товара
+     * 
+     * @param array $data 
+     * @return array
+     */
+
+    public function newzorder(array $data): array 
+    {
+        $url = $this->host . '/newzorder?request_from=retail_crm';
+
+        list($code, $response) = $this->makeRequestPost($url, $data);   
+
+        return $response;
+    }
 }

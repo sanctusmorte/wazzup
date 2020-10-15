@@ -157,12 +157,28 @@ class DeliveryService extends Component
 
     public function shipmentSave(): array 
     {
-        Yii::info('test zabor: ' . print_r(Yii::$app->request->post(), true));
+        $setting = $this->getSetting(Yii::$app->request->post('clientId'));
+        $shipmentSave = Json::decode(Yii::$app->request->post('shipmentSave'));
 
-        return [
-            'success' => false,
-            'errorMsg' => 'тест забор'
-        ];
+        $access = $this->accesssCheck($setting);
+        if ($access['success'] == false) return $access;
+
+        $shipmentSaveData = LogsisHelper::generateShipmentSaveData($setting, $shipmentSave);
+        $responseShipmentSave = Yii::$app->logsis->newzorder($shipmentSaveData);
+
+        if ($responseShipmentSave['status'] !== '200') {
+            return [
+                'success' => false,
+                'errorMsg' => $responseConfirmOrder['response']['Error']
+            ];
+        } else { 
+            return [
+                'success' => true,
+                'result' => [
+                    'shipmentId' => $responseShipmentSave['response']['zorder_id']
+                ]
+            ];
+        }
     }
 
     /**
