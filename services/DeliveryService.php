@@ -169,7 +169,7 @@ class DeliveryService extends Component
         if ($responseShipmentSave['status'] !== '200') {
             return [
                 'success' => false,
-                'errorMsg' => $responseConfirmOrder['response']['Error']
+                'errorMsg' => $responseShipmentSave['response']['Error']
             ];
         } else { 
             return [
