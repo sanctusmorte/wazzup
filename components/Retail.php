@@ -674,7 +674,7 @@ class Retail extends Component
 
         try{
             $response = $client->request->ordersList($filter, $page, $limit);
-
+            
             if ($response->isSuccessful()) {
                 return $response;
             } else {

@@ -90,7 +90,7 @@ class Logsis extends Component
                 "Content-Type: application/x-www-form-urlencoded"
             ],
         ]);
-        
+
         $response = curl_exec($ch);
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
@@ -207,5 +207,21 @@ class Logsis extends Component
         list($code, $response) = $this->makeRequestPost($url, $data);   
 
         return $response;
+    }
+
+    /**
+     * Запрос этикеток для заказов
+     * 
+     * @param array $data
+     * @return string
+     */
+    
+    public function orderLabels(array $data)
+    {
+        $url = 'http://api.logsis.ru/apiv2/order-labels?request_from=retail_crm';
+
+        // list($code, $response) = $this->makeRequestPost($url, $data); 
+
+        echo "<pre>"; print_r($data); die;
     }
 }

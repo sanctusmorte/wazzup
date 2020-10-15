@@ -182,6 +182,22 @@ class DeliveryService extends Component
     }
 
     /**
+     * Печатные формы службы доставки
+     * 
+     * @return
+     */
+
+    public function print()
+    {
+        $setting = $this->getSetting(Yii::$app->request->post('clientId'));
+        $print = Json::decode(Yii::$app->request->post('print'));
+
+        $orderLabelsData = LogsisHelper::generateOrderLabelsData($setting, $print);
+
+        return Yii::$app->logsis->orderLabels($orderLabelsData);
+    }
+
+    /**
      * Определение конечно стоимости доставки
      * 
      * @param object $setting

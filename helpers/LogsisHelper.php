@@ -144,6 +144,22 @@ class LogsisHelper
     }
 
     /**
+     * Генерация данных для запроса этикеток заказов
+     * 
+     * @param object $setting
+     * @param array $print
+     * @return array
+     */
+
+    public static function generateOrderLabelsData(Setting $setting, array $print): array 
+    {
+        return [
+            'key' => $setting->apikey,
+            'uid' => self::getUid($print)
+        ];
+    }
+
+    /**
      * Формирование данных для подтверждения заказа в Logsis
      * 
      * @param object $setting
@@ -159,6 +175,26 @@ class LogsisHelper
             'inner_n' => $data['inner_track'],
             'order_id' => $data['order_id']
         ];
+    }
+
+    /**
+     * Генерация номеров заказов Логсис
+     * 
+     * @param array $data
+     * @return array
+     */
+
+    private static function getUid(array $data): array
+    {
+        $uid = [];
+
+        foreach ($data['deliveryIds'] ?? [] as $deliveryId) {
+            foreach ($deliveryId as $value) {
+                $uid[] = $value;
+            }
+        }
+
+        return $uid;
     }
 
     /**

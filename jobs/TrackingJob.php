@@ -39,7 +39,7 @@ class TrackingJob extends \yii\base\BaseObject implements \yii\queue\Job
 
                     $orderEditResponse = $this->updateOrder($updateOrder['retail_order_id'], $retailToLogsisStatus->orderStatus->code, $updateOrder['retail_site']);
                 }
-            }
+            }   
         }
     }
 
@@ -67,6 +67,7 @@ class TrackingJob extends \yii\base\BaseObject implements \yii\queue\Job
 
     private function getRetailOrders(string $number, string $trackNumber): \RetailCrm\Response\ApiResponse
     {
-        return Yii::$app->retail->ordersList($this->_setting->getRetailAuthData(), ['numbers' => [$number], 'trackNumber' => $trackNumber]);
+        // 'trackNumber' => $trackNumber
+        return Yii::$app->retail->ordersList($this->_setting->getRetailAuthData(), ['numbers' => [$number]]);
     }
 }

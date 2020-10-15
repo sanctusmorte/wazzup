@@ -98,11 +98,6 @@ class DeliveryController extends ApiRestController
 
     public function actionPrint()
     {
-        Yii::info('print: ' . print_r(Yii::$app->request->post(), true));
-
-        return [
-            'success' => false,
-            'errorMsg' => 'test print'
-        ];
+        return $this->deliveryService->print();
     }
 }
