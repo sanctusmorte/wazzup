@@ -129,7 +129,7 @@ class LogsisHelper
     {
         return [
             'key' => $setting->apikey,
-            'inner_n' => '',
+            'inner_n' => $shipmentSave['orders'][0]['deliveryId'] ?? '',
             'city' => $shipmentSave['address']['city'],
             'addr' => self::getAddr($shipmentSave['address']),
             'target_name' => self::getCustomerName($shipmentSave['manager'] ?? []),
