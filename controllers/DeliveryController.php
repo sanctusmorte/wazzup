@@ -98,6 +98,12 @@ class DeliveryController extends ApiRestController
 
     public function actionPrint()
     {
-        return $this->deliveryService->print();
+        $pdf = $this->deliveryService->print();
+
+        $headers = Yii::$app->response->headers;
+        $headers->add('Content-Type', 'application/pdf');
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+
+        return $pdf;
     }
 }

@@ -72,7 +72,7 @@ class Logsis extends Component
      * @return array
      */
 
-    private function makeRequestPost(string $url, array $body = []): array
+    private function makeRequestPost(string $url, array $body = [], $flag_json = true): array
     {
         $ch = curl_init();
 
@@ -99,10 +99,17 @@ class Logsis extends Component
         Yii::info('body make request: ' . print_r($body, true));
         Yii::info($url . ' : ' . print_r($response, true));
 
-        return [
-            $http_code,
-            Json::decode($response, true)
-        ];
+        if ($flag_json) {
+            return [
+                $http_code,
+                Json::decode($response, true)
+            ];
+        } else {
+            return [
+                $http_code,
+                $response
+            ];
+        }
     }
 
     /**
@@ -215,13 +222,13 @@ class Logsis extends Component
      * @param array $data
      * @return string
      */
-    
+
     public function orderLabels(array $data)
     {
         $url = 'http://api.logsis.ru/apiv2/order-labels?request_from=retail_crm';
 
-        // list($code, $response) = $this->makeRequestPost($url, $data); 
+        list($code, $response) = $this->makeRequestPost($url, $data, false); 
 
-        echo "<pre>"; print_r($data); die;
+        return $response;
     }
 }
