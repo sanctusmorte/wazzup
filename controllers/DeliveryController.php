@@ -38,7 +38,9 @@ class DeliveryController extends ApiRestController
                 'actions' => [
                     'calculate' => ['post'],
                     'save' => ['post'],
-                    'tracking' => ['get']
+                    'tracking' => ['get'],
+                    'shipment-save' => ['post'],
+                    'print' => ['post']
                 ],
             ],
         ];
@@ -86,5 +88,21 @@ class DeliveryController extends ApiRestController
     public function actionShipmentSave(): array 
     {
         return $this->deliveryService->shipmentSave();
+    }
+
+    /**
+     * Печатные формы службы доставки
+     * 
+     * @return
+     */
+
+    public function actionPrint()
+    {
+        Yii::info('print: ' . print_r(Yii::$app->request->post(), true));
+
+        return [
+            'success' => false,
+            'errorMsg' => 'test print'
+        ];
     }
 }

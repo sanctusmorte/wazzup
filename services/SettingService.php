@@ -299,7 +299,7 @@ class SettingService extends Component
                         'get' => '/delivery/get-info',
                         'delete' => '/delivery/delete',
                         'shipmentSave' => '/delivery/shipment-save',
-                        'shipmentDelete' => '/delivery/shipment-delete'
+                        'print' => '/delivery/print'
                     ],
                     'payerType' => [									// Допустимые типы плательщиков за доставку;
                         'sender',                                       // sender - магазин может брать деньги с покупателя за доставку и потом расплачивается со службой доставки)
