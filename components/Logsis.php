@@ -130,7 +130,7 @@ class Logsis extends Component
 
     public function calculate(array $data): array
     {
-        $url = 'http://api.logsis.ru/api/v1/public/calculate';
+        $url = 'http://api.logsis.ru/api/v1/public/calculate?request_from=retail_crm';
 
         list($code, $response) = $this->makeRequest('POST', $url, $data);
 
@@ -148,7 +148,7 @@ class Logsis extends Component
 
     public function createorder(array $data): array
     {
-        $url = $this->host . '/createorder';
+        $url = $this->host . '/createorder?request_from=retail_crm';
 
         list($code, $response) = $this->makeRequestPost($url, $data);   
 
@@ -164,7 +164,7 @@ class Logsis extends Component
 
     public function confirmorder(array $data): array
     {
-        $url = $this->host . '/confirmorder';
+        $url = $this->host . '/confirmorder?request_from=retail_crm';
 
         list($code, $response) = $this->makeRequestPost($url, $data);   
 
@@ -180,7 +180,7 @@ class Logsis extends Component
 
     public function getstatusv3(array $data): array
     {
-        $url = $this->host . '/getstatusv3';
+        $url = $this->host . '/getstatusv3?request_from=retail_crm';
 
         $url .= '?' . http_build_query(['key' => $data['key']]);
 

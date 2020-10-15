@@ -76,4 +76,15 @@ class DeliveryController extends ApiRestController
     {
         return $this->deliveryService->tracking();
     }
+
+    /**
+     * Создание заявки на забор
+     * 
+     * @return array
+     */
+
+    public function actionShipmentSave(): array 
+    {
+        return $this->deliveryService->shipmentSave();
+    }
 }

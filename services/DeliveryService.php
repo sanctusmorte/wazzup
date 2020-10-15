@@ -150,6 +150,22 @@ class DeliveryService extends Component
     }
 
     /**
+     * Создание заявки на забор
+     * 
+     * @return array
+     */
+
+    public function shipmentSave(): array 
+    {
+        Yii::info('test zabor: ' . print_r(Yii::$app->request->post(), true));
+
+        return [
+            'success' => false,
+            'errorMsg' => 'тест забор'
+        ];
+    }
+
+    /**
      * Определение конечно стоимости доставки
      * 
      * @param object $setting
