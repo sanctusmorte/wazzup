@@ -298,10 +298,10 @@ class DeliveryService extends Component
 
     private function checkShipmentAddress(array $calculate): array
     {
-        if (!in_array($calculate['shipmentAddress']['region'], ['Москва город', 'Московская область'])) {
+        if (!in_array($calculate['shipmentAddress']['region'], ['Москва город', 'Московская область', 'Ленинградская область', 'Санкт-Петербург город'])) {
             return [
                 'success' => false,
-                'errorMsg' => 'Тарифы не найдены. Проверьте склад отправителя. Доставка Logsis возможна только из Москвы.'
+                'errorMsg' => 'Тарифы не найдены. Проверьте склад отправителя. Доставка Logsis возможна только из Москвы и Санкт-Петербурга.'
             ];
         }
             
