@@ -115,3 +115,6 @@ a.link-orange{
 .checkbox-block .icheck-primary {
     display: block !important;
 }
+.description-index img {
+    margin: 0 0 10px 0;
+}
