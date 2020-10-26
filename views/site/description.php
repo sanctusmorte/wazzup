@@ -16,7 +16,7 @@ $this->title = 'Интеграция Logsis и retailCRM';
             <div class="col-lg-10 col-md-10 col-md-offset-1" style="margin-top: 3%;margin-bottom: 3%;">
                 <h2><?= $this->title ?></h2>
 
-                <p>Модуль интеграции RBK.money с retailCRM.</p>
+                <p>Модуль интеграции RBK.money с retailCRM</p>
                 <h3>Подробная инструкция по установке и активации</h3>
 
                 <ul>
