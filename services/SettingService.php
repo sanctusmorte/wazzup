@@ -281,7 +281,7 @@ class SettingService extends Component
     {
         $moduleData = [
             'integrationCode' => 'logsis',
-            'code' => 'logsis_dev',
+            'code' => 'logsis',
             'clientId' => $setting->client_id,
             'baseUrl' => 'https://retailcrm.logsis.ru/',
             'accountUrl' => 'https://retailcrm.logsis.ru/setting',
