@@ -280,11 +280,11 @@ class SettingService extends Component
     private function moduleEdit(Setting $setting): bool
     {
         $moduleData = [
-            'integrationCode' => 'logsis_dev',
+            'integrationCode' => 'logsis',
             'code' => 'logsis_dev',
             'clientId' => $setting->client_id,
-            'baseUrl' => 'https://logsis.imb-service.ru/',
-            'accountUrl' => 'https://logsis.imb-service.ru/setting',
+            'baseUrl' => 'https://retailcrm.logsis.ru/',
+            'accountUrl' => 'https://retailcrm.logsis.ru/setting',
             'active' => ($setting->is_active == 1) ? true : false,
             'freeze' => ($setting->is_freeze == 1) ? true : false,
             'name' => 'Logsis DEV',
