@@ -510,7 +510,7 @@ class LogsisHelper
         $declarated = 0;
 
         foreach ($data['packages'][0]['items'] ?? false as $item) {
-            $declarated += $item['declaredValue'] ?? 0;
+            $declarated += $item['declaredValue'] * $item['quantity'];
         }
 
         return $declarated;
