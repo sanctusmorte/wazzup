@@ -41,14 +41,6 @@
         </div>
 
         <div class="checkbox-block">
-            <?= $form->field($setting, 'is_single_cost')->checkbox([
-                'template' => "<div class=\"icheck-primary d-inline\">
-                    {input}
-                    {label}
-                </div>",
-                'value' => 1,
-            ]); ?>
-
             <?= $form->field($setting, 'is_partial_redemption')->checkbox([
                 'template' => "<div class=\"icheck-primary d-inline\">
                     {input}
@@ -82,14 +74,6 @@
             ]); ?>
 
             <?= $form->field($setting, 'is_return_doc')->checkbox([
-                'template' => "<div class=\"icheck-primary d-inline\">
-                    {input}
-                    {label}
-                </div>",
-                'value' => 1,
-            ]); ?>
-
-            <?= $form->field($setting, 'is_assessed_value')->checkbox([
                 'template' => "<div class=\"icheck-primary d-inline\">
                     {input}
                     {label}

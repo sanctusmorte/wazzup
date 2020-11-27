@@ -23,7 +23,6 @@ use yii\behaviors\TimestampBehavior;
  * @property int|null $is_active
  * @property int|null $is_freeze
  * @property int|null $is_first_active
- * @property int|null $is_single_cost
  * @property int|null $is_partial_redemption
  * @property int|null $is_fitting
  * @property int|null $is_sms
@@ -90,7 +89,7 @@ class Setting extends \yii\db\ActiveRecord
         return [
             [['client_id', 'retail_api_url', 'retail_api_key', 'apikey'], 'required'],
             [['cost_delivery'], 'number'],
-            [['is_active', 'is_freeze', 'is_first_active', 'is_payment_type', 'is_assessed_value', 'is_single_cost', 'is_partial_redemption', 'is_fitting', 'is_sms', 'is_open', 'is_additional_call', 'is_return_doc', 'is_skid', 'is_nds', 'is_cargo_lift', 'is_partial_return', 'is_packaging', 'created_at', 'updated_at'], 'integer'],
+            [['is_active', 'is_freeze', 'is_first_active', 'is_payment_type', 'is_partial_redemption', 'is_fitting', 'is_sms', 'is_open', 'is_additional_call', 'is_return_doc', 'is_skid', 'is_nds', 'is_cargo_lift', 'is_partial_return', 'is_packaging', 'created_at', 'updated_at'], 'integer'],
             [['client_id'], 'string', 'max' => 32],
             [['retail_api_url', 'retail_api_key', 'apikey', 'prefix_shop', 'tax_product', 'tax_delivery'], 'string', 'max' => 255],
             ['retail_api_url', 'match', 'pattern' => '/^https:\/\/.+\.retailcrm\.+[a-zA-Z]+$/i', 'message' => 'Формат ссылки должен быть https://YOUR-DOMAIN.retailcrm.DOMAIN'],
@@ -153,6 +152,9 @@ class Setting extends \yii\db\ActiveRecord
                     if (!$this->searchArray($credentials['credentials'], '/api/orders/statuses')) {
                         $this->addError('retail_api_key',  'Недоступен метод /api/orders/statuses');
                     }
+                    if (!$this->searchArray($credentials['credentials'], '/api/reference/statuses')) {
+                        $this->addError('retail_api_key',  'Недоступен метод /api/reference/statuses');
+                    }
                 } else {
                     $this->addError('retail_api_key',  'Недоступен метод /api/reference/sites.');
                 }
@@ -207,14 +209,12 @@ class Setting extends \yii\db\ActiveRecord
             'markup' => 'Наценка % (от стоимости доставки)',
             'prefix_shop' => 'Префикс магазина',
             'is_payment_type' => 'Прием денежных средств по умолчанию',
-            'is_assessed_value' => 'Устанавливать в заявке оценочную стоимость в размере стоимости товаров',
             'tax_product' => 'Вид налога на товар',
             'tax_delivery' => 'Вид налога на доставку',
             'shop_ids' => 'Магазины',
             'is_active' => 'Is Active',
             'is_freeze' => 'Is Freeze',
             'is_first_active' => 'Is First Active',
-            'is_single_cost' => 'Устанавливать в заявке оценочную стоимость в размере стоимости товаров',
             'is_partial_redemption' => 'Частичный выкуп',
             'is_fitting' => 'Примерка товаров',
             'is_sms' => 'SMS информирование',
@@ -343,15 +343,6 @@ class Setting extends \yii\db\ActiveRecord
     {
         return [
             [
-                'code' => 'is_single_cost',
-                'label' => $this->getAttributeLabel('is_single_cost'),
-                // 'hint' => $this->getAttributeLabel('is_single_cost'),
-                'type' => 'checkbox',
-                'required' => false,
-                'affectsCost' => true,
-                'editable' => true,
-            ],
-            [
                 'code' => 'is_partial_redemption',
                 'label' => $this->getAttributeLabel('is_partial_redemption'),
                 // 'hint' => $this->getAttributeLabel('is_partial_redemption'),
@@ -418,15 +409,6 @@ class Setting extends \yii\db\ActiveRecord
                 'code' => 'is_payment_type',
                 'label' => $this->getAttributeLabel('is_payment_type'),
                 // 'hint' => $this->getAttributeLabel('is_payment_type'),
-                'type' => 'checkbox',
-                'required' => false,
-                'affectsCost' => true,
-                'editable' => true,
-            ],
-            [
-                'code' => 'is_assessed_value',
-                'label' => $this->getAttributeLabel('is_assessed_value'),
-                // 'hint' => $this->getAttributeLabel('is_assessed_value'),
                 'type' => 'checkbox',
                 'required' => false,
                 'affectsCost' => true,
@@ -522,8 +504,6 @@ class Setting extends \yii\db\ActiveRecord
     {
         return [
             'is_payment_type' => ($this->is_payment_type) ? true : false,
-            'is_assessed_value' => ($this->is_assessed_value) ? true : false,
-            'is_single_cost' => ($this->is_single_cost) ? true : false,
             'is_partial_redemption' => ($this->is_partial_redemption) ? true : false,
             'is_fitting' => ($this->is_fitting) ? true : false,
             'is_sms' => ($this->is_sms) ? true : false,

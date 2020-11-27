@@ -348,7 +348,7 @@ class Retail extends Component
             if ($response->isSuccessful()) { 
                 return $response['statuses'];
             } else {
-                throw new ServerErrorHttpException($response->getErrorMsg());
+                return [];
             }
         } catch (\RetailCrm\Exception\CurlException $e) {
             Yii::error($e, $e->getMessage());
