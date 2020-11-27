@@ -38,7 +38,8 @@ class m200828_170633_create_order_status_table extends Migration
             '{{%order_status}}',
             'setting_id',
             '{{%setting}}',
-            'id'
+            'id',
+            'CASCADE'
         );
     }
 
