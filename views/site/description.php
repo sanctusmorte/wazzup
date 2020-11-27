@@ -25,7 +25,14 @@ $this->title = 'Интеграция Logsis и retailCRM';
 <p>3.Потом перейти в retailCRM модуль Logsis там начать на кнопку &ldquo;перейти в личный кабинет&rdquo;.</p>
 <img src="/img/image8.png" alt="" width="100%" /></li>
 <li>
-<p>4.Сгенерировать API-ключ в retailCRM для этого перейти в раздел Администрирование &gt; Интеграция &gt; Ключи доступа к API и создать API-ключ. (в создаваемом API-ключе, в поле &laquo;Разрешенные методы API&raquo;, должны быть активированы методы &laquo;Доставки&raquo; и &laquo;Интеграция&raquo;.) <br /><strong>Интеграция</strong><br />/api/integration-modules/{code}<br />/api/integration-modules/{code}/edit <br /><br /><strong>Доставки</strong><br />/api/delivery/generic/setting/{code}<br />/api/delivery/generic/setting/{code}/edit<br />/api/delivery/generic/{code}/tracking<br />/api/delivery/shipments<br />/api/delivery/shipments/{id}<br />/api/delivery/shipments/create<br />/api/delivery/shipments/{id}/edit</p>
+<p>4.Сгенерировать API-ключ в retailCRM для этого перейти в раздел Администрирование &gt; Интеграция &gt; Ключи доступа к API и создать API-ключ с разрешенными методами:</p>
+<ul>
+    <li>/api/integration-modules/{code}</li>
+    <li>/api/integration-modules/{code}/edit</li>
+    <li>/api/reference/sites</li>
+    <li>/api/reference/payment-types</li>
+    <li>/api/orders/statuses</li>
+</ul>
 <br />
 <p>После нажатия открываются настройки доставки, где необходимо ввести раннее созданный API-ключ, а также адрес Вашей системы и нажать на кнопку &laquo;Сохранить&raquo;.</p>
 </li>
