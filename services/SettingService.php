@@ -287,7 +287,7 @@ class SettingService extends Component
             'accountUrl' => 'https://retailcrm.logsis.ru/setting',
             'active' => ($setting->is_active == 1) ? true : false,
             'freeze' => ($setting->is_freeze == 1) ? true : false,
-            'name' => 'Logsis DEV',
+            'name' => 'Logsis доставка',
             'actions' => [
                 'activity' => '/setting/activity'
             ],
