@@ -68,7 +68,7 @@ class SettingService extends Component
         $transaction = Yii::$app->db->beginTransaction();
         try {
             if ($setting->isNewRecord) {
-                $setting->is_active = $setting::STATUS_DISABLE;
+                $setting->is_active = $setting::STATUS_ACTIVE;
                 $setting->is_freeze = $setting::STATUS_UNFREEZE;
             }
 
