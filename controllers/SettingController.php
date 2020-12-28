@@ -17,7 +17,6 @@ use app\models\{
 
 class SettingController extends Controller 
 {
-
     private $settingService;
 
     public function __construct($id, Module $module, $config = [], SettingService $settingService)
@@ -36,8 +35,6 @@ class SettingController extends Controller
     public function actionIndex()
     {
         $clientId = Yii::$app->request->post('clientId') ?? Yii::$app->session->get('clientId');
-
-        // $clientId = 'MaXQWPb8-JLZI_TmMIM3jSijvXyLDK77';
 
         if ($clientId) {
             Yii::$app->session->set('clientId', $clientId);

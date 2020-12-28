@@ -314,7 +314,7 @@ class SettingService extends Component
                     'requiredFields' => [
                         'lastName', 									// Фамилия покупателя
                         'phone', 										// Телефон покупателя
-                        'email', 										// E-mail покупателя
+                       // 'email', 										// E-mail покупателя
                         'length', 										// Длина
                         'width', 										// Ширина
                         'height', 										// Высота

@@ -65,9 +65,8 @@ class TrackingJob extends \yii\base\BaseObject implements \yii\queue\Job
      * @return object
      */
 
-    private function getRetailOrders(string $number, string $trackNumber): \RetailCrm\Response\ApiResponse
+    private function getRetailOrders(string $number, string $trackNumber)
     {
-        // 'trackNumber' => $trackNumber
         return Yii::$app->retail->ordersList($this->_setting->getRetailAuthData(), ['numbers' => [$number]]);
     }
 }
