@@ -28,16 +28,16 @@ class TrackingJob extends \yii\base\BaseObject implements \yii\queue\Job
 
                 $ordersListResponse = $this->getRetailOrders($number, $orderStatus['order_id']);
 
-                if ($this->_setting->retail_api_url !== 'https://ava-med24.retailcrm.ru') {
-                    echo "<pre>"; print_r($ordersListResponse);
-                    die;
-                }
-
                 if ($retailOrder = $ordersListResponse['orders'][0] ?? false) {
                     $updateOrders[$key] = $orderStatus;
                     $updateOrders[$key]['retail_order_id'] = $retailOrder['id'];
                     $updateOrders[$key]['retail_site'] = $retailOrder['site'];
                 }
+            }
+
+            if ($this->_setting->retail_api_url !== 'https://ava-med24.retailcrm.ru') {
+                echo "<pre>"; print_r($updateOrders);
+                die;
             }
 
             foreach ($updateOrders as $updateOrder) {
