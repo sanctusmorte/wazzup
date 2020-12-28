@@ -33,6 +33,8 @@ $this->title = 'Интеграция Logsis и retailCRM';
     <li>/api/reference/payment-types</li>
     <li>/api/orders/statuses</li>
     <li>/api/reference/statuses</li>
+    <li>/api/orders</li>
+    <li>/api/orders/{externalId}</li>
     <li>/api/orders/{externalId}/edit</li>
 </ul>
 <br />

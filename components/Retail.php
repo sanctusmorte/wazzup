@@ -653,8 +653,6 @@ class Retail extends Component
         try{
             $response = $client->request->ordersEdit($data, $by, $site);
 
-            echo "<pre>"; print_r($response); die;
-            
             if ($response->isSuccessful()) {
                 return $response;
             } else {
