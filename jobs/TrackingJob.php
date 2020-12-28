@@ -35,15 +35,16 @@ class TrackingJob extends \yii\base\BaseObject implements \yii\queue\Job
                 }
             }
 
-            if ($this->_setting->retail_api_url == 'https://ava-med24.retailcrm.ru') {
-                echo "<pre>"; print_r($updateOrders);
-                die;
-            }
-
             foreach ($updateOrders as $updateOrder) {
                 if ($retailToLogsisStatus = $this->_setting->getRetailToLogsisStatusByLogsisStatusId($updateOrder['status'])) {
 
                     $orderEditResponse = $this->updateOrder($updateOrder['retail_order_id'], $retailToLogsisStatus->orderStatus->code, $updateOrder['retail_site']);
+                }
+
+                if ($this->_setting->retail_api_url == 'https://ava-med24.retailcrm.ru') {
+                    echo "<pre>"; print_r($retailToLogsisStatus ?? 'netu');
+                    echo "<pre>"; print_r($orderEditResponse ?? 'netu');
+                    die;
                 }
             }   
         }
