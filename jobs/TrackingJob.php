@@ -14,11 +14,6 @@ class TrackingJob extends \yii\base\BaseObject implements \yii\queue\Job
         $statusData = LogsisHelper::generateStatusData($this->_setting);
         $response = Yii::$app->logsis->getstatusv3($statusData);
 
-        if ($this->_setting->retail_api_url == 'https://ava-med24.retailcrm.ru') {
-            echo "<pre>"; print_r($response);
-            die;
-        }
-
         $updateOrders = [];
 
         if ($response['status'] == 200) {
@@ -38,6 +33,11 @@ class TrackingJob extends \yii\base\BaseObject implements \yii\queue\Job
                     $updateOrders[$key]['retail_order_id'] = $retailOrder['id'];
                     $updateOrders[$key]['retail_site'] = $retailOrder['site'];
                 }
+            }
+
+            if ($this->_setting->retail_api_url == 'https://ava-med24.retailcrm.ru') {
+                echo "<pre>"; print_r($updateOrders);
+                die;
             }
 
             foreach ($updateOrders as $updateOrder) {
