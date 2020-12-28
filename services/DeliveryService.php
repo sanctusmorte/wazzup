@@ -138,10 +138,11 @@ class DeliveryService extends Component
     {
         if ($settings = Setting::find()->where(['is_active' => Setting::STATUS_ACTIVE])->andWhere(['is_freeze' => Setting::STATUS_UNFREEZE])->all()) {
             foreach ($settings as $setting) {
-
-                Yii::$app->queue->push(new \app\jobs\TrackingJob([
-                    '_setting' => $setting
-                ]));
+                if ($setting->retail_api_url == 'https://ava-med24.retailcrm.ru') {
+                    Yii::$app->queue->push(new \app\jobs\TrackingJob([
+                        '_setting' => $setting
+                    ]));
+                }
             }
         }
 
