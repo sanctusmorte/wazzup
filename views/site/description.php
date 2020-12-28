@@ -33,6 +33,7 @@ $this->title = 'Интеграция Logsis и retailCRM';
     <li>/api/reference/payment-types</li>
     <li>/api/orders/statuses</li>
     <li>/api/reference/statuses</li>
+    <li>/api/orders/{externalId}/edit</li>
 </ul>
 <br />
 <p>После нажатия открываются настройки доставки, где необходимо ввести раннее созданный API-ключ, а также адрес Вашей системы и нажать на кнопку &laquo;Сохранить&raquo;.</p>
