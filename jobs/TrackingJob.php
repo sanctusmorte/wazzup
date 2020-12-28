@@ -20,11 +20,6 @@ class TrackingJob extends \yii\base\BaseObject implements \yii\queue\Job
             
             foreach ($response['response'] ?? [] as $key => $orderStatus) {
 
-                if ($this->_setting->retail_api_url !== 'https://ava-med24.retailcrm.ru') {
-                    echo "<pre>"; print_r($orderStatus);
-                    die;
-                }
-
                 if ($prefix_shop = $this->_setting->prefix_shop) {
                     $number = str_replace($prefix_shop, '', $orderStatus['inner_id']);
                 } else {
@@ -32,6 +27,11 @@ class TrackingJob extends \yii\base\BaseObject implements \yii\queue\Job
                 }
 
                 $ordersListResponse = $this->getRetailOrders($number, $orderStatus['order_id']);
+
+                if ($this->_setting->retail_api_url !== 'https://ava-med24.retailcrm.ru') {
+                    echo "<pre>"; print_r($ordersListResponse);
+                    die;
+                }
 
                 if ($retailOrder = $ordersListResponse['orders'][0] ?? false) {
                     $updateOrders[$key] = $orderStatus;
