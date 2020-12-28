@@ -40,7 +40,7 @@ class TrackingJob extends \yii\base\BaseObject implements \yii\queue\Job
 
                     $orderEditResponse = $this->updateOrder($updateOrder['retail_order_id'], $retailToLogsisStatus->orderStatus->code, $updateOrder['retail_site']);
                 }
-            }   
+            }
         }
     }
 
