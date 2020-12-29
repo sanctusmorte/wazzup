@@ -93,7 +93,7 @@ class DeliveryController extends ApiRestController
     /**
      * Печатные формы службы доставки
      * 
-     * @return
+     * @return mixed
      */
 
     public function actionPrint()

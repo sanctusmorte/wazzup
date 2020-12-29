@@ -301,6 +301,12 @@ class SettingService extends Component
                         'shipmentSave' => '/delivery/shipment-save',
                         'print' => '/delivery/print'
                     ],
+                    'plateList' => [
+                        [
+                            'code' => 'logsis_print',
+                            'label' => 'Logsis печать этикеток',
+                        ]
+                    ],
                     'payerType' => [									// Допустимые типы плательщиков за доставку;
                         'sender',                                       // sender - магазин может брать деньги с покупателя за доставку и потом расплачивается со службой доставки)
                         'receiver',                                     // receiver - покупатель сам расплачивается напрямую со службой доставки
