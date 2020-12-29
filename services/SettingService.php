@@ -304,7 +304,7 @@ class SettingService extends Component
                     'plateList' => [
                         [
                             'code' => 'logsis_print',
-                            'label' => 'Logsis печать этикеток',
+                            'label' => 'печать этикеток',
                         ]
                     ],
                     'payerType' => [									// Допустимые типы плательщиков за доставку;
