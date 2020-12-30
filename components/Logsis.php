@@ -100,16 +100,39 @@ class Logsis extends Component
         Yii::info($url . ' : ' . print_r($response, true));
 
         if ($flag_json) {
-            return [
-                $http_code,
-                Json::decode($response, true)
-            ];
+            if ($this->isJSON($response)) {
+                return [
+                    $http_code,
+                    Json::decode($response, true)
+                ];
+            } else {
+                return [
+                    $http_code,
+                    [
+                        'stauts' => 0,
+                        'response' => [
+                            'Error' => 'Ошибка Logsis. Повторите попытку позже.'
+                        ]
+                    ]
+                ];
+            }
         } else {
             return [
                 $http_code,
                 $response
             ];
         }
+    }
+
+    /**
+     * Проверка является ли строка JSON
+     * 
+     * @return boolean
+     */
+
+    private function isJSON(string $string): bool
+    {
+        return is_string($string) && is_array(json_decode($string, true)) && (json_last_error() == JSON_ERROR_NONE) ? true : false;
     }
 
     /**
