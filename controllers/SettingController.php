@@ -34,8 +34,6 @@ class SettingController extends Controller
 
     public function actionIndex()
     {
-        echo "<pre>"; print_r(Yii::$app->request->post()); die;
-
         $clientId = Yii::$app->request->post('clientId') ?? Yii::$app->session->get('clientId');
 
         if ($clientId) {
