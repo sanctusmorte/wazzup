@@ -25,7 +25,7 @@ class TrackingJob extends \yii\base\BaseObject implements \yii\queue\Job
                 } else {
                     $number = $orderStatus['inner_id'];
                 }
-
+                
                 $ordersListResponse = $this->getRetailOrders($number, $orderStatus['order_id']);
 
                 if ($retailOrder = $ordersListResponse['orders'][0] ?? false) {
