@@ -328,14 +328,14 @@ class LogsisHelper
                 }
             }
             if ($closest !== null) {
-                $return = $closest;
+                $return = $x[$closest];
             }
         }
 
         if ($return === null) {
             $return = 1;
         }
-        
+
         return $return;
     }
 
