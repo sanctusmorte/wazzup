@@ -328,7 +328,7 @@ class LogsisHelper
                 }
             }
             if ($closest !== null) {
-                $return = $x[$closest];
+                $return = $x[array_search($closest, $x)];
             }
         }
 
