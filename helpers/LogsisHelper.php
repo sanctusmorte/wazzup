@@ -315,14 +315,27 @@ class LogsisHelper
         $x[]=$y;
         sort($x);
 
-        for ($i=0, $return=$x[0]; $i < count($x)-1; $i++) {
-            if ($x[$i+1]==$y) {
-                if ($i+1>=count($x) || $y-$x[$i] < $x[$i+2]-$y) $return=$x[$i];
-                else $return=$x[$i+2];
-                break;
+        $return = null;
+
+        $find = array_search($y, $x);
+        if ($find !== null) {
+            $return = $x[$find];
+        } else {
+            $closest = null;
+            foreach ($x as $item) {
+                if ($closest === null || abs($y - $closest) > abs($item - $y)) {
+                    $closest = $item;
+                }
+            }
+            if ($closest !== null) {
+                $return = $closest;
             }
         }
 
+        if ($return === null) {
+            $return = 1;
+        }
+        
         return $return;
     }
 
