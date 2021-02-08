@@ -288,6 +288,8 @@ class LogsisHelper
         $minTo = self::getMinValueInArray($toArr, $to); 
         $timeFlip = array_flip($time);
 
+        
+
         if ($minFrom == $minTo) {
             foreach ($time as $key => $value) {
                 $explode = explode('-', $value);
@@ -313,30 +315,22 @@ class LogsisHelper
     private static function getMinValueInArray(array $x, int $y)
     {
         $x[]=$y;
-        sort($x);
 
-        $return = null;
+        $smallest = [];
 
-        $find = array_search($y, $x);
-        if ($find !== null) {
-            $return = $x[$find];
+        if (in_array($y, $x)) {
+            $needValue = $y;
         } else {
-            $closest = null;
             foreach ($x as $item) {
-                if ($closest === null || abs($y - $closest) > abs($item - $y)) {
-                    $closest = $item;
-                }
+                $smallest[$item] = abs($item - $y);
             }
-            if ($closest !== null) {
-                $return = $x[array_search($closest, $x)];
-            }
+            asort($smallest);
+            reset($array);
+            $first_key = key($array);
+            $needValue = $smallest[$first_key];
         }
 
-        if ($return === null) {
-            $return = 1;
-        }
-
-        return $return;
+        return $needValue;
     }
 
     /**
