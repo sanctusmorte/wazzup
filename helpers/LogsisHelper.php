@@ -288,20 +288,16 @@ class LogsisHelper
         $minTo = self::getMinValueInArray($toArr, $to); 
         $timeFlip = array_flip($time);
 
-        return $minFrom;
+        $needCode = null;
 
-        if ($minFrom == $minTo) {
-            foreach ($time as $key => $value) {
-                $explode = explode('-', $value);
-    
-                if ($explode[1] == $minTo) {
-                    return $key;
-                } 
-                return 2;
-            }
+        if (isset($timeFlip[$minFrom."-".$minTo])) {
+            $needCode = $timeFlip[$minFrom."-".$minTo];
         } else {
-            return $timeFlip[$minFrom."-".$minTo] ?? 2;
+            reset($timeFlip);
+            $needCode = $timeFlip[key($timeFlip)];
         }
+
+        return $needCode;
     }
 
     /**
