@@ -247,7 +247,7 @@ class LogsisHelper
      * @return int
      */
 
-    private static function getDeliveryTime(array $data): int 
+    public static function getDeliveryTime(array $data): int
     {   
         $timeFrom = self::getRegValue($data['delivery']['deliveryTime']['from'], "/[0-9]+/");
         $timeTo = self::getRegValue($data['delivery']['deliveryTime']['to'], "/[0-9]+/");

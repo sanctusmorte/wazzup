@@ -42,7 +42,14 @@ class DeliveryService extends Component
         $shipmentAddressAccess = $this->checkShipmentAddress($calculate);
         if ($shipmentAddressAccess['success'] == false) return $shipmentAddressAccess;
 
+        return [
+            'success' => false,
+            'errorMsg' => LogsisHelper::getDeliveryTime($calculate)
+        ];
+
         $calculateData = LogsisHelper::generateCalculateData($setting, $calculate);
+
+
         
         $response = Yii::$app->logsis->calculate($calculateData);
 
