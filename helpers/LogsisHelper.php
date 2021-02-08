@@ -324,6 +324,7 @@ class LogsisHelper
             return $x[array_search($y, $x)];
         }
 
+// awd
 //        for ($i=0, $return=$x[0]; $i < count($x)-1; $i++) {
 //            if ($x[$i+1]==$y) {
 //                if ($i+1>=count($x) || $y-$x[$i] < $x[$i+2]-$y) $return=$x[$i];
