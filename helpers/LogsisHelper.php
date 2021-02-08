@@ -97,7 +97,8 @@ class LogsisHelper
             'dress_fitting_option' => ($save['delivery']['extraData']['is_fitting'] ?? $setting->is_fitting) ? 1 : 0,
             'lifting_option' => ($save['delivery']['extraData']['is_skid'] ?? $setting->is_skid) ? 1 : 0,
             'cargo_lift' => ($save['delivery']['extraData']['is_cargo_lift'] ?? $setting->is_cargo_lift) ? 1 : 0,
-            'goods' => self::getGoods($save)
+            'goods' => self::getGoods($save),
+            'barcodes' => self::getBarCodes($save),
         ];
     }
 
@@ -172,8 +173,7 @@ class LogsisHelper
     {
         return [
             'key' => $setting->apikey,
-            'inner_n' => $data['inner_track'],
-            'order_id' => $data['order_id']
+            'inner_n' => $data['inner_n'],
         ];
     }
 
@@ -247,7 +247,7 @@ class LogsisHelper
      * @return int
      */
 
-    public static function getDeliveryTime(array $data): int
+    private static function getDeliveryTime(array $data): int 
     {   
         $timeFrom = self::getRegValue($data['delivery']['deliveryTime']['from'], "/[0-9]+/");
         $timeTo = self::getRegValue($data['delivery']['deliveryTime']['to'], "/[0-9]+/");
@@ -283,23 +283,23 @@ class LogsisHelper
             $fromArr[] = $explode[0];
             $toArr[] = $explode[1];
         }
-
-        return 1;
         
-//        $minFrom = self::getMinValueInArray($fromArr, $from);
-//        $minTo = self::getMinValueInArray($toArr, $to);
-//        $timeFlip = array_flip($time);
-//
-//        $needCode = null;
-//
-//        if (isset($timeFlip[$minFrom."-".$minTo])) {
-//            $needCode = $timeFlip[$minFrom."-".$minTo];
-//        } else {
-//            reset($timeFlip);
-//            $needCode = $timeFlip[key($timeFlip)];
-//        }
-//
-//        return $needCode;
+        $minFrom = self::getMinValueInArray($fromArr, $from);
+        $minTo = self::getMinValueInArray($toArr, $to); 
+        $timeFlip = array_flip($time);
+
+        if ($minFrom == $minTo) {
+            foreach ($time as $key => $value) {
+                $explode = explode('-', $value);
+    
+                if ($explode[1] == $minTo) {
+                    return $key;
+                } 
+                return 2;
+            }
+        } else {
+            return $timeFlip[$minFrom."-".$minTo] ?? 2;
+        }
     }
 
     /**
@@ -313,22 +313,26 @@ class LogsisHelper
     private static function getMinValueInArray(array $x, int $y)
     {
         $x[]=$y;
+        sort($x);
 
-        $smallest = [];
-
-        if (in_array($y, $x)) {
-            $needValue = $y;
+        if (!in_array($y, $x)) {
+            $y = max(array_filter($x, function ($v) use ($y) {
+                return $v < $y;
+            }));
+            return $y;
         } else {
-            foreach ($x as $item) {
-                $smallest[$item] = abs($item - $y);
-            }
-            asort($smallest);
-            reset($array);
-            $first_key = key($array);
-            $needValue = $smallest[$first_key];
+            return $x[array_search($y, $x)];
         }
 
-        return $needValue;
+//        for ($i=0, $return=$x[0]; $i < count($x)-1; $i++) {
+//            if ($x[$i+1]==$y) {
+//                if ($i+1>=count($x) || $y-$x[$i] < $x[$i+2]-$y) $return=$x[$i];
+//                else $return=$x[$i+2];
+//                break;
+//            }
+//        }
+
+//        return $return;
     }
 
     /**
@@ -361,17 +365,46 @@ class LogsisHelper
             foreach ($package['items'] as $item) {
 
                 $goods[] = [
-                    'articul' => '',
+                    'articul' => "Нет",
                     'artname' => $item['name'],
                     'count' => $item['quantity'],
                     'weight' => 0.1,
                     'price' => $item['cost'],
                     'nds' => ($vatRate = $item['vatRate'] ?? false) ? self::getNdsCode($item['vatRate']) : 2
                 ];
+
             }
         }
 
         return $goods;
+    }
+
+    /**
+     * Формирование кодов маркировки
+     * https://docs.retailcrm.ru/Developers/API/APIVersions/APIv5#callback_post--configuration_actions__save_
+     *
+     * @param array $data
+     * @return array
+     */
+
+    private static function getBarCodes(array $data): array
+    {
+        $barCodes = [];
+
+        foreach ($data['packages'] as $package) {
+            foreach ($package['items'] as $item) {
+                if (isset($item['markingCodes']) and count($item['markingCodes']) > 0) {
+                    if (isset($item['markingCodes'][0])) {
+                        $barCodes[] = [
+                            'place_num' => 1,
+                            'place_kod' => $item['markingCodes'][0]
+                        ];
+                    }
+                }
+            }
+        }
+
+        return $barCodes;
     }
 
     /**

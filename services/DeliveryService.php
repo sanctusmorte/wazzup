@@ -87,7 +87,6 @@ class DeliveryService extends Component
         $setting = $this->getSetting(Yii::$app->request->post('clientId'));
         $save = Json::decode(Yii::$app->request->post('save'));
 
-
         $access = $this->accesssCheck($setting);
         if ($access['success'] == false) return $access;
 
