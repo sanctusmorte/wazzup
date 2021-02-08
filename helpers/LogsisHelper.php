@@ -288,10 +288,7 @@ class LogsisHelper
         $minTo = self::getMinValueInArray($toArr, $to); 
         $timeFlip = array_flip($time);
 
-        return [
-            'success' => false,
-            'errorMsg' => $minTo
-        ];
+        return $minFrom;
 
         if ($minFrom == $minTo) {
             foreach ($time as $key => $value) {
