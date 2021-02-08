@@ -283,21 +283,23 @@ class LogsisHelper
             $fromArr[] = $explode[0];
             $toArr[] = $explode[1];
         }
+
+        return 1;
         
-        $minFrom = self::getMinValueInArray($fromArr, $from);
-        $minTo = self::getMinValueInArray($toArr, $to); 
-        $timeFlip = array_flip($time);
-
-        $needCode = null;
-
-        if (isset($timeFlip[$minFrom."-".$minTo])) {
-            $needCode = $timeFlip[$minFrom."-".$minTo];
-        } else {
-            reset($timeFlip);
-            $needCode = $timeFlip[key($timeFlip)];
-        }
-
-        return $needCode;
+//        $minFrom = self::getMinValueInArray($fromArr, $from);
+//        $minTo = self::getMinValueInArray($toArr, $to);
+//        $timeFlip = array_flip($time);
+//
+//        $needCode = null;
+//
+//        if (isset($timeFlip[$minFrom."-".$minTo])) {
+//            $needCode = $timeFlip[$minFrom."-".$minTo];
+//        } else {
+//            reset($timeFlip);
+//            $needCode = $timeFlip[key($timeFlip)];
+//        }
+//
+//        return $needCode;
     }
 
     /**
