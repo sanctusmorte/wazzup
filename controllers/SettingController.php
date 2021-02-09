@@ -38,7 +38,7 @@ class SettingController extends Controller
 
         //echo $clientId;
 
-        //Yii::$app->session->set('clientId', 'test');
+        Yii::$app->session->set('clientId', 'test');
 
         if ($clientId === null) {
 
