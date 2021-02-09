@@ -2,8 +2,8 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=logsis',
-    'username' => 'logsis',
+    'dsn' => 'mysql:host=localhost;dbname=wazzup',
+    'username' => 'wazzup',
     'password' => '{@Ih3#Qs',
     'charset' => 'utf8',
 

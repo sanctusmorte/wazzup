@@ -15,10 +15,6 @@
         
         <p><b>Настройки retailCRM</b></p>
 
-        <?= $form->field($setting, 'id')->hiddenInput()->label(false); ?>
-
-        <?= $form->field($setting, 'client_id')->hiddenInput()->label(false); ?>
-
         <input type="hidden" name="submit" value="0"/>
 
         <?= $form->field($setting, 'retail_api_url', [
@@ -37,15 +33,15 @@
                             </div>",
         ])->textInput(['placeholder' => $setting->getAttributeLabel('retail_api_key')]); ?>
 
-        <p><b>Настройки Logsis</b></p>
+        <p><b>Настройки Wazzup</b></p>
 
-        <?= $form->field($setting, 'apikey', [
+        <?= $form->field($setting, 'wazzup_api_key', [
                 'template' => "<div class=\"form-group\">
                                 {label}
                                 {input}
-                                {error}             
+                                {error}
                             </div>",
-        ])->textInput(['placeholder' => $setting->getAttributeLabel('apikey')]); ?>
+        ])->textInput(['placeholder' => $setting->getAttributeLabel('wazzup_api_key')]); ?>
         
     </div>
 </div>
