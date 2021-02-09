@@ -34,12 +34,10 @@ class SettingController extends Controller
 
     public function actionIndex()
     {
-        $clientId = $this->settingService->getSettingId();
-
-        var_dump($clientId);
-
         Yii::$app->session->set('clientId', 'test');
 
+        $clientId = $this->settingService->getSettingId();
+        
         if ($clientId === null) {
 
         } else {
