@@ -97,8 +97,7 @@ class LogsisHelper
             'dress_fitting_option' => ($save['delivery']['extraData']['is_fitting'] ?? $setting->is_fitting) ? 1 : 0,
             'lifting_option' => ($save['delivery']['extraData']['is_skid'] ?? $setting->is_skid) ? 1 : 0,
             'cargo_lift' => ($save['delivery']['extraData']['is_cargo_lift'] ?? $setting->is_cargo_lift) ? 1 : 0,
-            'goods' => self::getGoods($save),
-            'barcodes' => self::getBarCodes($save),
+            'goods' => self::getGoods($save)
         ];
     }
 
@@ -173,7 +172,8 @@ class LogsisHelper
     {
         return [
             'key' => $setting->apikey,
-            'inner_n' => $data['inner_n'],
+            'inner_n' => $data['inner_track'],
+            'order_id' => $data['order_id']
         ];
     }
 
@@ -323,17 +323,6 @@ class LogsisHelper
         } else {
             return $x[array_search($y, $x)];
         }
-
-// awd
-//        for ($i=0, $return=$x[0]; $i < count($x)-1; $i++) {
-//            if ($x[$i+1]==$y) {
-//                if ($i+1>=count($x) || $y-$x[$i] < $x[$i+2]-$y) $return=$x[$i];
-//                else $return=$x[$i+2];
-//                break;
-//            }
-//        }
-
-//        return $return;
     }
 
     /**
@@ -366,46 +355,17 @@ class LogsisHelper
             foreach ($package['items'] as $item) {
 
                 $goods[] = [
-                    'articul' => "Нет",
+                    'articul' => '',
                     'artname' => $item['name'],
                     'count' => $item['quantity'],
                     'weight' => 0.1,
                     'price' => $item['cost'],
                     'nds' => ($vatRate = $item['vatRate'] ?? false) ? self::getNdsCode($item['vatRate']) : 2
                 ];
-
             }
         }
 
         return $goods;
-    }
-
-    /**
-     * Формирование кодов маркировки
-     * https://docs.retailcrm.ru/Developers/API/APIVersions/APIv5#callback_post--configuration_actions__save_
-     *
-     * @param array $data
-     * @return array
-     */
-
-    private static function getBarCodes(array $data): array
-    {
-        $barCodes = [];
-
-        foreach ($data['packages'] as $package) {
-            foreach ($package['items'] as $item) {
-                if (isset($item['markingCodes']) and count($item['markingCodes']) > 0) {
-                    if (isset($item['markingCodes'][0])) {
-                        $barCodes[] = [
-                            'place_num' => 1,
-                            'place_kod' => $item['markingCodes'][0]
-                        ];
-                    }
-                }
-            }
-        }
-
-        return $barCodes;
     }
 
     /**

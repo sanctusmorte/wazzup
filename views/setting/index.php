@@ -6,11 +6,6 @@
         Url,
         Html
     };
-
-    $disable = '';
-    if ($setting->isNewRecord) {
-        $disable = 'disabledTab';
-    }
 ?>
 
 <div class="card card-primary card-outline">
@@ -21,23 +16,6 @@
         </h3>
     </div>
     <div class="card-body">
-        <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="module-tab" data-toggle="pill" href="#module" role="tab">Модуль</a>
-            </li>
-            <li class="nav-item <?= $disable ?>">
-                <a class="nav-link" id="shop-tab" data-toggle="pill" href="#shop" role="tab">Магазины</a>
-            </li>
-            <li class="nav-item <?= $disable ?>">
-                <a class="nav-link" id="setting-tab" data-toggle="pill" href="#setting" role="tab">Общие настройки</a>
-            </li>
-            <li class="nav-item <?= $disable ?>">
-                <a class="nav-link" id="setting-status-tab" data-toggle="pill" href="#setting-status" role="tab">Настройки статусов</a>
-            </li>
-            <li class="nav-item <?= $disable ?>">
-                <a class="nav-link" id="setting-payment-type-tab" data-toggle="pill" href="#setting-payment-type" role="tab">Настройки способов оплат</a>
-            </li>
-        </ul>
 
         <?php $form = ActiveForm::begin([
             'enableAjaxValidation' => true,
@@ -54,46 +32,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <?= $this->render('_module-form', [
-                                'setting' => $setting,
-                                'form' => $form
-                            ]); ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="shop" role="tabpanel">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <?= $this->render('_shop-form', [
-                                'setting' => $setting,
-                                'form' => $form
-                            ]); ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="setting" role="tabpanel">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <?= $this->render('_setting-form', [
-                                'setting' => $setting,
-                                'form' => $form
-                            ]); ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="setting-status" role="tabpanel">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <?= $this->render('_setting-status', [
-                                'setting' => $setting,
-                                'form' => $form
-                            ]); ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="setting-payment-type" role="tabpanel">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <?= $this->render('_setting-payment-type', [
                                 'setting' => $setting,
                                 'form' => $form
                             ]); ?>

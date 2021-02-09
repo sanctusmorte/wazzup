@@ -2,9 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=logsis',
-    'username' => 'logsis',
-    'password' => '{@Ih3#Qs',
+    'dsn' => 'mysql:host=localhost;dbname=wazzup',
+    'username' => 'mysql',
+    'password' => 'mysql',
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)
