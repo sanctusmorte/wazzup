@@ -36,7 +36,7 @@ class SettingController extends Controller
     {
         $clientId = $this->settingService->getSettingId();
 
-        //echo $clientId;
+        echo $clientId;
 
         Yii::$app->session->set('clientId', 'test');
 
