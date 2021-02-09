@@ -315,15 +315,14 @@ class LogsisHelper
         $x[]=$y;
         sort($x);
 
-        for ($i=0, $return=$x[0]; $i < count($x)-1; $i++) {
-            if ($x[$i+1]==$y) {
-                if ($i+1>=count($x) || $y-$x[$i] < $x[$i+2]-$y) $return=$x[$i];
-                else $return=$x[$i+2];
-                break;
-            }
+        if (!in_array($y, $x)) {
+            $y = max(array_filter($x, function ($v) use ($y) {
+                return $v < $y;
+            }));
+            return $y;
+        } else {
+            return $x[array_search($y, $x)];
         }
-
-        return $return;
     }
 
     /**

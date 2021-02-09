@@ -34,42 +34,41 @@ class SettingController extends Controller
 
     public function actionIndex()
     {
-        $clientId = Yii::$app->request->post('clientId') ?? Yii::$app->session->get('clientId');
+        $clientId = $this->settingService->getSettingId();
 
-        if ($clientId) {
-            Yii::$app->session->set('clientId', $clientId);
+        //echo $clientId;
+
+        //Yii::$app->session->set('clientId', 'test');
+
+        if ($clientId === null) {
+
+        } else {
+            $setting = $this->settingService->getSetting($clientId);
+            return $this->render('index', [
+                'setting' => $setting
+            ]);
         }
-        
-        $setting = $this->settingService->getSetting($clientId ?? '');
-        if (!$setting->isNewRecord) $this->settingService->backgroundUpdateSetting($setting);
-
-        return $this->render('index', [
-            'setting' => $setting
-        ]);
     }
-
-    /**
-     * Сохранение настроек модуля
-     * 
-     * @return string
-     */
 
     public function actionSave()
     {
-        if ($setting_id = Yii::$app->request->post('Setting')['id']) {
-            $setting = $this->settingService->getSettingById($setting_id);
-        } else {    
-            $setting = new Setting();
-        }
 
-        if ($setting->load(Yii::$app->request->post()) && $setting->validate() && Yii::$app->request->post('submit')) {
-            $this->settingService->save($setting);
+        $clientId = $this->settingService->getSettingId();
 
-            return $this->redirect(['/setting/index']);
+        if ($clientId !== null) {
+            $setting = $this->settingService->getSettingById($clientId);
+            if ($setting === null) {
+                $NewSetting = new Setting();
+                $NewSetting->client_id = $clientId;
+                if ($NewSetting->load(Yii::$app->request->post()) && $NewSetting->validate() && Yii::$app->request->post('submit')) {
+                    $this->settingService->save($NewSetting);
+                    return $this->redirect(['/setting/index']);
+                }
+            }
         }
 
         Yii::$app->response->format = Response::FORMAT_JSON;
-        return ActiveForm::validate($setting);
+        return ActiveForm::validate($NewSetting);
     }
 
 }
