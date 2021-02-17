@@ -48,5 +48,6 @@ class WazzupController extends Controller
         if ($message !== null) {
             $this->wazzupService->handleMessageFromWazzup(json_decode($message)['messages']);
         }
+        return true;
     }
 }
