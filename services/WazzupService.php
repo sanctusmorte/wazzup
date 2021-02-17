@@ -14,7 +14,7 @@ class WazzupService
         var_dump($webHookEdit);
     }
 
-    public function handleMessageFromWazzup(array $message)
+    public function handleMessageFromWazzup($message)
     {
         if ($message['status'] === 99) {
             $this->sentMessageToRetailCrm($message);
