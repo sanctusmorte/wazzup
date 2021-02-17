@@ -30,15 +30,16 @@ class WazzupService
         if ($setting !== null) {
             $needChanneId = null;
             $existChannels = $setting->wazzup_channels;
+            Yii::error($existChannels, 'wazzup_telegram_log');
             foreach ($existChannels as $existChannel) {
                 if ($existChannel['externalId'] === $needChannelExternalId) {
                     $needChanneId = $existChannel['id'];
                     break;
                 }
             }
-            Yii::error($needChanneId, 'wazzup_telegram_log');
+            
             if ($needChanneId !== null) {
-                
+
                 Yii::$app->transport->sentMessageToRetailCrm($setting, $message, $needChanneId);
             }
 
