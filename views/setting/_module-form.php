@@ -43,13 +43,7 @@
                             </div>",
         ])->textInput(['placeholder' => $setting->getAttributeLabel('wazzup_api_key')]); ?>
 
-
-<!--        --><?//= $form->field($setting, 'channels', [
-//            'template' => "<div class=\"form-group\">
-//                {label}
-//                {input}
-//            </div>",
-//        ])->dropDownList([$setting->getExistChannels()], ['value' => json_decode($setting->channels, 1), 'class' => 'form-control select2', 'autocomplete' => 'off', 'multiple' => true]); ?>
+        
         
     </div>
 </div>
