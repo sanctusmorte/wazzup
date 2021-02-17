@@ -43,7 +43,7 @@
                             </div>",
         ])->textInput(['placeholder' => $setting->getAttributeLabel('wazzup_api_key')]); ?>
 
-        
+
         
     </div>
 </div>
