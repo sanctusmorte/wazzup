@@ -15,11 +15,9 @@ class Retail extends Component
 {
 
     /**
-     * Получение списка доступных методов и магазинов для данного ключа
-     * @param array - $apiClient - ['retailApiUrl' => $url, 'retailApiKey' => $apiKey]
-     * @return array
+     * @param $apiClient
+     * @return bool|\RetailCrm\Response\ApiResponse
      */
-
     public function credentials($apiClient) 
     {
         $client = new \RetailCrm\ApiClient(
@@ -30,9 +28,7 @@ class Retail extends Component
 
         try{
             $response = $client->request->credentials();
-            
             if ($response->isSuccessful()) {
-                
                 return $response;
             } else {
                 return false;
@@ -40,7 +36,7 @@ class Retail extends Component
         } catch (\RetailCrm\Exception\CurlException $e) {
             // Yii::error($e, $e->getMessage());
             // throw new ServerErrorHttpException($e->getMessage());
-            return false;
+           return false;
         }
     }
 
@@ -98,12 +94,10 @@ class Retail extends Component
     }
 
     /**
-     * Редактирование настроек модуля
-     * @param array - $apiClient - ['retailApiUrl' => $url, 'retailApiKey' => $apiKey]
-     * @param array - $data - массив настроек модуля
-     * @return boolean
+     * @param $apiClient
+     * @param $data
+     * @return array|bool
      */
-
     public function moduleEdit($apiClient, $data)
     {
         $client = new \RetailCrm\ApiClient(
@@ -112,17 +106,29 @@ class Retail extends Component
             \RetailCrm\ApiClient::V5
         );
 
-        try{
-            $response = $client->request->integrationModulesEdit($data);
+        $response = $client->request->integrationModulesEdit($data);
 
-            if ($response->isSuccessful()) { 
-                return true;
-            } else {
-                return false;
-            }
-        } catch (\RetailCrm\Exception\CurlException $e) {
-            Yii::error($e, $e->getMessage());
-            throw new ServerErrorHttpException($e->getMessage());
+        if ($response->isSuccessful()) {
+            return [
+                'success' => true,
+                'data' => $response->getResponse(),
+            ];
+        } else {
+            $logMsg = [
+                'RetailCRM клиента (retail_api_url)' =>  $apiClient['retailApiUrl'],
+                'Ошибка' => 'Редактирование модуля (moduleEdit)',
+                'Путь к ошибке' => '\wazzup\components\Retail.php',
+                'Метод' => 'moduleEdit()',
+                'Строка' => '102',
+                'Дата и время' => date('d-m-Y H:i:s'),
+                'Параметры запроса' => $data,
+                'Ответ' => $response->getResponse(),
+            ];
+
+            return [
+                'success' => false,
+                'logMsg' => $logMsg,
+            ];
         }
     }
 

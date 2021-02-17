@@ -44,11 +44,13 @@ $config = [
             'useFileTransport' => true,
         ],
         'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning', 'info'],
+                    'class' => 'sergeymakinen\yii\telegramlog\Target',
+                    'token' => '1681007089:AAEUAha-oFHjhXa8qA0sjhDF03FmS93sPtE',
+                    'levels' => ['error', 'info', 'warning'],
+                    'categories' => ['wazzup_telegram_log'],
+                    'chatId' => 90187076,
                 ],
             ],
         ],
@@ -64,6 +66,12 @@ $config = [
         'logsis' => [
             'class' => app\components\Logsis::class,
             'host' => 'http://cab.logsis.ru/apiv2'
+        ],
+        'wazzup' => [
+            'class' => app\components\Wazzup::class,
+        ],
+        'transport' => [
+            'class' => app\components\RetailTransportMg::class
         ],
         'queue' => [
             'class' => \yii\queue\file\Queue::class,

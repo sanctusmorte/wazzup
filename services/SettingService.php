@@ -7,20 +7,8 @@ use yii\helpers\{
     Url,
     Json
 };
-use yii\web\{
-    NotFoundHttpException,
-    ServerErrorHttpException,
-    BadRequestHttpException
-};
-
 use app\models\{
     Setting,
-    Shop, 
-    OrderStatus,
-    SettingShop,
-    RetailToLogsisStatus,
-    PaymentType,
-    PaymentTypeSetting
 };
 
 class SettingService extends Component 
@@ -38,21 +26,10 @@ class SettingService extends Component
     }
 
     /**
-     * @param $settingId
+     * @param string $clientId
+     * @return Setting|array|\yii\db\ActiveRecord|null
      */
-    public function setSettingIdInSession($settingId)
-    {
-        Yii::$app->session->set('clientId', $settingId);
-    }
-
-    /**
-     * Получение настроек
-     * 
-     * @param string
-     * @return object
-     */
-
-    public function getSetting(string $clientId = ''): Setting
+    public function getSetting($clientId = '')
     {
         if ($setting = Setting::find()->where(['client_id' => $clientId])->one()) return $setting;
 
@@ -67,7 +44,7 @@ class SettingService extends Component
      */
     public function getSettingById($id)
     {
-        if ($setting = Setting::find()->where(['id' => $id])->one()) {
+        if ($setting = Setting::find()->where(['client_id' => $id])->one()) {
             return $setting;
         } else {
             return null;
@@ -75,127 +52,73 @@ class SettingService extends Component
     }
 
     /**
-     * Сохранение настроек
-     * 
-     * @param object $setting
-     * @return boolean
+     * @param $setting
+     * @return bool
      */
-
-    public function save(Setting $setting): bool
+    public function save($setting): bool
     {
+        $moduleEdit = $this->moduleEdit($setting);
+        if ($moduleEdit['success'] === false) {
+            Yii::error($moduleEdit['logMsg'], 'wazzup_telegram_log');
+        } else {
+            $setting = $moduleEdit['setting'];
+        }
         $setting->save();
-       // $this->moduleEdit($setting);
-        Yii::$app->session->set('clientId', $setting->client_id);
         Yii::$app->getSession()->setFlash("success", "Настройки модуля сохранены.");
         return true;
-
-//        $transaction = Yii::$app->db->beginTransaction();
-//        try {
-//            if ($setting->isNewRecord) {
-//                $setting->is_active = $setting::STATUS_ACTIVE;
-//                $setting->is_freeze = $setting::STATUS_UNFREEZE;
-//            }
-//
-//            $setting->save();
-//
-//            if ($settingShops = $setting->settingShops) {
-//                foreach ($settingShops as $settingShop) {
-//                    $setting->unlink('settingShop', $settingShop, true);
-//                }
-//            }
-//
-//            if ($setting->shop_ids) {
-//                foreach ($setting->shop_ids as $shop_id) {
-//                    $settingShop = new SettingShop([
-//                        'setting_id' => $setting->id,
-//                        'shop_id' => $shop_id
-//                    ]);
-//
-//                    if ($settingShop->validate()) $settingShop->save();
-//                }
-//            }
-//
-//            if ($orderStatuses = $setting->order_statuses) $this->synchStatusSave($setting, $orderStatuses);
-//            if ($setting->payment_types && $setting->payment_types_cod) $this->synchPaymentTypeSave($setting);
-//
-//            $this->getShops($setting);
-//            $this->getOrderStatus($setting);
-//            $this->getPaymentType($setting);
-//            $this->moduleEdit($setting);
-//
-//            $transaction->commit();
-//
-//            Yii::$app->session->set('clientId', $setting->client_id);
-//            Yii::$app->getSession()->setFlash("success", "Настройки модуля сохранены.");
-//
-//            return true;
-//
-//        } catch(\Exception $th) {
-//            $transaction->rollBack();
-//
-//            Yii::error($th->getMessage(), 'Ошибка сохранения настроек модуля.');
-//            Yii::$app->getSession()->setFlash("error", "Ошибка сохранения настроек модуля.");
-//
-//            return false;
-//        }
-    }
-    
-    /**
-     * Фоновое обновление настроек
-     * 
-     * @param object $setting
-     * @return boolean
-     */
-
-    public function backgroundUpdateSetting(Setting $setting): bool
-    {
-        $this->getShops($setting);
-        $this->getOrderStatus($setting);
-        $this->getPaymentType($setting);
-
-        return true;
     }
 
-
-
     /**
-     * Обновление настроек модуля
-     * 
-     * @param object
-     * @return boolean
+     * @param Setting $setting
+     * @return array
      */
-
-    private function moduleEdit(Setting $setting): bool
+    private function moduleEdit(Setting $setting)
     {
         $moduleData = [
-            'integrationCode' => 'wazzup',
-            'code' => 'wazzup',
+            'integrationCode' => 'wazzup-transport',
+            'code' => 'wazzup-transport',
             'clientId' => $setting->client_id,
             'baseUrl' => 'https://wazzup.imb-service.ru',
             'accountUrl' => 'https://wazzup.imb-service.ru/setting',
             'active' => true,
             'freeze' => false,
-            'name' => 'Wazzup чаты v1.0 [dev-max]',
+            'name' => 'Wazzup чаты v1.2 [dev-max]',
             'actions' => [
                 'activity' => '/setting/activity'
             ],
+            'integrations' => [
+                'mgTransport' => [
+                    "webhookUrl" => "http://imb-service.ru/wazzup_test_max/test.php"
+                ]
+            ],
         ];
 
-        if ($response = Yii::$app->retail->moduleEdit($this->getRetailAuthData($setting), $moduleData)) {
-            return true;
+        $moduleEdit = Yii::$app->retail->moduleEdit($this->getRetailAuthData($setting), $moduleData);
+        if ($moduleEdit['success'] === false) {
+            return $moduleEdit;
         } else {
-            return false;
+            $moduleEditResponse = $moduleEdit['data'];
+            if (isset($moduleEditResponse['info']['mgTransport']['endpointUrl'])) {
+                $setting->mg_transport_endpoint_url = $moduleEditResponse['info']['mgTransport']['endpointUrl'];
+            }
+            if (isset($moduleEditResponse['info']['mgTransport']['endpointUrl'])) {
+                $setting->mg_transport_token = $moduleEditResponse['info']['mgTransport']['token'];
+            }
+            $setting->save();
+
+
+            return [
+                'success' => true,
+                'setting' => $setting
+            ];
         }
     }
 
 
     /**
-     * Получение данных авторизации для retailCRM
-     * 
-     * @param object
-     * @param array
+     * @param Setting $setting
+     * @return array
      */
-
     private function getRetailAuthData(Setting $setting): array
     {
         return [
@@ -205,12 +128,10 @@ class SettingService extends Component
     }
 
     /**
-     * Генерация секретного ключа
-     * 
      * @return string
+     * @throws \yii\base\Exception
      */
-
-    private function generateClientId(): string
+    public function generateClientId(): string
     {
         while (true) {
             $clientId = Yii::$app->security->generateRandomString(32);
