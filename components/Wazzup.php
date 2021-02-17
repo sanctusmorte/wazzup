@@ -97,7 +97,7 @@ class Wazzup extends Component
         $url = 'https://api.wazzup24.com/v2/channels';
 
         $response = json_decode($this->makeGetRequest($url, $apiKey), 1);
-        
+
         if (isset($response['error'])) {
             return [
                 'success' => false,

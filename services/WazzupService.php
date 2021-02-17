@@ -10,7 +10,8 @@ class WazzupService
 {
     public function putUrlWebHook($setting)
     {
-        $createChannel = Yii::$app->wazzup->putUrlWebHook($setting);
+        $webHookEdit = Yii::$app->wazzup->putUrlWebHook($setting);
+        var_dump($webHookEdit);
     }
 
     public function handleMessageFromWazzup(array $message)
