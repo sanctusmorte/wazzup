@@ -40,7 +40,7 @@ class WazzupController extends Controller
         ]);
     }
 
-    public function actionWebHoo()
+    public function actionWebHook()
     {
         $data = file_get_contents('php://input');
         if ($data === null) {
