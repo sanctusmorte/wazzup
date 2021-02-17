@@ -42,6 +42,7 @@ class WazzupController extends Controller
 
     public function actionWebHook()
     {
+        return http_response_code(200);
         $message = file_get_contents('php://input');
         if ($message !== null) {
             $this->wazzupService->handleMessageFromWazzup(json_decode($message)['messages']);
