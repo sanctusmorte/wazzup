@@ -74,7 +74,5 @@ class RetailTransportMg extends Component
         ];
 
         $response = $this->makePostRequest($url, $setting, $body);
-
-        Yii::error($response, 'wazzup_telegram_log');
     }
 }
