@@ -20,6 +20,7 @@ class WazzupController extends Controller
 {
     private $wazzupService;
 
+
     public function __construct($id, Module $module, WazzupService $wazzupService, $config = [])
     {
         parent::__construct($id, $module, $config);
@@ -40,10 +41,10 @@ class WazzupController extends Controller
         ]);
     }
 
-    public function actionWebHook()
+    public function actionWebHoo()
     {
         $data = file_get_contents('php://input');
-        if ($data === null) {
+        if ($data === null or $data === '{"messages":[],"channels":[],"statuses":[]}') {
             return http_response_code(200);
         } else {
             $message = json_decode($data, 1);
