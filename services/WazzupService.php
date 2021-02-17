@@ -13,10 +13,12 @@ class WazzupService
         $webHookEdit = Yii::$app->wazzup->putUrlWebHook($setting);
     }
 
-    public function handleMessageFromWazzup($message)
+    public function handleMessageFromWazzup($wazzupMessages)
     {
-        if ($message['status'] === 99) {
-            $this->sentMessageToRetailCrm($message);
+        foreach ($wazzupMessages as $message) {
+            if ($message['status'] === 99) {
+                $this->sentMessageToRetailCrm($message);
+            }
         }
     }
 
