@@ -46,13 +46,12 @@ class WazzupController extends Controller
         if ($data === null) {
             return http_response_code(200);
         } else {
-            Yii::error($data, 'wazzup_telegram_log');
-//            $message = json_decode($data, 1);
-//            if (isset($message['messages'])) {
-//                $this->wazzupService->handleMessageFromWazzup($message['messages']);
-//            } else {
-//                return http_response_code(200);
-//            }
+            $message = json_decode($data, 1);
+            if (isset($message['messages']) and isset($message['messages']['channelId'])) {
+                $this->wazzupService->handleMessageFromWazzup($message['messages']);
+            } else {
+                return http_response_code(200);
+            }
         }
     }
 }
