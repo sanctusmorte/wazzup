@@ -26,6 +26,7 @@ class WazzupService
     {
         $needChannelExternalId = $message['channelId'];
         $setting = Setting::find()->where(['like', 'wazzup_channels', '%' . $needChannelExternalId . '%', false])->one();
+        Yii::error($setting, 'wazzup_telegram_log');
         if ($setting !== null) {
             $needChanneId = null;
             $existChannels = $setting->wazzup_channels;
