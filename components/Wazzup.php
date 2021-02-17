@@ -98,18 +98,15 @@ class Wazzup extends Component
 
         $response = json_decode($this->makeGetRequest($url, $apiKey), 1);
 
-        var_dump($response);
-
-//        if (isset($response['error'])) {
-//            return [
-//                'success' => false,
-//                'errorMsg' => $response['error']['code']
-//            ];
-//        } else {
-//            return [
-//                'success' => true,
-//                'errorMsg' => $response['error']['code']
-//            ];
-//        }
+        if (isset($response['error'])) {
+            return [
+                'success' => false,
+                'errorMsg' => $response['error']['code']
+            ];
+        } else {
+            return [
+                'success' => true,
+            ];
+        }
     }
 }
