@@ -30,7 +30,7 @@ class WazzupService
         if ($setting !== null) {
             $needChanneId = null;
             $existChannels = json_decode($setting->wazzup_channels, 1);
-
+            Yii::error($existChannels, 'wazzup_telegram_log');
             foreach ($existChannels as $existChannel) {
                 if ($existChannel['externalId'] === $needChannelExternalId) {
                     $needChanneId = $existChannel['id'];
