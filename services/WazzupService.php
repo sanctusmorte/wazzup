@@ -23,7 +23,7 @@ class WazzupService
 
     public function sentMessageToRetailCrm($message)
     {
-        $needChannelExternalId = $message['messages']['channelId'];
+        $needChannelExternalId = $message['channelId'];
         $setting = Setting::find()->where(['like', 'wazzup_channels', '%' . $needChannelExternalId . '%', false])->one();
         if ($setting !== null) {
             $needChanneId = null;
@@ -35,7 +35,7 @@ class WazzupService
                 }
             }
             if ($needChanneId !== null) {
-                Yii::$app->transport->sentMessageToRetailCrm($setting, $message['messages'], $needChanneId);
+                Yii::$app->transport->sentMessageToRetailCrm($setting, $message, $needChanneId);
             }
 
         }
