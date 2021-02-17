@@ -40,14 +40,14 @@ class WazzupController extends Controller
         ]);
     }
 
-    public function actionWebHoo()
+    public function actionWebHook()
     {
-
         $message = file_get_contents('php://input');
-        var_dump($message);
-//        if ($message !== null) {
-//            $this->wazzupService->handleMessageFromWazzup(json_decode($message)['messages']);
-//        }
-//        return http_response_code(200);
+        if ($message === null) {
+            return http_response_code(200);
+        } else {
+            $this->wazzupService->handleMessageFromWazzup(json_decode($message)['messages']);
+            //return true;
+        }
     }
 }
