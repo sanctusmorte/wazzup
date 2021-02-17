@@ -1,0 +1,113 @@
+<?php
+namespace app\components;
+
+use Yii;
+use yii\base\Component;
+
+use yii\helpers\{
+    Url,
+    Json
+};
+
+class Wazzup extends Component
+{
+    /**
+     * @param $url
+     * @param $apiKey
+     * @return bool|string
+     */
+    private function makeGetRequest($url, $apiKey)
+    {
+        $headers = [
+            'Authorization: Basic '.$apiKey.'',
+            'Content-Type:application/json; charset=utf-8'
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        return $response;
+    }
+
+    /**
+     * @param $url
+     * @param $apiKey
+     * @param $body
+     * @return bool|string
+     */
+    private function makePutRequest($url, $apiKey, $body)
+    {
+        $headers = [
+            'Authorization: Basic '.$apiKey.'',
+            'Content-Type:application/json'
+        ];
+
+        var_dump($body);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        var_dump($response);
+
+        return $response;
+    }
+
+    /**
+     * @param $setting
+     * @return bool|string
+     */
+    public function getChannels($setting)
+    {
+        $url = 'https://api.wazzup24.com/v2/channels';
+
+        $response = $this->makeGetRequest($url, $setting->wazzup_api_key);
+
+        if (isset($response['error'])) {
+            return false;
+        } else {
+            return json_decode($response, 1);
+        }
+    }
+
+    public function putUrlWebHook($setting)
+    {
+        $url = 'https://api.wazzup24.com/v2/webhooks';
+
+        $body = [
+            'url' => 'https://wazzup.imb-service.ru/wazzup/web-hook',
+        ];
+
+        $response = $this->makePutRequest($url, $setting->wazzup_api_key, $body);
+    }
+
+    public function checkApiKey($apiKey)
+    {
+        $url = 'https://api.wazzup24.com/v2/channels';
+
+        $response = json_decode($this->makeGetRequest($url, $apiKey), 1);
+
+        if (isset($response['error'])) {
+            return [
+                'success' => false,
+                'errorMsg' => $response['error']['code']
+            ];
+        } else {
+            return [
+                'success' => true,
+                'errorMsg' => $response['error']['code']
+            ];
+        }
+    }
+}
