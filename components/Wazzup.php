@@ -73,7 +73,6 @@ class Wazzup extends Component
             'Content-Type:application/json'
         ];
 
-        var_dump($body);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -86,7 +85,6 @@ class Wazzup extends Component
 
         curl_close($ch);
 
-        var_dump($response);
 
         return $response;
     }
