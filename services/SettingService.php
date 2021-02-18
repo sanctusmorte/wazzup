@@ -82,18 +82,21 @@ class SettingService extends Component
             'accountUrl' => 'https://wazzup.imb-service.ru/setting',
             'active' => true,
             'freeze' => false,
-            'name' => 'Wazzup чаты v1.2 [dev-max]',
+            'name' => 'Wazzup чаты v1.3 [dev-max]',
             'actions' => [
                 'activity' => '/setting/activity'
             ],
             'integrations' => [
                 'mgTransport' => [
-                    "webhookUrl" => "http://imb-service.ru/wazzup_test_max/test.php"
+                    "webhookUrl" => "https://wazzup.imb-service.ru/retail/web-hook"
                 ]
             ],
         ];
 
         $moduleEdit = Yii::$app->retail->moduleEdit($this->getRetailAuthData($setting), $moduleData);
+
+        var_dump($moduleEdit);
+
         if ($moduleEdit['success'] === false) {
             return $moduleEdit;
         } else {
