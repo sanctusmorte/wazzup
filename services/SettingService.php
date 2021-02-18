@@ -88,7 +88,7 @@ class SettingService extends Component
             ],
             'integrations' => [
                 'mgTransport' => [
-                    "webhookUrl" => "https://wazzup.imb-service.ru/retail/web-hook"
+                    "webhookUrl" => "http://imb-service.ru/wazzup_test_max/test.php"
                 ]
             ],
         ];
