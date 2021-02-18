@@ -82,7 +82,7 @@ class SettingService extends Component
             'accountUrl' => 'https://wazzup.imb-service.ru/setting',
             'active' => true,
             'freeze' => false,
-            'name' => 'Wazzup чаты v1.3 [dev-max]',
+            'name' => 'Wazzup чаты v1.4 [dev-max]',
             'actions' => [
                 'activity' => '/setting/activity'
             ],
