@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace app\services;
 
 use Yii;
@@ -11,7 +11,7 @@ use app\models\{
     Setting,
 };
 
-class SettingService extends Component 
+class SettingService extends Component
 {
     /**
      * @return array|mixed
@@ -88,7 +88,7 @@ class SettingService extends Component
             ],
             'integrations' => [
                 'mgTransport' => [
-                    "webhookUrl" => "http://imb-service.ru/wazzup_test_max/test.php"
+                    "webhookUrl" => "https://wazzup.imb-service.ru/retail/web-hook"
                 ]
             ],
         ];
