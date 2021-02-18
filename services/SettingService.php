@@ -59,7 +59,7 @@ class SettingService extends Component
     {
         $moduleEdit = $this->moduleEdit($setting);
         if ($moduleEdit['success'] === false) {
-            Yii::error($moduleEdit['logMsg'], 'wazzup_telegram_log');
+            //Yii::error($moduleEdit['logMsg'], 'wazzup_telegram_log');
         } else {
             $setting = $moduleEdit['setting'];
         }
