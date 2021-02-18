@@ -115,6 +115,8 @@ class Wazzup extends Component
         ];
 
         $response = $this->makePutRequest($url, $setting->wazzup_api_key, $body);
+
+        var_dump($response);
     }
 
     public function checkApiKey($apiKey)
