@@ -24,7 +24,10 @@ class m200827_113825_create_setting_table extends Migration
             'wazzup_instagram_imb_service_ex_id' => $this->string(255),
 
             'created_at' => $this->integer(),
-            'updated_at' => $this->integer()
+            'updated_at' => $this->integer(),
+
+            'is_active' => $this->boolean(),
+            'is_freeze' => $this->boolean(),
         ]);
     }
 

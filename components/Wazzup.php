@@ -39,6 +39,33 @@ class Wazzup extends Component
      * @param $body
      * @return bool|string
      */
+    private function makePostRequest($url, $apiKey, $body)
+    {
+        $headers = [
+            'Authorization: Basic '.$apiKey.'',
+            'Content-Type:application/json'
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $response;
+    }
+
+    /**
+     * @param $url
+     * @param $apiKey
+     * @param $body
+     * @return bool|string
+     */
     private function makePutRequest($url, $apiKey, $body)
     {
         $headers = [
@@ -108,5 +135,12 @@ class Wazzup extends Component
                 'success' => true,
             ];
         }
+    }
+
+    public function sentMessage($setting, $body)
+    {
+        $url = 'https://api.wazzup24.com/v2/send_message';
+
+        $response = $this->makePostRequest($url, $setting['wazzup_api_key'], $body);
     }
 }

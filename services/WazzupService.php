@@ -29,7 +29,7 @@ class WazzupService
 
         if ($setting !== null) {
             $needChanneId = null;
-            $existChannels = json_decode($setting->wazzup_channels, 1);
+            $existChannels = json_decode($setting->wazzup_csentMessagehannels, 1);
 
             foreach ($existChannels as $existChannel) {
                 if ($existChannel['external_id'] === $needChannelExternalId) {
@@ -42,6 +42,36 @@ class WazzupService
                 Yii::$app->transport->sentMessageToRetailCrm($setting, $message, $needChanneId);
             }
 
+        }
+    }
+
+    public function sentMessageToWazzup($retailMessage)
+    {
+        $needSetting = null;
+        $channelExternalId = null;
+        $channelid = $retailMessage['data']['channel_id'];
+        $allSettings = Setting::findAll(['is_active' => 1]);
+        foreach ($allSettings as $existSetting) {
+            $existChannels = json_decode($existSetting->wazzup_channels, 1);
+            if (count($existChannels) > 0) {
+                foreach ($existChannels as $existChannel) {
+                    if ($existChannel['id'] === $channelid) {
+                        $needSetting = $existSetting;
+                        $channelExternalId = $existChannel['external_id'];
+                        break;
+                    }
+                }
+            }
+        }
+
+        if ($needSetting !== null and $channelExternalId !== null) {
+            $body = [
+                'channelId' => $channelExternalId,
+                'chatType' => 'instagram',
+                'chatId' => $retailMessage['data']['external_user_id'],
+                'text' => $retailMessage['data']['content']
+            ];
+            Yii::$app->wazzup->sentMessage($needSetting, $body);
         }
     }
 }

@@ -48,6 +48,12 @@ class RetailTransportMg extends Component
             'type' => $channel['transport'],
             'name' => $channel['plainId'],
             'external_id' => $channel['channelId'],
+            'settings' => [
+                'text' => [
+                    'creating' => 'both',
+                    'editing' => 'send',
+                ],
+            ],
         ];
 
         $response =  $this->makePostRequest($url, $setting, $body);

@@ -16,6 +16,7 @@ class RetailTransportMg
         if ($channels !== false) {
             foreach ($channels as $channel) {
                 $createChannel = Yii::$app->transport->createTransportInRetailCrm($setting, $channel);
+                var_dump($createChannel);
                 if (isset($createChannel['id'])) {
                     $needChannelsToSave[] = [
                         'external_id' => $channel['channelId'],
