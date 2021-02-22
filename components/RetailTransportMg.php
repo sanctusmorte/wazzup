@@ -98,12 +98,9 @@ class RetailTransportMg extends Component
 
     public function uploadFileByUrl(array $data, $request)
     {
-        Yii::error($request, 'wazzup_telegram_log');
-
-//        $url = $data['mg_transport_endpoint_url'] . '/api/transport/v1/files/upload_by_url';
-//
-//        $response = $this->makePostRequest($url, $data['mg_transport_token'], $request);
-//
-//        Yii::error($response, 'wazzup_telegram_log');
+        $url = $data['mg_transport_endpoint_url'] . '/api/transport/v1/files/upload_by_url';
+        $response = $this->makePostRequest($url, $data['mg_transport_token'], $request);
+        
+        return $response;
     }
 }
