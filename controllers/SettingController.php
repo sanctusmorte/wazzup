@@ -24,16 +24,6 @@ class SettingController extends Controller
     private $settingService;
 
     /**
-     * @var RetailTransportMgService
-     */
-    private $transportService;
-
-    /**
-     * @var WazzupService
-     */
-    private $wazzupService;
-
-    /**
      * SettingController constructor.
      * @param $id
      * @param Module $module
@@ -43,11 +33,9 @@ class SettingController extends Controller
      * @param array $config
      */
     public function __construct($id, Module $module, SettingService $settingService,
-                                RetailTransportMgService $transportService, WazzupService $wazzupService, $config = [])
+                                $config = [])
     {
         $this->settingService = $settingService;
-        $this->transportService = $transportService;
-        $this->wazzupService = $wazzupService;
 
         parent::__construct($id, $module, $config);
     }

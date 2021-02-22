@@ -29,25 +29,24 @@ class RetailController extends Controller
         $this->retailTransportMgService = $retailTransportMgService;
     }
 
-
-    public function actionWebHook2()
+    /**
+     * На этот контроллер приходят сообщения из RetailCRM
+     * @return int
+     */
+    public function actionWebHook()
     {
         $data = file_get_contents('php://input');
         if ($data === null) {
             return http_response_code(200);
         } else {
             $message = json_decode($data, 1);
-
-            Yii::error(['сообщение из срмки' => $message], 'wazzup_telegram_log');
-
             if (isset($message['type'])) {
-                //$this->retailTransportMgService->handleMessageFromRetail($message);
-
+                $this->retailTransportMgService->handleMessageFromRetail($message);
                 $response = [
                     'success' => true,
                 ];
-
                 echo json_encode($response);
+                exit;
             } else {
                 return http_response_code(200);
             }

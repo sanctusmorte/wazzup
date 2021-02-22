@@ -4,19 +4,21 @@
 namespace app\services;
 
 use app\helpers\RetailTransportMgHelper;
+use app\helpers\WazzupHelper;
 use app\models\Setting;
 use Yii;
 
 class RetailTransportMgService
 {
-    private $settingService, $wazzupService;
+    private $settingService;
     private $retailTransportMgHelper;
+    private $wazzupHelper;
 
-    public function __construct(SettingService $settingService, RetailTransportMgHelper $retailTransportMgHelper, WazzupService $wazzupService)
+    public function __construct(SettingService $settingService, RetailTransportMgHelper $retailTransportMgHelper, WazzupHelper $wazzupHelper)
     {
         $this->settingService = $settingService;
-        $this->wazzupService = $wazzupService;
         $this->retailTransportMgHelper = $retailTransportMgHelper;
+        $this->wazzupHelper = $wazzupHelper;
     }
 
     public function createChannelsInRetailCrm($setting)
@@ -40,25 +42,39 @@ class RetailTransportMgService
         $this->setChannelsToSetting($setting, $needChannelsToSave);
     }
 
-    public function sentMessageToRetailCrm($message)
-    {
-        $data = $this->settingService->getChannelDataByChannelId($message['channelId']);
-        if ($data !== null) {
-            $data['message'] = $this->retailTransportMgHelper->generateMessage($message, $data);
-            Yii::$app->transport->sentMessageToRetailCrm($data);
-        }
-    }
-
+    /**
+     * Обрабатываем сообщение из RetailCRM и проверяем тип ("type") сообщения
+     * @param $retailMessage
+     */
     public function handleMessageFromRetail($retailMessage)
     {
        if ($retailMessage['type'] === 'message_sent') {
-           $this->wazzupService->sentMessageToWazzup($retailMessage);
+           $this->sentMessageToWazzup($retailMessage);
        }
         if ($retailMessage['type'] === 'message_read') {
             $this->setMessageReadInRetailCrm($retailMessage);
         }
     }
 
+    /**
+     * Отправляем сообщение из RetailCRM в Wazzup
+     * @param $retailMessage
+     */
+    private function sentMessageToWazzup($retailMessage)
+    {
+        $data = $this->settingService->getChannelInfoByChannelIdFromRetailCrm($retailMessage['data']['channel_id']);
+        Yii::error($data, 'wazzup_telegram_log');
+        if ($data !== null) {
+            $body = $this->wazzupHelper->generateMessage($data, $retailMessage);
+            Yii::$app->wazzup->sentMessage($data['wazzup_api_key'], $body);
+        }
+    }
+
+    /**
+     * Если сообщение от клиента было прочитано пользователем RetailCRM
+     * То необходимо пометить его как прочитанное, таким образом в RetailCRM можно отметить все исходящие сообщения как прочитанные клиентом
+     * @param $retailMessage
+     */
     private function setMessageReadInRetailCrm($retailMessage)
     {
         $data = $this->settingService->getChannelDataByChannelId($retailMessage['data']['channel_id']);
