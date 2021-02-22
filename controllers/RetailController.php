@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\services\RetailTransportMgService;
 use app\services\WazzupService;
 use Yii;
 use yii\filters\AccessControl;
@@ -18,14 +19,14 @@ use app\models\{
 
 class RetailController extends Controller
 {
-    private $wazzupService;
+    private $retailTransportMgService;
 
 
-    public function __construct($id, Module $module, WazzupService $wazzupService, $config = [])
+    public function __construct($id, Module $module, RetailTransportMgService $retailTransportMgService, $config = [])
     {
         parent::__construct($id, $module, $config);
 
-        $this->wazzupService = $wazzupService;
+        $this->retailTransportMgService = $retailTransportMgService;
     }
 
 
@@ -40,7 +41,7 @@ class RetailController extends Controller
             Yii::error(['сообщение из срмки' => $message], 'wazzup_telegram_log');
 
             if (isset($message['type'])) {
-                $this->wazzupService->sentMessageToWazzup($message);
+                $this->retailTransportMgService->handleMessageFromRetail($message);
 
                 $response = [
                     'success' => true,

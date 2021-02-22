@@ -12,12 +12,15 @@ class WazzupService
 {
     private $settingService;
     private $retailTransportMgHelper, $wazzupHelper;
+    private $retailTransportMg;
 
-    public function __construct(SettingService $settingService, RetailTransportMgHelper $retailTransportMgHelper, WazzupHelper $wazzupHelper)
+    public function __construct(SettingService $settingService, RetailTransportMgHelper $retailTransportMgHelper,
+                                WazzupHelper $wazzupHelper, RetailTransportMgService $retailTransportMg)
     {
         $this->settingService = $settingService;
         $this->retailTransportMgHelper = $retailTransportMgHelper;
         $this->wazzupHelper = $wazzupHelper;
+        $this->retailTransportMg = $retailTransportMg;
     }
 
     public function putUrlWebHook($setting)
@@ -29,17 +32,8 @@ class WazzupService
     {
         foreach ($wazzupMessages as $message) {
             if ($message['status'] === 99) {
-                $this->sentMessageToRetailCrm($message);
+                $this->retailTransportMg->sentMessageToRetailCrm($message);
             }
-        }
-    }
-
-    public function sentMessageToRetailCrm($message)
-    {
-        $data = $this->settingService->getChannelIdByChannelIdFromWazzup($message['channelId']);
-        if ($data !== null) {
-            $data['message'] = $this->retailTransportMgHelper->generateMessage($message, $data);
-            Yii::$app->transport->sentMessageToRetailCrm($data);
         }
     }
 

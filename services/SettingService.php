@@ -154,7 +154,7 @@ class SettingService extends Component
      * @param $channelId
      * @return array
      */
-    public function getChannelIdByChannelIdFromWazzup($channelId): array
+    public function getChannelDataByChannelId($channelId): array
     {
         $data = null;
         $needChannelId = null;
@@ -217,7 +217,7 @@ class SettingService extends Component
                 'chatType' => $needChannelType,
             ];
         }
-        
+
         return $data;
     }
 
