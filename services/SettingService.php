@@ -88,14 +88,12 @@ class SettingService extends Component
             ],
             'integrations' => [
                 'mgTransport' => [
-                    "webhookUrl" => "https://wazzup.imb-service.ru/retail/web-hook?uuid='$setting->retail_crm_web_hook_uuid'"
+                    "webhookUrl" => 'https://wazzup.imb-service.ru/retail/web-hook?uuid='.$setting->retail_crm_web_hook_uuid.''
                 ]
             ],
         ];
 
         $moduleEdit = Yii::$app->retail->moduleEdit($this->getRetailAuthData($setting), $moduleData);
-
-        var_dump($moduleEdit);
 
         if ($moduleEdit['success'] === false) {
             return $moduleEdit;
@@ -108,7 +106,6 @@ class SettingService extends Component
                 $setting->mg_transport_token = $moduleEditResponse['info']['mgTransport']['token'];
             }
             $setting->save();
-
 
             return [
                 'success' => true,
