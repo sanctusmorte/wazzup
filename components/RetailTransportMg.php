@@ -60,7 +60,7 @@ class RetailTransportMg extends Component
             ],
         ];
 
-        $response =  $this->makePostRequest($url, $setting, $body);
+        $response =  $this->makePostRequest($url, $setting->mg_transport_token, $body);
 
         return json_decode($response, 1);
     }
