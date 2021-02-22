@@ -9,7 +9,7 @@ class RetailTransportMgHelper
     {
         return [
             'Message' => [
-                'ExternalId' => $message['messageId'],
+                'external_id' => $message['messageId'],
                 'Type' => 'text',
                 'Text' => $message['text']
             ],
