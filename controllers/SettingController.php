@@ -40,7 +40,7 @@ class SettingController extends Controller
         parent::__construct($id, $module, $config);
     }
 
-    public function actionTest($params)
+    public function actionTest($uuid)
     {
         var_dump($params);
     }
@@ -80,6 +80,7 @@ class SettingController extends Controller
             if ($existSetting === null) {
                 $newSetting = new Setting();
                 $newSetting->client_id = $clientId;
+                $newSetting->retail_crm_web_hook_uuid = $this->settingService->generateRetailCrmWebHookUuid();
                 $newSetting->is_active = 1;
                 $needSetting = $newSetting;
                 if ($newSetting->load($postData) && $newSetting->validate() && Yii::$app->request->post('submit')) {

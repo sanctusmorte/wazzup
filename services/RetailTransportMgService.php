@@ -46,15 +46,14 @@ class RetailTransportMgService
      * Обрабатываем сообщение из RetailCRM и проверяем тип ("type") сообщения
      * @param $retailMessage
      */
-    public function handleMessageFromRetail($retailMessage)
+    public function handleMessageFromRetail($retailMessage, $existSetting)
     {
-        //Yii::error($retailMessage, 'wazzup_telegram_log');
        if ($retailMessage['type'] === 'message_sent') {
-           $this->sentMessageToWazzup($retailMessage);
+           $this->sentMessageToWazzup($retailMessage, $existSetting);
        }
 
         if ($retailMessage['type'] === 'message_read') {
-            $this->setMessageReadInRetailCrm($retailMessage);
+            $this->setMessageReadInRetailCrm($retailMessage, $existSetting);
         }
     }
 
@@ -62,13 +61,13 @@ class RetailTransportMgService
      * Отправляем сообщение из RetailCRM в Wazzup
      * @param $retailMessage
      */
-    private function sentMessageToWazzup($retailMessage)
+    private function sentMessageToWazzup($retailMessage, $existSetting)
     {
-        $data = $this->settingService->getChannelInfoByChannelIdFromRetailCrm($retailMessage['data']['channel_id']);
+        $data = $this->settingService->getChannelInfoByChannelIdFromRetailCrm($retailMessage['data']['channel_id'], $existSetting);
 
         if ($data !== null) {
             $body = $this->wazzupHelper->generateMessage($data, $retailMessage);
-            Yii::$app->wazzup->sentMessage($data['wazzup_api_key'], $body);
+            Yii::$app->wazzup->sentMessage($existSetting->wazzup_api_key, $body);
         }
     }
 
@@ -77,22 +76,20 @@ class RetailTransportMgService
      * То необходимо пометить его как прочитанное, таким образом в RetailCRM можно отметить все исходящие сообщения как прочитанные клиентом
      * @param $retailMessage
      */
-    private function setMessageReadInRetailCrm($retailMessage)
+    private function setMessageReadInRetailCrm($retailMessage, $existSetting)
     {
         Yii::error($retailMessage, 'wazzup_telegram_log');
-        $data = $this->settingService->getChannelDataByChannelId($retailMessage['data']['channel_id']);
+        $data = $this->settingService->getChannelDataByChannelId($retailMessage['data']['channel_id'], $existSetting);
 
-        //Yii::error($data, 'wazzup_telegram_log');
-
-//        if ($data !== null) {
-//            $body = [
-//                'Message' => [
-//                    'external_id' => $retailMessage['data']['external_message_id']
-//                ],
-//                'channel_id' => $retailMessage['data']['channel_id']
-//            ];
-//            Yii::$app->transport->sentMessageToRetailCrm($data, $body);
-//        }
+        if ($data !== null) {
+            $body = [
+                'Message' => [
+                    'external_id' => $retailMessage['data']['external_message_id']
+                ],
+                'channel_id' => $retailMessage['data']['channel_id']
+            ];
+            Yii::$app->transport->sentMessageToRetailCrm($data, $body);
+        }
     }
 
     private function setChannelsToSetting($setting, $needChannelsToSave)

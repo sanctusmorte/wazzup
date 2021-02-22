@@ -14,6 +14,8 @@ use yii\behaviors\TimestampBehavior;
  * @property string $retail_api_url
  * @property string $retail_api_key
  * @property string $wazzup_api_key
+ * @property string $retail_crm_web_hook_uuid
+ * @property string $wazzup_web_hook_uuid
  * @property string $channels
  * @property int|null $created_at
  * @property int|null $updated_at
@@ -46,7 +48,7 @@ class Setting extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['client_id', 'retail_api_url', 'retail_api_key', 'wazzup_api_key'], 'required'],
+            [['client_id', 'retail_api_url', 'retail_api_key', 'wazzup_api_key', 'retail_crm_web_hook_uuid'], 'required'],
             [['client_id'], 'string', 'max' => 32],
             [['retail_api_url', 'retail_api_key', 'wazzup_api_key'], 'string', 'max' => 255],
             ['retail_api_url', 'match', 'pattern' => '/^https:\/\/.+\.retailcrm\.+[a-zA-Z]+$/i', 'message' => 'Формат ссылки должен быть https://YOUR-DOMAIN.retailcrm.DOMAIN'],
