@@ -41,21 +41,16 @@ class WazzupController extends Controller
         ]);
     }
 
-    public function actionWebHook2()
+    public function actionWebHook()
     {
         $data = file_get_contents('php://input');
-
-
-
         if ($data === null or $data === '{"messages":[],"channels":[],"statuses":[]}') {
             return http_response_code(200);
         } else {
             $message = json_decode($data, 1);
-
-            Yii::error(['сообщение из вазапа' => $message], 'wazzup_telegram_log');
-
             if (isset($message['messages'])) {
-                //$this->wazzupService->handleMessageFromWazzup($message['messages']);
+                $this->wazzupService->handleMessageFromWazzup($message['messages']);
+                return http_response_code(200);
             } else {
                 return http_response_code(200);
             }
