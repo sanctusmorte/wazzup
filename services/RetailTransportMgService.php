@@ -48,7 +48,7 @@ class RetailTransportMgService
      */
     public function handleMessageFromRetail($retailMessage)
     {
-        Yii::error($retailMessage, 'wazzup_telegram_log');
+        //Yii::error($retailMessage, 'wazzup_telegram_log');
        if ($retailMessage['type'] === 'message_sent') {
            $this->sentMessageToWazzup($retailMessage);
        }
@@ -79,9 +79,10 @@ class RetailTransportMgService
      */
     private function setMessageReadInRetailCrm($retailMessage)
     {
+        Yii::error($retailMessage, 'wazzup_telegram_log');
         $data = $this->settingService->getChannelDataByChannelId($retailMessage['data']['channel_id']);
 
-        Yii::error($data, 'wazzup_telegram_log');
+        //Yii::error($data, 'wazzup_telegram_log');
 
 //        if ($data !== null) {
 //            $body = [
