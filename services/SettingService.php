@@ -165,7 +165,7 @@ class SettingService extends Component
         if ($setting !== null) {
             $channels = json_decode($setting->wazzup_channels, 1);
             foreach ($channels as $channel) {
-                if ($channels['external_id'] === $channelId) {
+                if ($channel['external_id'] === $channelId) {
                     $needChannelId = $channel['id'];
                     break;
                 }
