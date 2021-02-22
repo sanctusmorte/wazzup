@@ -42,7 +42,6 @@ class RetailController extends Controller
 
                 $response = [
                     'success' => true,
-                    'is_read' => true,
                 ];
 
                 echo json_encode($response);
