@@ -42,7 +42,7 @@ class WazzupService
         $data = $this->settingService->getChannelIdByChannelIdFromWazzup($message['channelId']);
 
         if ($data !== null) {
-            Yii::$app->transport->sentMessageToRetailCrm($this->retailTransportMgHelper->generateMessage($message, $data['channelId']));
+            Yii::$app->transport->sentMessageToRetailCrm($data['message'] = $this->retailTransportMgHelper->generateMessage($message, $data['channelId']));
         }
     }
 
