@@ -38,8 +38,6 @@ class RetailTransportMgHelper
             ];
         }
 
-
-
         if (isset($message['content'])) {
             $uploadFile = json_decode(Yii::$app->transport->uploadFileByUrl($data, ['url' => $message['content']]));
             if (isset($uploadFile['id'])) {
