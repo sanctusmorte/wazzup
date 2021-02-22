@@ -160,6 +160,8 @@ class SettingService extends Component
         $needChannelId = null;
         $setting = Setting::find()->where(['like', 'wazzup_channels', '%' . $channelId . '%', false])->one();
 
+        Yii::error($setting, 'wazzup_telegram_log');
+
         if ($setting !== null) {
             $channels = json_decode($setting->wazzup_channels, 1);
             foreach ($channels as $channel) {

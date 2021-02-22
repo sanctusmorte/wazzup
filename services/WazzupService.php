@@ -27,7 +27,7 @@ class WazzupService
     {
         foreach ($wazzupMessages as $message) {
             if ($message['status'] === 99) {
-                Yii::error($message, 'wazzup_telegram_log');
+                //Yii::error($message, 'wazzup_telegram_log');
                 $this->sentMessageToRetailCrm($message);
             }
 
@@ -40,7 +40,7 @@ class WazzupService
     public function sentMessageToRetailCrm($message)
     {
         $data = $this->settingService->getChannelIdByChannelIdFromWazzup($message['channelId']);
-        Yii::error($data, 'wazzup_telegram_log');
+
         if ($data !== null) {
             Yii::$app->transport->sentMessageToRetailCrm($this->retailTransportMgHelper->generateMessage($message, $data['channelId']));
         }
