@@ -54,9 +54,9 @@ class RetailTransportMg extends Component
                     'read' => 'both'
                 ],
                 'text' => [
-                   // 'creating' => 'receive',
-                   // 'editing' => 'both',
-                   // 'quoting' => 'receive',
+                    'creating' => 'receive',
+                    'editing' => 'both',
+                    'quoting' => 'receive',
                 ],
             ],
         ];
