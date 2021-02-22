@@ -53,9 +53,6 @@ class WazzupService
         $channelid = $retailMessage['data']['channel_id'];
         $allSettings = Setting::findAll(['is_active' => 1]);
 
-
-
-
         foreach ($allSettings as $existSetting) {
             $existChannels = json_decode($existSetting->wazzup_channels, 1);
             Yii::error([json_decode($existSetting->wazzup_channels, 1)], 'wazzup_telegram_log');

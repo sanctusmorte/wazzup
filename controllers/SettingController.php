@@ -16,7 +16,7 @@ use app\models\{
     Setting
 };
 
-class SettingController extends Controller 
+class SettingController extends Controller
 {
     /**
      * @var SettingService
@@ -54,7 +54,7 @@ class SettingController extends Controller
 
     /**
      * Страница настроек модуля
-     * 
+     *
      * @return string
      */
     public function actionIndex()
@@ -89,6 +89,7 @@ class SettingController extends Controller
             if ($existSetting === null) {
                 $newSetting = new Setting();
                 $newSetting->client_id = $clientId;
+                $newSetting->is_active = 1;
                 $needSetting = $newSetting;
                 if ($newSetting->load($postData) && $newSetting->validate() && Yii::$app->request->post('submit')) {
                     $this->settingService->save($newSetting);
@@ -99,6 +100,7 @@ class SettingController extends Controller
             } else {
                 $needSetting = $existSetting;
                 if ($existSetting->load($postData) && $existSetting->validate() && Yii::$app->request->post('submit')) {
+                    $needSetting->is_active = 1;
                     $this->settingService->save($existSetting);
                     $this->transportService->createChannelsInRetailCrm($existSetting);
                     $this->wazzupService->putUrlWebHook($existSetting);
