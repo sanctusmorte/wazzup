@@ -37,8 +37,6 @@ class RetailController extends Controller
         } else {
             $message = json_decode($data, 1);
 
-
-
             if (isset($message['type'])) {
                 $this->wazzupService->sentMessageToWazzup($message);
 

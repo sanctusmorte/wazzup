@@ -67,7 +67,7 @@ class WazzupService
             }
         }
 
-        //Yii::error([$needSetting, $channelExternalId], 'wazzup_telegram_log');
+        Yii::error($retailMessage, 'wazzup_telegram_log');
 
         if ($needSetting !== null and $channelExternalId !== null) {
             $body = [
