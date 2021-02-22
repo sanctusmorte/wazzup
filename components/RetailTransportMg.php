@@ -49,9 +49,13 @@ class RetailTransportMg extends Component
             'name' => $channel['plainId'],
             'external_id' => $channel['channelId'],
             'settings' => [
+                'status' => [
+                    'delivered' => 'none',
+                    'read' => 'receive'
+                ],
                 'text' => [
                     'creating' => 'both',
-                    'editing' => 'send',
+                    'editing' => 'both',
                 ],
             ],
         ];
