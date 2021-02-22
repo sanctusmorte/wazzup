@@ -59,18 +59,18 @@ class SettingController extends Controller
      */
     public function actionIndex()
     {
-
-        //Yii::error(['awd'], 'wazzup_telegram_log');
-        $clientId = $this->settingService->getSettingId();
-
-        $setting = $this->settingService->getSetting($clientId);
-        if ($setting->isNewRecord) {
-            Yii::$app->session->set('clientId', $setting->client_id);
-        }
-
-        return $this->render('index', [
-            'setting' => $setting
-        ]);
+        phpinfo();
+//        //Yii::error(['awd'], 'wazzup_telegram_log');
+//        $clientId = $this->settingService->getSettingId();
+//
+//        $setting = $this->settingService->getSetting($clientId);
+//        if ($setting->isNewRecord) {
+//            Yii::$app->session->set('clientId', $setting->client_id);
+//        }
+//
+//        return $this->render('index', [
+//            'setting' => $setting
+//        ]);
     }
 
     public function actionSave()
