@@ -143,19 +143,7 @@ class Setting extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Получение данных авторизации
-     * 
-     * @return array
-     */
 
-    public function getRetailAuthData(): array
-    {
-        return [
-            'retailApiUrl' => $this->retail_api_url,
-            'retailApiKey' => $this->retail_api_key
-        ];
-    }
-    
+
 }
 
