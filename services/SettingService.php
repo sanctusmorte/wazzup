@@ -160,8 +160,6 @@ class SettingService extends Component
         $needChannelId = null;
         $setting = Setting::find()->where(['like', 'wazzup_channels', '%' . $channelId . '%', false])->one();
 
-
-
         if ($setting !== null) {
             $channels = json_decode($setting->wazzup_channels, 1);
             foreach ($channels as $channel) {
@@ -170,15 +168,12 @@ class SettingService extends Component
                     break;
                 }
             }
-
             if ($needChannelId !== null) {
                 $data = [
                     'channelId' => $needChannelId,
                     'mg_transport_token' => $setting->mg_transport_token,
                     'mg_transport_endpoint_url' => $setting->mg_transport_endpoint_url
                 ];
-                Yii::error($data, 'wazzup_telegram_log');
-
             }
         }
 
