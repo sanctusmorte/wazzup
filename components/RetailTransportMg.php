@@ -93,14 +93,13 @@ class RetailTransportMg extends Component
 
         $response = $this->makePostRequest($url, $data['mg_transport_token'], $data['message']);
 
-       // Yii::error($response, 'wazzup_telegram_log');
+        Yii::error($response, 'wazzup_telegram_log');
     }
 
     public function uploadFileByUrl(array $data, $request)
     {
         $url = $data['mg_transport_endpoint_url'] . '/api/transport/v1/files/upload_by_url';
         $response = $this->makePostRequest($url, $data['mg_transport_token'], $request);
-        Yii::error($response, 'wazzup_telegram_log');
         return $response;
     }
 }
