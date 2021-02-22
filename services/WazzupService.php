@@ -3,11 +3,21 @@
 
 namespace app\services;
 
+use app\helpers\RetailTransportMgHelper;
 use app\models\Setting;
 use Yii;
 
 class WazzupService
 {
+    private $settingService;
+    private $retailTransportMgHelper;
+
+    public function __construct(SettingService $settingService, RetailTransportMgHelper $retailTransportMgHelper)
+    {
+        $this->settingService = $settingService;
+        $this->retailTransportMgHelper = $retailTransportMgHelper;
+    }
+
     public function putUrlWebHook($setting)
     {
         $webHookEdit = Yii::$app->wazzup->putUrlWebHook($setting);
@@ -19,30 +29,18 @@ class WazzupService
             if ($message['status'] === 99) {
                 $this->sentMessageToRetailCrm($message);
             }
+
+            if ($message['status'] === 3) {
+                $this->sentMessageToRetailCrm($message);
+            }
         }
     }
 
     public function sentMessageToRetailCrm($message)
     {
-        $needChannelExternalId = $message['channelId'];
-        $setting = Setting::find()->where(['like', 'wazzup_channels', '%' . $needChannelExternalId . '%', false])->one();
-
-
-        if ($setting !== null) {
-            $needChanneId = null;
-            $existChannels = json_decode($setting->wazzup_channels, 1);
-
-            foreach ($existChannels as $existChannel) {
-                if ($existChannel['external_id'] === $needChannelExternalId) {
-                    $needChanneId = $existChannel['id'];
-                    break;
-                }
-            }
-
-            if ($needChanneId !== null) {
-                Yii::$app->transport->sentMessageToRetailCrm($setting, $message, $needChanneId);
-            }
-
+        $data = $this->settingService->getChannelIdByChannelIdFromWazzup($message['channelId']);
+        if ($data !== null) {
+            Yii::$app->transport->sentMessageToRetailCrm($this->retailTransportMgHelper->generateMessage($message, $data['channelId']));
         }
     }
 
@@ -81,4 +79,6 @@ class WazzupService
             Yii::$app->wazzup->sentMessage($needSetting, $body);
         }
     }
+
+
 }

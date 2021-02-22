@@ -19,11 +19,11 @@ class RetailTransportMg extends Component
      * @param array $body
      * @return bool|string
      */
-    private function makePostRequest(string $url, $setting, array $body)
+    private function makePostRequest(string $url, string $mg_transport_token, array $body)
     {
         $headers = [
             'Content-Type: application/json; charset=utf-8',
-            'X-Transport-Token: '.$setting->mg_transport_token.''
+            'X-Transport-Token: '.$mg_transport_token.''
         ];
 
         $ch = curl_init();
@@ -61,25 +61,11 @@ class RetailTransportMg extends Component
         return json_decode($response, 1);
     }
 
-    public function sentMessageToRetailCrm($setting, $message, $needChanneId)
+    public function sentMessageToRetailCrm(array $data)
     {
-        $url = $setting->mg_transport_endpoint_url . '/api/transport/v1/messages';
+        $url = $data['mg_transport_endpoint_url'] . '/api/transport/v1/messages';
 
-        $body = [
-            'Message' => [
-                'ExternalId' => $message['messageId'],
-                'Type' => 'text',
-                'Text' => $message['text']
-            ],
-            'User' => [
-                'Firstname' => $message['authorName'],
-                'external_id' => $message['chatId'],
-                'nickname' => $message['authorName'],
-            ],
-            'Channel' => $needChanneId,
-        ];
-
-        $response = $this->makePostRequest($url, $setting, $body);
+        $response = $this->makePostRequest($url, $data['mg_transport_token'], $data['message']);
 
        // Yii::error($response, 'wazzup_telegram_log');
     }
