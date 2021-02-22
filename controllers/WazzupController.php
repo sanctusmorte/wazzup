@@ -55,7 +55,7 @@ class WazzupController extends Controller
             Yii::error(['сообщение из вазапа' => $message], 'wazzup_telegram_log');
 
             if (isset($message['messages'])) {
-                $this->wazzupService->handleMessageFromWazzup($message['messages']);
+                //$this->wazzupService->handleMessageFromWazzup($message['messages']);
             } else {
                 return http_response_code(200);
             }
