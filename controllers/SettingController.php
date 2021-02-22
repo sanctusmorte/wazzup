@@ -59,7 +59,7 @@ class SettingController extends Controller
      */
     public function actionIndex()
     {
-        phpinfo();
+        var_dump(phpinfo());
 //        //Yii::error(['awd'], 'wazzup_telegram_log');
 //        $clientId = $this->settingService->getSettingId();
 //

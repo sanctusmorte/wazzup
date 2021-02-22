@@ -30,7 +30,7 @@ class RetailController extends Controller
     }
 
 
-    public function actionWebHook()
+    public function actionWebHook2()
     {
         $data = file_get_contents('php://input');
         if ($data === null) {
