@@ -96,6 +96,7 @@ class SettingController extends Controller
                     $this->settingService->save($newSetting);
                     $this->transportService->createChannelsInRetailCrm($newSetting);
                     $this->wazzupService->putUrlWebHook($newSetting);
+                    Yii::$app->session->set('clientId', $newSetting->client_id);
                     return $this->redirect(['/setting/index']);
                 }
             } else {
