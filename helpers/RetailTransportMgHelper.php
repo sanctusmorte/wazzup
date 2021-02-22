@@ -41,16 +41,15 @@ class RetailTransportMgHelper
 
 
         if (isset($message['content'])) {
-            $uploadFile = Yii::$app->transport->uploadFileByUrl($data, ['url' => $message['content']]);
-            //Yii::error($uploadFile, 'wazzup_telegram_log');
-//            if (isset($uploadFile['id'])) {
-//                $body['Message']['Type'] = 'image';
-//                $body['Message']['items'] = [
-//                    0 => [
-//                        'id' => $uploadFile['id']
-//                    ],
-//                ];
-//            }
+            $uploadFile = json_decode(Yii::$app->transport->uploadFileByUrl($data, ['url' => $message['content']]));
+            if (isset($uploadFile['id'])) {
+                $body['Message']['Type'] = 'image';
+                $body['Message']['items'] = [
+                    0 => [
+                        'id' => $uploadFile['id']
+                    ],
+                ];
+            }
         }
 
         return $body;
