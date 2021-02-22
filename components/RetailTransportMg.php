@@ -50,34 +50,34 @@ class RetailTransportMg extends Component
             'external_id' => $channel['channelId'],
             'settings' => [
                 'status' => [
-                    'delivered' => 'both',
-                    'read' => 'both'
+                    'Delivered' => 'both',
+                    'Read' => 'both'
                 ],
                 'text' => [
-                    'creating' => 'both',
-                    'editing' => 'both',
-                    'quoting' => 'both',
-                    'deleting' => 'both',
+                    'Creating' => 'both',
+                    'Editing' => 'both',
+                    'Quoting' => 'both',
+                    'Deleting' => 'both',
                     'max_chars_count' => 4096
                 ],
                 'image' => [
-                    'creating' => 'both',
-                    'editing' => 'both',
-                    'quoting' => 'both',
-                    'deleting' => 'both',
+                    'Creating' => 'both',
+                    'Editing' => 'both',
+                    'Quoting' => 'both',
+                    'Deleting' => 'both',
                     'max_items_count' => 4096
                 ],
                 'file' => [
-                    'creating' => 'both',
-                    'editing' => 'both',
-                    'quoting' => 'both',
-                    'deleting' => 'both',
+                    'Creating' => 'both',
+                    'Editing' => 'both',
+                    'Quoting' => 'both',
+                    'Deleting' => 'both',
                     'max_items_count' => 1
                 ],
                 'suggestions' => [
-                    'text' => 'both',
-                    'email' => 'both',
-                    'phone' => 'both',
+                    'Text' => 'both',
+                    'Email' => 'both',
+                    'Phone' => 'both',
                 ],
             ],
         ];
