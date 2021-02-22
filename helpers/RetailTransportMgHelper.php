@@ -2,6 +2,8 @@
 
 namespace app\helpers;
 
+use Yii;
+
 /**
  * Class RetailTransportMgHelper
  * @package app\helpers
@@ -13,9 +15,9 @@ class RetailTransportMgHelper
      * @param $channelId
      * @return array
      */
-    public function generateMessage($message, $channelId): array
+    public function generateMessage(array $message, array $data): array
     {
-        $data =  [
+        $body =  [
             'Message' => [
                 'external_id' => $message['messageId'],
                 'Type' => 'text',
@@ -26,16 +28,28 @@ class RetailTransportMgHelper
                 'external_id' => $message['chatId'],
                 'nickname' => $message['authorName'],
             ],
-            'Channel' => $channelId,
+            'Channel' => $data['channelId'],
         ];
 
         // проверяем цитируется ли сообщение
         if (isset($message['refMessageId'])) {
-            $data['Quote'] = [
+            $body['Quote'] = [
                 'external_id' => $message['refMessageId']
             ];
         }
 
-        return $data;
+        if (isset($message['content'])) {
+            $uploadFile = json_decode(Yii::$app->transpot->uploadFileByUrl($data));
+            if (isset($uploadFile['id'])) {
+                $body['Message']['Type'] = 'image';
+                $body['Message']['items'] = [
+                    0 => [
+                        'id' => $uploadFile['id']
+                    ],
+                ];
+            }
+        }
+
+        return $body;
     }
 }
