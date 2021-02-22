@@ -50,7 +50,7 @@ class RetailTransportMgHelper
             }
         }
 
-        Yii::error($body, 'wazzup_telegram_log');
+        //Yii::error($body, 'wazzup_telegram_log');
 
         return $body;
     }
