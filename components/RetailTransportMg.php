@@ -57,6 +57,27 @@ class RetailTransportMg extends Component
                     'creating' => 'both',
                     'editing' => 'both',
                     'quoting' => 'both',
+                    'deleting' => 'both',
+                    'max_chars_count' => 4096
+                ],
+                'image' => [
+                    'creating' => 'both',
+                    'editing' => 'both',
+                    'quoting' => 'both',
+                    'deleting' => 'both',
+                    'max_items_count' => 4096
+                ],
+                'file' => [
+                    'creating' => 'both',
+                    'editing' => 'both',
+                    'quoting' => 'both',
+                    'deleting' => 'both',
+                    'max_items_count' => 1
+                ],
+                'suggestions' => [
+                    'text' => 'both',
+                    'email' => 'both',
+                    'phone' => 'both',
                 ],
             ],
         ];
