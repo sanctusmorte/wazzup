@@ -31,24 +31,30 @@ class RetailController extends Controller
 
     /**
      * На этот контроллер приходят сообщения из RetailCRM
+     * @param $uuid
      * @return int
      */
-    public function actionWebHook()
+    public function actionWebHook($uuid)
     {
-        $data = file_get_contents('php://input');
-        if ($data === null) {
-            return http_response_code(200);
-        } else {
-            $message = json_decode($data, 1);
-            if (isset($message['type'])) {
-                $this->retailTransportMgService->handleMessageFromRetail($message);
-                $response = [
-                    'success' => true,
-                ];
-                echo json_encode($response);
-                exit;
-            } else {
-                return http_response_code(200);
+        if ($uuid !== null and $uuid !== "") {
+            $existSetting = Setting::find()->where(['retail_crm_web_hook_uuid' => $uuid])->one();
+            if ($existSetting !== null) {
+                $data = file_get_contents('php://input');
+                if ($data === null) {
+                    return http_response_code(200);
+                } else {
+                    $message = json_decode($data, 1);
+                    if (isset($message['type'])) {
+                        $this->retailTransportMgService->handleMessageFromRetail($message, $existSetting);
+                        $response = [
+                            'success' => true,
+                        ];
+                        echo json_encode($response);
+                        exit;
+                    } else {
+                        return http_response_code(200);
+                    }
+                }
             }
         }
     }

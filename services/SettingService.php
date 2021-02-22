@@ -88,7 +88,7 @@ class SettingService extends Component
             ],
             'integrations' => [
                 'mgTransport' => [
-                    "webhookUrl" => "https://wazzup.imb-service.ru/retail/web-hook"
+                    "webhookUrl" => "https://wazzup.imb-service.ru/retail/web-hook?uuid='$setting->retail_crm_web_hook_uuid'"
                 ]
             ],
         ];
@@ -145,6 +145,22 @@ class SettingService extends Component
         }
     }
 
+    /**
+     * @return string
+     * @throws \yii\base\Exception
+     */
+    public function generateRetailCrmWebHookUuid(): string
+    {
+        while (true) {
+            $uuid = Yii::$app->security->generateRandomString(32);
+
+            if (!Setting::find()->where(['retail_crm_web_hook_uuid' => $uuid])->one()) {
+                return $uuid;
+            }
+        }
+    }
+
+
 
     /**
      * Возвращает информацию о канале
@@ -154,28 +170,27 @@ class SettingService extends Component
      * @param $channelId
      * @return array
      */
-    public function getChannelDataByChannelId($channelId): array
+    public function getChannelDataByChannelId($channelId, $existSetting): array
     {
         $data = null;
         $needChannelId = null;
-        $setting = Setting::find()->where(['like', 'wazzup_channels', '%' . $channelId . '%', false])->one();
 
-        if ($setting !== null) {
-            $channels = json_decode($setting->wazzup_channels, 1);
-            foreach ($channels as $channel) {
-                if ($channel['external_id'] === $channelId) {
-                    $needChannelId = $channel['id'];
-                    break;
-                }
-            }
-            if ($needChannelId !== null) {
-                $data = [
-                    'channelId' => $needChannelId,
-                    'mg_transport_token' => $setting->mg_transport_token,
-                    'mg_transport_endpoint_url' => $setting->mg_transport_endpoint_url
-                ];
+        $channels = json_decode($existSetting->wazzup_channels, 1);
+        foreach ($channels as $channel) {
+            if ($channel['external_id'] === $channelId) {
+                $needChannelId = $channel['id'];
+                break;
             }
         }
+
+        if ($needChannelId !== null) {
+            $data = [
+                'channelId' => $needChannelId,
+                'mg_transport_token' => $setting->mg_transport_token,
+                'mg_transport_endpoint_url' => $setting->mg_transport_endpoint_url
+            ];
+        }
+
 
         return $data;
     }
@@ -188,31 +203,25 @@ class SettingService extends Component
      * @param $channelId
      * @return array
      */
-    public function getChannelInfoByChannelIdFromRetailCrm($channelId): array
+    public function getChannelInfoByChannelIdFromRetailCrm($channelId, $existSetting): array
     {
         $data = null;
-        $needSetting = null;
         $needChannelExternalId = null;
         $needChannelType = null;
 
-        $allSettings = Setting::findAll(['is_active' => 1]);
-        foreach ($allSettings as $existSetting) {
-            $existChannels = json_decode($existSetting->wazzup_channels, 1);
-            if (count($existChannels) > 0) {
-                foreach ($existChannels as $existChannel) {
-                    if ($existChannel['id'] === $channelId) {
-                        $needSetting = $existSetting;
-                        $needChannelExternalId = $existChannel['external_id'];
-                        $needChannelType = $existChannel['channelType'];
-                        break;
-                    }
+        $existChannels = json_decode($existSetting->wazzup_channels, 1);
+        if (count($existChannels) > 0) {
+            foreach ($existChannels as $existChannel) {
+                if ($existChannel['id'] === $channelId) {
+                    $needChannelExternalId = $existChannel['external_id'];
+                    $needChannelType = $existChannel['channelType'];
+                    break;
                 }
             }
         }
 
-        if ($needSetting !== null and $needChannelExternalId !== null and $needChannelType !== null) {
+        if ($needChannelExternalId !== null and $needChannelType !== null) {
             $data = [
-                'wazzup_api_key' => $needSetting->wazzup_api_key,
                 'channelId' => $needChannelExternalId,
                 'chatType' => $needChannelType,
             ];

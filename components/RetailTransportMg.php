@@ -103,9 +103,9 @@ class RetailTransportMg extends Component
         return $response;
     }
 
-    public function setMessageRead(array $data, array $body)
+    public function setMessageRead($existSetting, array $body)
     {
-        $url = $data['mg_transport_endpoint_url'] . '/api/transport/v1/messages/read';
-        $response = $this->makePostRequest($url, $data['mg_transport_token'], $body);
+        $url = $existSetting->mg_transport_endpoint_url . '/api/transport/v1/messages/read';
+        $response = $this->makePostRequest($url, $existSetting->mg_transport_token, $body);
     }
 }

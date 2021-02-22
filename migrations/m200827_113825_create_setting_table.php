@@ -22,6 +22,9 @@ class m200827_113825_create_setting_table extends Migration
             'wazzup_channels' => $this->text(),
             'mg_transport_endpoint_url' => $this->string(255),
 
+            'retail_crm_web_hook_uuid' => $this->string(255),
+            'wazzup_web_hook_uuid' => $this->string(255),
+
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
 
