@@ -81,6 +81,7 @@ class SettingController extends Controller
                 $newSetting = new Setting();
                 $newSetting->client_id = $clientId;
                 $newSetting->retail_crm_web_hook_uuid = $this->settingService->generateRetailCrmWebHookUuid();
+                $newSetting->wazzup_web_hook_uuid = $this->settingService->generateWazzupWebHookUuid();
                 $newSetting->is_active = 1;
                 $needSetting = $newSetting;
                 if ($newSetting->load($postData) && $newSetting->validate() && Yii::$app->request->post('submit')) {
@@ -94,6 +95,8 @@ class SettingController extends Controller
                 $needSetting = $existSetting;
                 if ($existSetting->load($postData) && $existSetting->validate() && Yii::$app->request->post('submit')) {
                     $needSetting->is_active = 1;
+                    $existSetting->retail_crm_web_hook_uuid = $this->settingService->generateRetailCrmWebHookUuid();
+                    $existSetting->wazzup_web_hook_uuid = $this->settingService->generateWazzupWebHookUuid();
                     $this->settingService->save($existSetting);
                     $this->retailTransportMgService->createChannelsInRetailCrm($existSetting);
                     $this->wazzupService->putUrlWebHook($existSetting);

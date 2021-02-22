@@ -40,11 +40,11 @@ class WazzupService
      * Сверяем статус ("status") сообщения
      * @param $wazzupMessages
      */
-    public function handleMessageFromWazzup($wazzupMessages)
+    public function handleMessageFromWazzup($wazzupMessages, $existSetting)
     {
         foreach ($wazzupMessages as $message) {
             if ($message['status'] === 99) {
-                $this->sentMessageToRetailCrm($message);
+                $this->sentMessageToRetailCrm($message, $existSetting);
             }
         }
     }
@@ -52,13 +52,14 @@ class WazzupService
     /**
      * Посылаем сообщение из Wazzup в RetailCRM
      * @param $message
+     * @param $existSetting
      */
-    public function sentMessageToRetailCrm($message)
+    public function sentMessageToRetailCrm($message, $existSetting)
     {
-        $data = $this->settingService->getChannelDataByChannelId($message['channelId']);
-        if ($data !== null) {
-            $data['message'] = $this->retailTransportMgHelper->generateMessage($message, $data);
-            Yii::$app->transport->sentMessageToRetailCrm($data);
+        $needChannelId = $this->settingService->getChannelDataByChannelId($message['channelId'], $existSetting);
+        if ($needChannelId !== null) {
+            $body =  $this->retailTransportMgHelper->generateMessage($message, $needChannelId, $existSetting);
+            Yii::$app->transport->sentMessageToRetailCrm($existSetting, $body);
         }
     }
 

@@ -87,19 +87,19 @@ class RetailTransportMg extends Component
         return json_decode($response, 1);
     }
 
-    public function sentMessageToRetailCrm(array $data)
+    public function sentMessageToRetailCrm($existSetting,$body)
     {
-        $url = $data['mg_transport_endpoint_url'] . '/api/transport/v1/messages';
+        $url = $existSetting->mg_transport_endpoint_url . '/api/transport/v1/messages';
 
-        $response = $this->makePostRequest($url, $data['mg_transport_token'], $data['message']);
+        $response = $this->makePostRequest($url, $existSetting->mg_transport_token, $body);
 
         //Yii::error($response, 'wazzup_telegram_log');
     }
 
-    public function uploadFileByUrl(array $data, $request)
+    public function uploadFileByUrl($existSetting, $request)
     {
-        $url = $data['mg_transport_endpoint_url'] . '/api/transport/v1/files/upload_by_url';
-        $response = $this->makePostRequest($url, $data['mg_transport_token'], $request);
+        $url = $existSetting->mg_transport_endpoint_url . '/api/transport/v1/files/upload_by_url';
+        $response = $this->makePostRequest($url, $existSetting->mg_transport_token, $request);
         return $response;
     }
 

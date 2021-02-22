@@ -20,7 +20,6 @@ class WazzupController extends Controller
 {
     private $wazzupService;
 
-
     public function __construct($id, Module $module, WazzupService $wazzupService, $config = [])
     {
         parent::__construct($id, $module, $config);
@@ -29,31 +28,31 @@ class WazzupController extends Controller
     }
 
     /**
-     * Страница настроек модуля
-     *
-     * @return string
+     * @param $uuid
+     * @return int
      */
-
-    public function actionIndex()
+    public function actionWebHook($uuid)
     {
-        return $this->render('/setting/wazzup', [
-            'wazzup' => 'awd'
-        ]);
-    }
+        $responseCode = 404;
 
-    public function actionWebHook()
-    {
-        $data = file_get_contents('php://input');
-        if ($data === null or $data === '{"messages":[],"channels":[],"statuses":[]}') {
-            return http_response_code(200);
-        } else {
-            $message = json_decode($data, 1);
-            if (isset($message['messages'])) {
-                $this->wazzupService->handleMessageFromWazzup($message['messages']);
-                return http_response_code(200);
-            } else {
-                return http_response_code(200);
+        if ($uuid !== null and $uuid !== "") {
+            $existSetting = Setting::find()->where(['wazzup_web_hook_uuid' => $uuid])->one();
+            if ($existSetting !== null) {
+                $data = file_get_contents('php://input');
+                if ($data === null or $data === '{"messages":[],"channels":[],"statuses":[]}') {
+                    $responseCode = 200;
+                } else {
+                    $message = json_decode($data, 1);
+                    if (isset($message['messages'])) {
+                        $this->wazzupService->handleMessageFromWazzup($message['messages'], $existSetting);
+                        $responseCode = 200;
+                    } else {
+                        $responseCode = 200;
+                    }
+                }
             }
         }
+
+        return $responseCode;
     }
 }
