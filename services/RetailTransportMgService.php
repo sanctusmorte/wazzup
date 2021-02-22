@@ -88,7 +88,7 @@ class RetailTransportMgService
                 ],
                 'channel_id' => $retailMessage['data']['channel_id']
             ];
-            Yii::$app->transport->sentMessageToRetailCrm($data, $body);
+            Yii::$app->transport->setMessageRead($data, $body);
         }
     }
 
