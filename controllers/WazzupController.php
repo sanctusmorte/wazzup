@@ -45,7 +45,7 @@ class WazzupController extends Controller
     {
         $data = file_get_contents('php://input');
 
-
+        Yii::error(['сообщение из вазапа' => $data], 'wazzup_telegram_log');
 
         if ($data === null or $data === '{"messages":[],"channels":[],"statuses":[]}') {
             return http_response_code(200);
