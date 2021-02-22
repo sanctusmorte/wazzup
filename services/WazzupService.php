@@ -27,6 +27,7 @@ class WazzupService
     {
         foreach ($wazzupMessages as $message) {
             if ($message['status'] === 99) {
+
                 //Yii::error($message, 'wazzup_telegram_log');
                 $this->sentMessageToRetailCrm($message);
             }
