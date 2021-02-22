@@ -147,10 +147,10 @@ class SettingService extends Component
 
 
     /**
-     * Возвращает ID канала RetailCRM
+     * Возвращает информацию о канале
      * Поиск осуществляется по всем настройкам клиентов из БД из поля wazzup_channels
      * Данные о сообщении, которое приходит из Wazzup содержит в себе externalId канала (пример - e6d12d13-87f6-4c21-bf40-bc037d99b5a6)
-     * По нему нам необходимо получить ID (пример - 12)
+     * По нему нам необходимо получить channelId, mg_transport_token, mg_transport_endpoint_url клиента
      * @param $channelId
      * @return array
      */
@@ -158,6 +158,67 @@ class SettingService extends Component
     {
         $data = null;
         $needChannelId = null;
+        $setting = Setting::find()->where(['like', 'wazzup_channels', '%' . $channelId . '%', false])->one();
+
+        if ($setting !== null) {
+            $channels = json_decode($setting->wazzup_channels, 1);
+            foreach ($channels as $channel) {
+                if ($channel['external_id'] === $channelId) {
+                    $needChannelId = $channel['id'];
+                    break;
+                }
+            }
+            if ($needChannelId !== null) {
+                $data = [
+                    'channelId' => $needChannelId,
+                    'mg_transport_token' => $setting->mg_transport_token,
+                    'mg_transport_endpoint_url' => $setting->mg_transport_endpoint_url
+                ];
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Возвращает информацию о канале
+     * Поиск осуществляется по всем настройкам клиентов из БД из поля wazzup_channels
+     * Данные о сообщении, которое приходит из RetailCRM содержит в себе channel_id канала (пример - 12)
+     * По нему нам необходимо получить ID (пример - 12)
+     * @param $channelId
+     * @return array
+     */
+    public function getChannelInfoByChannelIdFromRetailCrm($channelId): array
+    {
+        $data = null;
+        $needSetting = null;
+        $needChannelExternalId = null;
+        $needChannelType = null;
+
+        $allSettings = Setting::findAll(['is_active' => 1]);
+        foreach ($allSettings as $existSetting) {
+            $existChannels = json_decode($existSetting->wazzup_channels, 1);
+            if (count($existChannels) > 0) {
+                foreach ($existChannels as $existChannel) {
+                    if ($existChannel['id'] === $channelId) {
+                        $needSetting = $existSetting;
+                        $needChannelExternalId = $existChannel['external_id'];
+                        $needChannelType = $existChannel['channelType'];
+                        break;
+                    }
+                }
+            }
+        }
+
+        if ($needSetting !== null and $needChannelExternalId !== null and $needChannelType !== null) {
+            $data = [
+                'wazzup_api_key' => $needSetting->wazzup_api_key,
+                'channelId' => $needChannelExternalId,
+                'chatType' => $needChannelType,
+            ];
+        }
+
+
         $setting = Setting::find()->where(['like', 'wazzup_channels', '%' . $channelId . '%', false])->one();
 
         if ($setting !== null) {

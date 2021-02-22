@@ -137,11 +137,11 @@ class Wazzup extends Component
         }
     }
 
-    public function sentMessage($setting, $body)
+    public function sentMessage(string $wazzup_api_key, $body)
     {
         $url = 'https://api.wazzup24.com/v2/send_message';
 
-        $response = $this->makePostRequest($url, $setting['wazzup_api_key'], $body);
+        $response = $this->makePostRequest($url, $wazzup_api_key, $body);
 
 //        Yii::error($body, 'wazzup_telegram_log');
 //        Yii::error($setting, 'wazzup_telegram_log');
