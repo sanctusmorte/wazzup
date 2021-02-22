@@ -2,12 +2,20 @@
 
 namespace app\helpers;
 
-
+/**
+ * Class RetailTransportMgHelper
+ * @package app\helpers
+ */
 class RetailTransportMgHelper
 {
+    /**
+     * @param $message
+     * @param $channelId
+     * @return array
+     */
     public function generateMessage($message, $channelId): array
     {
-        return [
+        $data =  [
             'Message' => [
                 'external_id' => $message['messageId'],
                 'Type' => 'text',
@@ -20,5 +28,14 @@ class RetailTransportMgHelper
             ],
             'Channel' => $channelId,
         ];
+
+        // проверяем цитируется ли сообщение
+        if (isset($message['refMessageId'])) {
+            $data['Quote'] = [
+                'external_id' => $message['refMessageId']
+            ];
+        }
+
+        return $data;
     }
 }
