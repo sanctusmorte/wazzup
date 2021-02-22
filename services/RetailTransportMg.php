@@ -19,7 +19,8 @@ class RetailTransportMg
                 if (isset($createChannel['id'])) {
                     $needChannelsToSave[] = [
                         'external_id' => $channel['channelId'],
-                        'id' => $createChannel['id']
+                        'id' => $createChannel['id'],
+                        'channelType' => $channel['transport'],
                     ];
                 }
             }

@@ -50,6 +50,7 @@ class WazzupService
     {
         $needSetting = null;
         $channelExternalId = null;
+        $needChannelType = null;
         $channelid = $retailMessage['data']['channel_id'];
         $allSettings = Setting::findAll(['is_active' => 1]);
 
@@ -61,6 +62,7 @@ class WazzupService
                     if ($existChannel['id'] === $channelid) {
                         $needSetting = $existSetting;
                         $channelExternalId = $existChannel['external_id'];
+                        $needChannelType = $existChannel['channelType'];
                         break;
                     }
                 }
@@ -69,10 +71,10 @@ class WazzupService
 
         Yii::error($retailMessage, 'wazzup_telegram_log');
 
-        if ($needSetting !== null and $channelExternalId !== null) {
+        if ($needSetting !== null and $channelExternalId !== null and $needChannelType !== null)  {
             $body = [
                 'channelId' => $channelExternalId,
-                'chatType' => 'instagram',
+                'chatType' => $needChannelType,
                 'chatId' => $retailMessage['data']['external_user_id'],
                 'text' => $retailMessage['data']['content']
             ];
