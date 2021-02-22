@@ -39,8 +39,7 @@ class RetailTransportMgHelper
         }
 
         if (isset($message['content'])) {
-            $uploadFile = json_decode(Yii::$app->transpot->uploadFileByUrl($data));
-            //Yii::error($message['content'], 'wazzup_telegram_log');
+            $uploadFile = json_decode(Yii::$app->transpot->uploadFileByUrl($data, ['url' => $message['content']]));
             if (isset($uploadFile['id'])) {
                 $body['Message']['Type'] = 'image';
                 $body['Message']['items'] = [
