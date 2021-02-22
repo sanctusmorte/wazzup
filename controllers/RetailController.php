@@ -37,13 +37,12 @@ class RetailController extends Controller
         } else {
             $message = json_decode($data, 1);
 
-            Yii::error($message, 'wazzup_telegram_log');
-            
             if (isset($message['type'])) {
                 $this->wazzupService->sentMessageToWazzup($message);
 
                 $response = [
                     'success' => true,
+                    'is_read' => true,
                 ];
 
                 echo json_encode($response);
