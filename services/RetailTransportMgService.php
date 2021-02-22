@@ -53,8 +53,6 @@ class RetailTransportMgService
            $this->sentMessageToWazzup($retailMessage);
        }
 
-
-
         if ($retailMessage['type'] === 'message_read') {
             $this->setMessageReadInRetailCrm($retailMessage);
         }
@@ -85,15 +83,15 @@ class RetailTransportMgService
 
         Yii::error($data, 'wazzup_telegram_log');
 
-        if ($data !== null) {
-            $body = [
-                'Message' => [
-                    'external_id' => $retailMessage['data']['external_message_id']
-                ],
-                'channel_id' => $retailMessage['data']['channel_id']
-            ];
-            Yii::$app->transport->sentMessageToRetailCrm($data, $body);
-        }
+//        if ($data !== null) {
+//            $body = [
+//                'Message' => [
+//                    'external_id' => $retailMessage['data']['external_message_id']
+//                ],
+//                'channel_id' => $retailMessage['data']['channel_id']
+//            ];
+//            Yii::$app->transport->sentMessageToRetailCrm($data, $body);
+//        }
     }
 
     private function setChannelsToSetting($setting, $needChannelsToSave)
