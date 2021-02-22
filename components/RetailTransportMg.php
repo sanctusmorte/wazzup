@@ -50,8 +50,8 @@ class RetailTransportMg extends Component
             'external_id' => $channel['channelId'],
             'settings' => [
                 'status' => [
-                    'delivered' => 'none',
-                    'read' => 'receive'
+                    'delivered' => 'both',
+                    'read' => 'both'
                 ],
                 'text' => [
                     'creating' => 'both',
