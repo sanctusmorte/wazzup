@@ -102,6 +102,6 @@ class RetailTransportMg extends Component
 
         $response = $this->makePostRequest($url, $data['mg_transport_token'], $data['fileUrl']);
 
-        // Yii::error($response, 'wazzup_telegram_log');
+        Yii::error($response, 'wazzup_telegram_log');
     }
 }
