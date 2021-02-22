@@ -18,24 +18,24 @@ use app\models\{
 
 class SettingController extends Controller
 {
-    /**
-     * @var SettingService
-     */
-    private $settingService;
+
+    private $settingService, $retailTransportMgService, $wazzupService;
 
     /**
      * SettingController constructor.
      * @param $id
      * @param Module $module
      * @param SettingService $settingService
-     * @param RetailTransportMgService $transportService
-     * @param WazzupService $wazzupService
+     * @param RetailTransportMgService $retailTransportMgService
      * @param array $config
      */
-    public function __construct($id, Module $module, SettingService $settingService,
-                                $config = [])
+    public function __construct($id, Module $module, SettingService $settingService, WazzupService $wazzupService,
+                                RetailTransportMgService $retailTransportMgService, $config = [])
     {
         $this->settingService = $settingService;
+        $this->retailTransportMgService = $retailTransportMgService;
+        $this->wazzupService = $wazzupService;
+
 
         parent::__construct($id, $module, $config);
     }
@@ -79,7 +79,7 @@ class SettingController extends Controller
                 $needSetting = $newSetting;
                 if ($newSetting->load($postData) && $newSetting->validate() && Yii::$app->request->post('submit')) {
                     $this->settingService->save($newSetting);
-                    $this->transportService->createChannelsInRetailCrm($newSetting);
+                    $this->retailTransportMgService->createChannelsInRetailCrm($newSetting);
                     $this->wazzupService->putUrlWebHook($newSetting);
                     Yii::$app->session->set('clientId', $newSetting->client_id);
                     return $this->redirect(['/setting/index']);
@@ -89,7 +89,7 @@ class SettingController extends Controller
                 if ($existSetting->load($postData) && $existSetting->validate() && Yii::$app->request->post('submit')) {
                     $needSetting->is_active = 1;
                     $this->settingService->save($existSetting);
-                    $this->transportService->createChannelsInRetailCrm($existSetting);
+                    $this->retailTransportMgService->createChannelsInRetailCrm($existSetting);
                     $this->wazzupService->putUrlWebHook($existSetting);
                     return $this->redirect(['/setting/index']);
                 }
