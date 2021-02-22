@@ -40,6 +40,11 @@ class SettingController extends Controller
         parent::__construct($id, $module, $config);
     }
 
+    public function actionTest($params)
+    {
+        var_dump($params);
+    }
+
     /**
      * Страница настроек модуля
      *
