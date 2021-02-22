@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\services\RetailTransportMg;
+use app\services\RetailTransportMgService;
 use app\services\WazzupService;
 use Yii;
 use yii\web\{
@@ -24,7 +24,7 @@ class SettingController extends Controller
     private $settingService;
 
     /**
-     * @var RetailTransportMg
+     * @var RetailTransportMgService
      */
     private $transportService;
 
@@ -38,12 +38,12 @@ class SettingController extends Controller
      * @param $id
      * @param Module $module
      * @param SettingService $settingService
-     * @param RetailTransportMg $transportService
+     * @param RetailTransportMgService $transportService
      * @param WazzupService $wazzupService
      * @param array $config
      */
     public function __construct($id, Module $module, SettingService $settingService,
-                                RetailTransportMg $transportService, WazzupService $wazzupService, $config = [])
+                                RetailTransportMgService $transportService, WazzupService $wazzupService, $config = [])
     {
         $this->settingService = $settingService;
         $this->transportService = $transportService;
