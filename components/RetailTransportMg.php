@@ -73,7 +73,7 @@ class RetailTransportMg extends Component
             ],
             'User' => [
                 'Firstname' => $message['authorName'],
-                'external_id' => $message['authorName'],
+                'external_id' => $message['chatId'],
                 'nickname' => $message['authorName'],
             ],
             'Channel' => $needChanneId,
