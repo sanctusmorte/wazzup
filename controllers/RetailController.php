@@ -41,7 +41,7 @@ class RetailController extends Controller
             Yii::error(['сообщение из срмки' => $message], 'wazzup_telegram_log');
 
             if (isset($message['type'])) {
-                $this->retailTransportMgService->handleMessageFromRetail($message);
+                //$this->retailTransportMgService->handleMessageFromRetail($message);
 
                 $response = [
                     'success' => true,
