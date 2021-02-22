@@ -217,27 +217,7 @@ class SettingService extends Component
                 'chatType' => $needChannelType,
             ];
         }
-
-
-        $setting = Setting::find()->where(['like', 'wazzup_channels', '%' . $channelId . '%', false])->one();
-
-        if ($setting !== null) {
-            $channels = json_decode($setting->wazzup_channels, 1);
-            foreach ($channels as $channel) {
-                if ($channel['external_id'] === $channelId) {
-                    $needChannelId = $channel['id'];
-                    break;
-                }
-            }
-            if ($needChannelId !== null) {
-                $data = [
-                    'channelId' => $needChannelId,
-                    'mg_transport_token' => $setting->mg_transport_token,
-                    'mg_transport_endpoint_url' => $setting->mg_transport_endpoint_url
-                ];
-            }
-        }
-
+        
         return $data;
     }
 
