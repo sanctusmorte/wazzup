@@ -46,6 +46,7 @@ class WazzupService
     public function sentMessageToWazzup($retailMessage)
     {
         $data = $this->settingService->getChannelInfoByChannelIdFromRetailCrm($retailMessage['data']['channel_id']);
+        Yii::error($data, 'wazzup_telegram_log');
         if ($data !== null) {
             $body = $this->wazzupHelper->generateMessage($data, $retailMessage);
             Yii::$app->wazzup->sentMessage($data['wazzup_api_key'], $body);
