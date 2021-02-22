@@ -15,7 +15,7 @@ class RetailTransportMgHelper
      * @param $channelId
      * @return array
      */
-    public function generateMessage(array $message, array $data): array
+    public function generateMessage(array $message, $needChannelId, $existSetting): array
     {
         $body =  [
             'Message' => [
@@ -28,7 +28,7 @@ class RetailTransportMgHelper
                 'external_id' => $message['chatId'],
                 'nickname' => $message['authorName'],
             ],
-            'Channel' => $data['channelId'],
+            'Channel' => $needChannelId,
         ];
 
         // проверяем цитируется ли сообщение
@@ -39,7 +39,7 @@ class RetailTransportMgHelper
         }
 
         if (isset($message['content'])) {
-            $uploadFile = json_decode(Yii::$app->transport->uploadFileByUrl($data, ['url' => $message['content']]), 1);
+            $uploadFile = json_decode(Yii::$app->transport->uploadFileByUrl($existSetting, ['url' => $message['content']]), 1);
             if (isset($uploadFile['id'])) {
                 $body['Message']['Type'] = 'image';
                 $body['Message']['items'] = [
@@ -49,8 +49,6 @@ class RetailTransportMgHelper
                 ];
             }
         }
-
-        //Yii::error($body, 'wazzup_telegram_log');
 
         return $body;
     }

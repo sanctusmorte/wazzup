@@ -157,6 +157,20 @@ class SettingService extends Component
         }
     }
 
+    /**
+     * @return string
+     * @throws \yii\base\Exception
+     */
+    public function generateWazzupWebHookUuid(): string
+    {
+        while (true) {
+            $uuid = Yii::$app->security->generateRandomString(32);
+
+            if (!Setting::find()->where(['wazzup_web_hook_uuid' => $uuid])->one()) {
+                return $uuid;
+            }
+        }
+    }
 
 
     /**
@@ -165,11 +179,11 @@ class SettingService extends Component
      * Данные о сообщении, которое приходит из Wazzup содержит в себе externalId канала (пример - e6d12d13-87f6-4c21-bf40-bc037d99b5a6)
      * По нему нам необходимо получить channelId, mg_transport_token, mg_transport_endpoint_url клиента
      * @param $channelId
-     * @return array
+     * @param $existSetting
+     * @return int|null
      */
-    public function getChannelDataByChannelId($channelId, $existSetting): array
+    public function getChannelDataByChannelId($channelId, $existSetting)
     {
-        $data = null;
         $needChannelId = null;
 
         $channels = json_decode($existSetting->wazzup_channels, 1);
@@ -180,16 +194,7 @@ class SettingService extends Component
             }
         }
 
-        if ($needChannelId !== null) {
-            $data = [
-                'channelId' => $needChannelId,
-                'mg_transport_token' => $setting->mg_transport_token,
-                'mg_transport_endpoint_url' => $setting->mg_transport_endpoint_url
-            ];
-        }
-
-
-        return $data;
+        return $needChannelId;
     }
 
     /**

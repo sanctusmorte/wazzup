@@ -73,7 +73,6 @@ class Wazzup extends Component
             'Content-Type:application/json'
         ];
 
-
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -84,7 +83,6 @@ class Wazzup extends Component
         $response = curl_exec($ch);
 
         curl_close($ch);
-
 
         return $response;
     }
@@ -111,12 +109,10 @@ class Wazzup extends Component
         $url = 'https://api.wazzup24.com/v2/webhooks';
 
         $body = [
-            'url' => 'https://wazzup.imb-service.ru/wazzup/web-hook',
+            'url' => 'https://wazzup.imb-service.ru/wazzup/web-hook?uuid='.$setting->wazzup_web_hook_uuid.'',
         ];
 
-        $response = $this->makePutRequest($url, $setting->wazzup_api_key, $body);
-
-        var_dump($response);
+        $this->makePutRequest($url, $setting->wazzup_api_key, $body);
     }
 
     public function checkApiKey($apiKey)
@@ -141,10 +137,6 @@ class Wazzup extends Component
     {
         $url = 'https://api.wazzup24.com/v2/send_message';
 
-        $response = $this->makePostRequest($url, $wazzup_api_key, $body);
-
-//        Yii::error($body, 'wazzup_telegram_log');
-//        Yii::error($setting, 'wazzup_telegram_log');
-//        Yii::error($response, 'wazzup_telegram_log');
+        $this->makePostRequest($url, $wazzup_api_key, $body);
     }
 }
