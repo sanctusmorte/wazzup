@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\services\RetailTransportMgService;
 use app\services\WazzupService;
 use Yii;
 use yii\filters\AccessControl;
@@ -19,14 +20,14 @@ use app\models\{
 class WazzupController extends Controller
 {
     private $wazzupService;
-    private $settingService;
+    private $retailTransportMgService;
 
-    public function __construct($id, Module $module, WazzupService $wazzupService, SettingService $settingService, $config = [])
+    public function __construct($id, Module $module, WazzupService $wazzupService, RetailTransportMgService $retailTransportMgService, $config = [])
     {
         parent::__construct($id, $module, $config);
 
         $this->wazzupService = $wazzupService;
-        $this->settingService = $settingService;
+        $this->retailTransportMgService = $retailTransportMgService;
     }
 
     /**
@@ -52,7 +53,7 @@ class WazzupController extends Controller
                         $this->wazzupService->handleMessageFromWazzup($message['messages'], $existSetting);
                         $responseCode = 200;
                     } else if (isset($message['channelsList'])){
-                        $this->settingService->setChannelsList($message['channelsList'], $existSetting);
+                        $this->retailTransportMgService->createChannelsInRetailCrm($existSetting);
                     } else {
                         $responseCode = 200;
                     }

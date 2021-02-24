@@ -235,9 +235,15 @@ class SettingService extends Component
     public function setChannelsList($channels, $existSetting)
     {
         $needChannels = [];
-        foreach (json_decode($channels, 1) as $channel) {
-            $needChannels[] = $channel;
+        foreach (json_decode($channels['channelsList'], 1) as $channel) {
+            $needChannels[] = [
+                'external_id' => $channel['channelId'],
+                'channel_type' => $channel['transport'],
+                'id' => $channel['']
+            ];
         }
+
+        Yii::error($needChannels, 'wazzup_telegram_log');
 
         $existSetting->wazzup_channels = json_encode($needChannels);
     }
