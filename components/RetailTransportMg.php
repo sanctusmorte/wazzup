@@ -107,6 +107,5 @@ class RetailTransportMg extends Component
     {
         $url = $existSetting->mg_transport_endpoint_url . '/api/transport/v1/messages/read';
         $response = $this->makePostRequest($url, $existSetting->mg_transport_token, $body);
-        Yii::error($response, 'wazzup_telegram_log');
     }
 }
