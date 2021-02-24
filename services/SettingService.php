@@ -243,7 +243,7 @@ class SettingService extends Component
             ];
         }
 
-        Yii::error($needChannels, 'wazzup_telegram_log');
+        //Yii::error($needChannels, 'wazzup_telegram_log');
 
         $existSetting->wazzup_channels = json_encode($needChannels);
     }
