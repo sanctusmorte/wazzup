@@ -49,10 +49,6 @@ class RetailTransportMg extends Component
             'name' => $channel['plainId'],
             'external_id' => $channel['channelId'],
             'settings' => [
-                'status' => [
-                    'Delivered' => 'both',
-                    'Read' => 'both'
-                ],
                 'text' => [
                     'Creating' => 'both',
                     'Editing' => 'both',
@@ -73,11 +69,6 @@ class RetailTransportMg extends Component
                     'Quoting' => 'both',
                     'Deleting' => 'both',
                     'max_items_count' => 1
-                ],
-                'suggestions' => [
-                    'Text' => 'both',
-                    'Email' => 'both',
-                    'Phone' => 'both',
                 ],
             ],
         ];
