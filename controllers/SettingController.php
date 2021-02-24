@@ -65,7 +65,7 @@ class SettingController extends Controller
 
     public function actionSave()
     {
-        var_dump(Yii::$app->request->post());
+
         $clientId = $this->settingService->getSettingId();
 
         $postData = Yii::$app->request->post();
@@ -73,14 +73,12 @@ class SettingController extends Controller
             $postData['Setting']['channels'] = json_encode($postData['Setting']['channels']);
         }
 
-        var_dump($clientId);
-
         $needSetting = null;
 
         if ($clientId !== null) {
             $existSetting = $this->settingService->getSettingById($clientId);
 
-            var_dump($existSetting);
+
 
             if ($existSetting === null) {
                 $newSetting = new Setting();
@@ -110,8 +108,8 @@ class SettingController extends Controller
             }
         } else {}
 
-//        Yii::$app->response->format = Response::FORMAT_JSON;
-//        return ActiveForm::validate($needSetting);
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return ActiveForm::validate($needSetting);
     }
 
 
