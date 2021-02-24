@@ -55,9 +55,8 @@ class SettingController extends Controller
         $clientId = $this->settingService->getSettingId();
 
         $setting = $this->settingService->getSetting($clientId);
-        if ($setting->isNewRecord) {
-            Yii::$app->session->set('clientId', $setting->client_id);
-        }
+
+        Yii::$app->session->set('clientId', $setting->client_id);
 
         return $this->render('index', [
             'setting' => $setting
