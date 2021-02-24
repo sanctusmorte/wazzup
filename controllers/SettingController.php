@@ -110,8 +110,8 @@ class SettingController extends Controller
             }
         } else {}
 
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ActiveForm::validate($needSetting);
+//        Yii::$app->response->format = Response::FORMAT_JSON;
+//        return ActiveForm::validate($needSetting);
     }
 
 
