@@ -49,6 +49,10 @@ class RetailTransportMg extends Component
             'name' => $channel['plainId'],
             'external_id' => $channel['channelId'],
             'settings' => [
+                'status' => [
+                    'Delivered' => 'both',
+                    'Read' => 'both'
+                ],
                 'text' => [
                     'Creating' => 'both',
                     'Editing' => 'both',
@@ -69,6 +73,11 @@ class RetailTransportMg extends Component
                     'Quoting' => 'both',
                     'Deleting' => 'both',
                     'max_items_count' => 1
+                ],
+                'suggestions' => [
+                    'Text' => 'both',
+                    'Email' => 'both',
+                    'Phone' => 'both',
                 ],
             ],
         ];
@@ -98,5 +107,6 @@ class RetailTransportMg extends Component
     {
         $url = $existSetting->mg_transport_endpoint_url . '/api/transport/v1/messages/read';
         $response = $this->makePostRequest($url, $existSetting->mg_transport_token, $body);
+        //Yii::error($response, 'wazzup_telegram_log');
     }
 }
