@@ -43,6 +43,9 @@ class WazzupController extends Controller
                     $responseCode = 200;
                 } else {
                     $message = json_decode($data, 1);
+
+                    Yii::error($message, 'wazzup_telegram_log');
+
                     if (isset($message['messages'])) {
                         $this->wazzupService->handleMessageFromWazzup($message['messages'], $existSetting);
                         $responseCode = 200;

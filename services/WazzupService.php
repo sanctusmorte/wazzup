@@ -43,7 +43,6 @@ class WazzupService
     public function handleMessageFromWazzup($wazzupMessages, $existSetting)
     {
         foreach ($wazzupMessages as $message) {
-            Yii::error($message, 'wazzup_telegram_log');
             if ($message['status'] === 99) {
                 $this->sentMessageToRetailCrm($message, $existSetting);
             }
