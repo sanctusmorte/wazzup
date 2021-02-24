@@ -73,6 +73,8 @@ class SettingController extends Controller
             $postData['Setting']['channels'] = json_encode($postData['Setting']['channels']);
         }
 
+        var_dump($clientId);
+
         $needSetting = null;
 
         if ($clientId !== null) {
