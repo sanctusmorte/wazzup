@@ -19,12 +19,14 @@ use app\models\{
 class WazzupController extends Controller
 {
     private $wazzupService;
+    private $settingService;
 
-    public function __construct($id, Module $module, WazzupService $wazzupService, $config = [])
+    public function __construct($id, Module $module, WazzupService $wazzupService, SettingService $settingService, $config = [])
     {
         parent::__construct($id, $module, $config);
 
         $this->wazzupService = $wazzupService;
+        $this->settingService = $settingService;
     }
 
     /**
@@ -49,9 +51,12 @@ class WazzupController extends Controller
                     if (isset($message['messages'])) {
                         $this->wazzupService->handleMessageFromWazzup($message['messages'], $existSetting);
                         $responseCode = 200;
+                    } else if (isset($message['channelsList'])){
+                        $this->settingService->setChannelsList($message['channelsList'], $existSetting);
                     } else {
                         $responseCode = 200;
                     }
+
                 }
             }
         }

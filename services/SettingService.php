@@ -232,4 +232,14 @@ class SettingService extends Component
         return $data;
     }
 
+    public function setChannelsList($channels, $existSetting)
+    {
+        $needChannels = [];
+        foreach (json_decode($channels, 1) as $channel) {
+            $needChannels[] = $channel;
+        }
+
+        $existSetting->wazzup_channels = json_encode($needChannels);
+    }
+
 }
