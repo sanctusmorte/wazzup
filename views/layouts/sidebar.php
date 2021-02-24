@@ -1,4 +1,4 @@
-<?php 
+<?php
 use yii\helpers\{
     Html,
     Url
@@ -15,12 +15,12 @@ use yii\helpers\{
                 <li class="nav-item">
                     <?= Html::a('<i class="fas fa-file-prescription"></i> <p>Wazzup</p>', Url::to(['/wazzup']), ['class' => 'nav-link'])?>
                 </li>
-                <li class="nav-item">
-                    <?= Html::a('<i class="fas fa-file-prescription"></i> <p>Описание</p>', Url::to(['/site/description']), ['class' => 'nav-link'])?>
-                </li>
-                <li class="nav-item">
-                    <?= Html::a('<i class="fas fa-hands-helping"></i> <p>Поддержка</p>', Url::to(['/site/support']), ['class' => 'nav-link'])?>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    --><?//= Html::a('<i class="fas fa-file-prescription"></i> <p>Описание</p>', Url::to(['/site/description']), ['class' => 'nav-link'])?>
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    --><?//= Html::a('<i class="fas fa-hands-helping"></i> <p>Поддержка</p>', Url::to(['/site/support']), ['class' => 'nav-link'])?>
+<!--                </li>-->
             </ul>
         </nav>
     </div>

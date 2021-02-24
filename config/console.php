@@ -34,10 +34,6 @@ $config = [
             'path' => '@app/runtime/queue',
             'as log' => \yii\queue\LogBehavior::class,
         ],
-        'logsis' => [
-            'class' => app\components\Logsis::class,
-            'host' => 'http://cab.logsis.ru/apiv2'
-        ],
         'retail' => [
             'class' => app\components\Retail::class
         ],
