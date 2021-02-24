@@ -31,12 +31,12 @@ class RetailTransportMgHelper
             'Channel' => $needChannelId,
         ];
 
-        if (isset($message['authorName'])) {
-            $body['Customer']['Firstname'] = $message['authorName'];
-        }
-
         if ($message['chatType'] === 'whatsapp') {
             $body['Customer']['phone'] = $message['chatId'];
+            if (isset($message['authorName'])) {
+                $body['Customer']['Firstname'] = $message['authorName'];
+                $body['Customer']['nickname'] = $message['authorName'];
+            }
         }
 
         // проверяем цитируется ли сообщение
