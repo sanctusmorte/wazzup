@@ -77,6 +77,9 @@ class SettingController extends Controller
 
         if ($clientId !== null) {
             $existSetting = $this->settingService->getSettingById($clientId);
+
+            var_dump($existSetting);
+
             if ($existSetting === null) {
                 $newSetting = new Setting();
                 $newSetting->client_id = $clientId;
