@@ -47,13 +47,13 @@ class WazzupController extends Controller
                 } else {
                     $message = json_decode($data, 1);
 
-                    Yii::error($message, 'wazzup_telegram_log');
+                    //Yii::error($message, 'wazzup_telegram_log');
 
                     if (isset($message['messages'])) {
                         $this->wazzupService->handleMessageFromWazzup($message['messages'], $existSetting);
                         $responseCode = 200;
                     } else if (isset($message['channelsList'])){
-                        Yii::error($message, 'wazzup_telegram_log');
+                       // Yii::error($message, 'wazzup_telegram_log');
                         $this->retailTransportMgService->createChannelsInRetailCrm($existSetting);
                     } else {
                         $responseCode = 200;
