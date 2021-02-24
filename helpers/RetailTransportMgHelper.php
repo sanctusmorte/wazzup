@@ -26,7 +26,7 @@ class RetailTransportMgHelper
             'User' => [
                 'Firstname' => $message['authorName'],
                 'external_id' => $message['chatId'],
-                'nickname' => $message['authorName'],
+                'nickname' => $message['chatId'],
             ],
             'Channel' => $needChannelId,
         ];
