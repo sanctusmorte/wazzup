@@ -82,7 +82,7 @@ class SettingService extends Component
             'accountUrl' => 'https://wazzup.imb-service.ru/setting',
             'active' => true,
             'freeze' => false,
-            'name' => 'Wazzup чаты v1.4 [dev-max]',
+            'name' => 'Wazzup',
             'actions' => [
                 'activity' => '/setting/activity'
             ],
@@ -230,6 +230,22 @@ class SettingService extends Component
         }
 
         return $data;
+    }
+
+    public function setChannelsList($channels, $existSetting)
+    {
+        $needChannels = [];
+        foreach (json_decode($channels['channelsList'], 1) as $channel) {
+            $needChannels[] = [
+                'external_id' => $channel['channelId'],
+                'channel_type' => $channel['transport'],
+                'id' => $channel['']
+            ];
+        }
+
+        //Yii::error($needChannels, 'wazzup_telegram_log');
+
+        $existSetting->wazzup_channels = json_encode($needChannels);
     }
 
 }

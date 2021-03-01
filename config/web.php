@@ -7,7 +7,7 @@ $routes = require __DIR__ . '/routes.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'name' => 'Logsis',
+    'name' => 'Wazzup',
     'language' => 'ru-RU',
     'bootstrap' => [
         'log',
@@ -62,10 +62,6 @@ $config = [
         ],
         'retail' => [
             'class' => app\components\Retail::class
-        ],
-        'logsis' => [
-            'class' => app\components\Logsis::class,
-            'host' => 'http://cab.logsis.ru/apiv2'
         ],
         'wazzup' => [
             'class' => app\components\Wazzup::class,

@@ -23,13 +23,21 @@ class RetailTransportMgHelper
                 'Type' => 'text',
                 'Text' => $message['text']
             ],
-            'User' => [
-                'Firstname' => $message['authorName'],
+            'Customer' => [
                 'external_id' => $message['chatId'],
-                'nickname' => $message['authorName'],
+                'nickname' => $message['chatId'],
+                'Firstname' => ''
             ],
             'Channel' => $needChannelId,
         ];
+
+        if ($message['chatType'] === 'whatsapp') {
+            $body['Customer']['phone'] = $message['chatId'];
+            if (isset($message['authorName'])) {
+                $body['Customer']['Firstname'] = $message['authorName'];
+                $body['Customer']['nickname'] = $message['authorName'];
+            }
+        }
 
         // проверяем цитируется ли сообщение
         if (isset($message['refMessageId'])) {

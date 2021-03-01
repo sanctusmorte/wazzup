@@ -55,9 +55,8 @@ class SettingController extends Controller
         $clientId = $this->settingService->getSettingId();
 
         $setting = $this->settingService->getSetting($clientId);
-        if ($setting->isNewRecord) {
-            Yii::$app->session->set('clientId', $setting->client_id);
-        }
+
+        Yii::$app->session->set('clientId', $setting->client_id);
 
         return $this->render('index', [
             'setting' => $setting
@@ -66,6 +65,7 @@ class SettingController extends Controller
 
     public function actionSave()
     {
+
         $clientId = $this->settingService->getSettingId();
 
         $postData = Yii::$app->request->post();
@@ -77,6 +77,7 @@ class SettingController extends Controller
 
         if ($clientId !== null) {
             $existSetting = $this->settingService->getSettingById($clientId);
+
             if ($existSetting === null) {
                 $newSetting = new Setting();
                 $newSetting->client_id = $clientId;

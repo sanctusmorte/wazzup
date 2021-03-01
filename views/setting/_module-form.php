@@ -1,4 +1,4 @@
-<?php 
+<?php
     use yii\helpers\{
         Html,
         Url
@@ -12,8 +12,8 @@
         </div>
     </div>
     <div class="card-body">
-        
-        <p><b>Настройки retailCRM</b></p>
+
+        <p><b>Настройки RetailCRM</b></p>
 
         <input type="hidden" name="submit" value="0"/>
 
@@ -44,6 +44,6 @@
         ])->textInput(['placeholder' => $setting->getAttributeLabel('wazzup_api_key')]); ?>
 
 
-        
+
     </div>
 </div>

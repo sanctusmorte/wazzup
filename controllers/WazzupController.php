@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\services\RetailTransportMgService;
 use app\services\WazzupService;
 use Yii;
 use yii\filters\AccessControl;
@@ -19,12 +20,14 @@ use app\models\{
 class WazzupController extends Controller
 {
     private $wazzupService;
+    private $retailTransportMgService;
 
-    public function __construct($id, Module $module, WazzupService $wazzupService, $config = [])
+    public function __construct($id, Module $module, WazzupService $wazzupService, RetailTransportMgService $retailTransportMgService, $config = [])
     {
         parent::__construct($id, $module, $config);
 
         $this->wazzupService = $wazzupService;
+        $this->retailTransportMgService = $retailTransportMgService;
     }
 
     /**
@@ -43,12 +46,20 @@ class WazzupController extends Controller
                     $responseCode = 200;
                 } else {
                     $message = json_decode($data, 1);
+
+                    //Yii::error($message, 'wazzup_telegram_log');
+
                     if (isset($message['messages'])) {
+                        //Yii::error($message, 'wazzup_telegram_log');
                         $this->wazzupService->handleMessageFromWazzup($message['messages'], $existSetting);
                         $responseCode = 200;
+                    } else if (isset($message['channelsList'])){
+                       // Yii::error($message, 'wazzup_telegram_log');
+                        $this->retailTransportMgService->createChannelsInRetailCrm($existSetting);
                     } else {
                         $responseCode = 200;
                     }
+
                 }
             }
         }
