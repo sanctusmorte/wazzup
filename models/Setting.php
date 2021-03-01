@@ -63,7 +63,7 @@ class Setting extends \yii\db\ActiveRecord
     }
 
     /**
-     * Валидация аккаунта retailCRM
+     * Валидация аккаунта RetailCRM
      */
     public function validateApiUrl()
     {
@@ -115,7 +115,7 @@ class Setting extends \yii\db\ActiveRecord
                     $this->addError('retail_api_key',  'Выберите как минимум 1 разрешенный метод в настройках API-ключа.');
                 }
             } else {
-                $this->addError('retail_api_key',  'Некорректно указана ссылка на retailCRM или ключ доступа к api.');
+                $this->addError('retail_api_key',  'Некорректно указана ссылка на RetailCRM или ключ доступа к api.');
             }
         }
     }
@@ -136,7 +136,7 @@ class Setting extends \yii\db\ActiveRecord
     {
         return [
             'client_id' => 'Client ID',
-            'retail_api_url' => 'Ссылка на retailCRM вида: https://YOUR-DOMAIN.retailcrm.ru',
+            'retail_api_url' => 'Ссылка на RetailCRM вида: https://YOUR-DOMAIN.retailcrm.ru',
             'retail_api_key' => 'API-ключ',
             'wazzup_api_key' => 'API-ключ Wazzup',
             'channels' => 'Каналы',

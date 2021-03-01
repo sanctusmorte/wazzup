@@ -1290,16 +1290,16 @@
             ],
             "authors": [
                 {
-                    "name": "retailCRM",
+                    "name": "RetailCRM",
                     "email": "support@retailcrm.ru"
                 }
             ],
-            "description": "PHP client for retailCRM API",
+            "description": "PHP client for RetailCRM API",
             "homepage": "http://www.retailcrm.ru/",
             "keywords": [
                 "api",
                 "rest",
-                "retailCRM"
+                "RetailCRM"
             ],
             "time": "2020-09-24T11:02:25+00:00"
         },
@@ -1361,17 +1361,17 @@
             ],
             "authors": [
                 {
-                    "name": "retailCRM",
+                    "name": "RetailCRM",
                     "email": "support@retailcrm.ru"
                 }
             ],
-            "description": "PHP client for retailCRM MG Bot API",
+            "description": "PHP client for RetailCRM MG Bot API",
             "homepage": "http://www.retailcrm.ru/",
             "keywords": [
                 "api",
                 "bot",
                 "rest",
-                "retailCRM"
+                "RetailCRM"
             ],
             "support": {
                 "email": "support@retailcrm.ru",
