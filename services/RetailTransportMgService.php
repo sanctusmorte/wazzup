@@ -78,18 +78,15 @@ class RetailTransportMgService
      */
     private function setMessageReadInRetailCrm($retailMessage, $existSetting)
     {
-        Yii::error($retailMessage, 'wazzup_telegram_log');
-        $data = $this->settingService->getChannelDataByChannelId($retailMessage['data']['channel_id'], $existSetting);
+        $body = [
+            'Message' => [
+                'external_id' => $retailMessage['data']['external_message_id']
+            ],
+            'channel_id' => $retailMessage['data']['channel_id']
+        ];
 
-        if ($data !== null) {
-            $body = [
-                'Message' => [
-                    'external_id' => $retailMessage['data']['external_message_id']
-                ],
-                'channel_id' => $retailMessage['data']['channel_id']
-            ];
-            Yii::$app->transport->setMessageRead($data, $body);
-        }
+        Yii::$app->transport->setMessageRead($existSetting, $body);
+
     }
 
     private function setChannelsToSetting($setting, $needChannelsToSave)
