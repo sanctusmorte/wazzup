@@ -84,6 +84,7 @@ class RetailTransportMgService
 
         if ($data !== null) {
             $body = $this->wazzupHelper->generateMessageForImage($data, $retailMessage, $imageUrl);
+            Yii::error($body, 'wazzup_telegram_log');
             Yii::$app->wazzup->sentMessage($existSetting->wazzup_api_key, $body);
         }
     }
