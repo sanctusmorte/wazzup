@@ -48,17 +48,43 @@ class RetailTransportMgService
      * @param $retailMessage
      * @param $existSetting
      */
-    public function handleMessageFromRetail($retailMessage, $existSetting)
+    public function handleMessageFromRetail(array $retailMessage, $existSetting)
     {
-
 
        if ($retailMessage['type'] === 'message_sent') {
            //Yii::error($existSetting->wazzup_channels, 'wazzup_telegram_log');
-           $this->sentMessageToWazzup($retailMessage, $existSetting);
+           if (!isset($retailMessage['items'])) {
+               $this->sentMessageToWazzup($retailMessage, $existSetting);
+           } else {
+               $this->handleFiles($retailMessage, $existSetting);
+           }
+
        }
 
         if ($retailMessage['type'] === 'message_read') {
             $this->setMessageReadInRetailCrm($retailMessage, $existSetting);
+        }
+    }
+
+    private function handleFiles($retailMessage, $existSetting)
+    {
+        if (count($retailMessage['items']) > 0) {
+            foreach ($retailMessage['items'] as $file) {
+                if (isset($file['height']) and isset($file['width'])) {
+                    $imageUrl = 'https://s3.eu-central-1.amazonaws.com/mg-node-files/files/2844/' . $file['id'];
+                    $this->sentImageToWazzup($retailMessage, $existSetting, $imageUrl);
+                }
+            }
+        }
+    }
+
+    private function sentImageToWazzup(array $retailMessage, $existSetting, string $imageUrl)
+    {
+        $data = $this->settingService->getChannelInfoByChannelIdFromRetailCrm($retailMessage['data']['channel_id'], $existSetting);
+
+        if ($data !== null) {
+            $body = $this->wazzupHelper->generateMessageForImage($data, $retailMessage, $imageUrl);
+            Yii::$app->wazzup->sentMessage($existSetting->wazzup_api_key, $body);
         }
     }
 
