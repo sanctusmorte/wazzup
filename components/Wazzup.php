@@ -139,6 +139,6 @@ class Wazzup extends Component
 
         $response = $this->makePostRequest($url, $wazzup_api_key, $body);
 
-        //Yii::error($response, 'wazzup_telegram_log');
+        Yii::error($response, 'wazzup_telegram_log');
     }
 }
