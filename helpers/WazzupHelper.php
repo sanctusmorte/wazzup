@@ -26,4 +26,22 @@ class WazzupHelper
 
         return $body;
     }
+
+    /**
+     * @param array $data
+     * @param array $retailMessage
+     * @param string $imageUrl
+     * @return array
+     */
+    public function generateMessageForImage(array $data, array $retailMessage, string $imageUrl): array
+    {
+        $body =  [
+            'channelId' => $data['channelId'],
+            'chatType' => $data['chatType'],
+            'chatId' => $retailMessage['data']['external_user_id'],
+            'content' => $imageUrl
+        ];
+
+        return $body;
+    }
 }
