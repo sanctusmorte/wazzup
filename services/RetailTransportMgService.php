@@ -45,6 +45,7 @@ class RetailTransportMgService
     /**
      * Обрабатываем сообщение из RetailCRM и проверяем тип ("type") сообщения
      * @param $retailMessage
+     * @param $existSetting
      */
     public function handleMessageFromRetail($retailMessage, $existSetting)
     {
@@ -63,6 +64,7 @@ class RetailTransportMgService
     /**
      * Отправляем сообщение из RetailCRM в Wazzup
      * @param $retailMessage
+     * @param $existSetting
      */
     private function sentMessageToWazzup($retailMessage, $existSetting)
     {

@@ -212,6 +212,9 @@ class SettingService extends Component
         $needChannelType = null;
 
         $existChannels = json_decode($existSetting->wazzup_channels, 1);
+
+        Yii::error($existChannels, 'wazzup_telegram_log');
+
         if (count($existChannels) > 0) {
             foreach ($existChannels as $existChannel) {
                 if ($existChannel['id'] === $channelId) {
