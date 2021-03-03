@@ -212,11 +212,11 @@ class SettingService extends Component
         $needChannelExternalId = null;
         $needChannelType = null;
 
-        Yii::error($data, 'wazzup_telegram_log');
+
 
         $existChannels = json_decode($existSetting->wazzup_channels, 1);
 
-        Yii::error($existChannels, 'wazzup_telegram_log');
+
 
         if (count($existChannels) > 0) {
             foreach ($existChannels as $existChannel) {
@@ -234,6 +234,8 @@ class SettingService extends Component
                 'chatType' => $needChannelType,
             ];
         }
+
+        Yii::error($data, 'wazzup_telegram_log');
 
         return $data;
     }
