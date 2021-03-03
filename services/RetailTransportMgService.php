@@ -26,6 +26,9 @@ class RetailTransportMgService
         $needChannelsToSave = [];
 
         $channels = Yii::$app->wazzup->getChannels($setting);
+
+        Yii::error($channels, 'wazzup_telegram_log');
+
         if ($channels !== false) {
             foreach ($channels as $channel) {
                 $createChannel = Yii::$app->transport->createTransportInRetailCrm($setting, $channel);
