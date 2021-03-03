@@ -203,6 +203,7 @@ class SettingService extends Component
      * Данные о сообщении, которое приходит из RetailCRM содержит в себе channel_id канала (пример - 12)
      * По нему нам необходимо получить ID (пример - 12)
      * @param $channelId
+     * @param $existSetting
      * @return array
      */
     public function getChannelInfoByChannelIdFromRetailCrm($channelId, $existSetting): array
@@ -210,6 +211,8 @@ class SettingService extends Component
         $data = null;
         $needChannelExternalId = null;
         $needChannelType = null;
+
+        Yii::error($data, 'wazzup_telegram_log');
 
         $existChannels = json_decode($existSetting->wazzup_channels, 1);
 
