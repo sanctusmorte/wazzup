@@ -39,7 +39,8 @@ class WazzupHelper
             'channelId' => $data['channelId'],
             'chatType' => $data['chatType'],
             'chatId' => $retailMessage['data']['external_user_id'],
-            'content' => $imageUrl
+            'content' => $imageUrl,
+            'text' => ''
         ];
 
         return $body;
