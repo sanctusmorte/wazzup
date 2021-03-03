@@ -67,6 +67,8 @@ class RetailTransportMgService
     {
         $data = $this->settingService->getChannelInfoByChannelIdFromRetailCrm($retailMessage['data']['channel_id'], $existSetting);
 
+        Yii::error($data, 'wazzup_telegram_log');
+
         if ($data !== null) {
             $body = $this->wazzupHelper->generateMessage($data, $retailMessage);
             Yii::$app->wazzup->sentMessage($existSetting->wazzup_api_key, $body);
