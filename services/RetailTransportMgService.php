@@ -27,8 +27,6 @@ class RetailTransportMgService
 
         $channels = Yii::$app->wazzup->getChannels($setting);
 
-        Yii::error($channels, 'wazzup_telegram_log');
-
         if ($channels !== false) {
             foreach ($channels as $channel) {
                 $createChannel = Yii::$app->transport->createTransportInRetailCrm($setting, $channel);
@@ -55,7 +53,7 @@ class RetailTransportMgService
 
 
        if ($retailMessage['type'] === 'message_sent') {
-           Yii::error($existSetting->wazzup_channels, 'wazzup_telegram_log');
+           //Yii::error($existSetting->wazzup_channels, 'wazzup_telegram_log');
            $this->sentMessageToWazzup($retailMessage, $existSetting);
        }
 
