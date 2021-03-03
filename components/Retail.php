@@ -11,14 +11,14 @@ use yii\helpers\{
     Json
 };
 
-class Retail extends Component 
+class Retail extends Component
 {
 
     /**
      * @param $apiClient
      * @return bool|\RetailCrm\Response\ApiResponse
      */
-    public function credentials($apiClient) 
+    public function credentials($apiClient)
     {
         $client = new \RetailCrm\ApiClient(
             $apiClient['retailApiUrl'],
@@ -36,7 +36,7 @@ class Retail extends Component
         } catch (\RetailCrm\Exception\CurlException $e) {
             // Yii::error($e, $e->getMessage());
             // throw new ServerErrorHttpException($e->getMessage());
-           return false;
+            return false;
         }
     }
 
@@ -70,7 +70,7 @@ class Retail extends Component
      * @return array
      */
 
-    public function sitesList($apiClient) 
+    public function sitesList($apiClient)
     {
         $client = new \RetailCrm\ApiClient(
             $apiClient['retailApiUrl'],
@@ -133,7 +133,7 @@ class Retail extends Component
     }
 
     /**
-     * Получения платежных статусов 
+     * Получения платежных статусов
      * @param array - $apiClient - ['retailApiUrl' => $url, 'retailApiKey' => $apiKey]
      * @return array
      */
@@ -149,7 +149,7 @@ class Retail extends Component
         try{
             $response = $client->request->paymentStatusesList();
 
-            if ($response->isSuccessful()) { 
+            if ($response->isSuccessful()) {
                 return $response['paymentStatuses'] ?? false;
             } else {
                 return false;
@@ -166,7 +166,7 @@ class Retail extends Component
      * @return array
      */
 
-    public function deliveryTypesList($apiClient) 
+    public function deliveryTypesList($apiClient)
     {
         $client = new \RetailCrm\ApiClient(
             $apiClient['retailApiUrl'],
@@ -194,7 +194,7 @@ class Retail extends Component
      * @return array
      */
 
-    public function paymentTypesList($apiClient) 
+    public function paymentTypesList($apiClient)
     {
         $client = new \RetailCrm\ApiClient(
             $apiClient['retailApiUrl'],
@@ -222,7 +222,7 @@ class Retail extends Component
      * @return array
      */
 
-    public function couriersList($apiClient) 
+    public function couriersList($apiClient)
     {
         $client = new \RetailCrm\ApiClient(
             $apiClient['retailApiUrl'],
@@ -251,7 +251,7 @@ class Retail extends Component
      * @param array - data - массив с данными инвойса
      */
 
-    public function paymentUpdateInvoice($apiClient, $data) 
+    public function paymentUpdateInvoice($apiClient, $data)
     {
         $client = new \RetailCrm\ApiClient(
             $apiClient['retailApiUrl'],
@@ -262,10 +262,10 @@ class Retail extends Component
         try{
             $response = $client->request->paymentUpdateInvoice($data);
 
-            if ($response->isSuccessful()) { 
-               return [
-                   'status' => true
-               ];
+            if ($response->isSuccessful()) {
+                return [
+                    'status' => true
+                ];
             } else {
                 return [
                     'status' => false,
@@ -296,8 +296,8 @@ class Retail extends Component
         try{
             $response = $client->request->integrationModulesGet($code);
 
-            if ($response->isSuccessful()) { 
-               return $response;
+            if ($response->isSuccessful()) {
+                return $response;
             } else {
                 return [
                     'status' => false,
@@ -310,7 +310,7 @@ class Retail extends Component
         }
     }
 
-    public function paymentCheckInvoice($apiClient, $check) 
+    public function paymentCheckInvoice($apiClient, $check)
     {
         $client = new \RetailCrm\ApiClient(
             $apiClient['retailApiUrl'],
@@ -321,10 +321,10 @@ class Retail extends Component
         try{
             $response = $client->request->paymentCheckInvoice($check);
 
-            if ($response->isSuccessful()) { 
-               return [
-                   'status' => true
-               ];
+            if ($response->isSuccessful()) {
+                return [
+                    'status' => true
+                ];
             } else {
                 throw new ServerErrorHttpException($e->getMessage());
             }
@@ -337,10 +337,10 @@ class Retail extends Component
     /**
      * Получения статусов заказа
      * @param array $apiClient - ['retailApiUrl' => $url, 'retailApiKey' => $apiKey]
-     * @return array 
+     * @return array
      */
 
-    public function statusesList($apiClient) 
+    public function statusesList($apiClient)
     {
         $client = new \RetailCrm\ApiClient(
             $apiClient['retailApiUrl'],
@@ -351,7 +351,7 @@ class Retail extends Component
         try{
             $response = $client->request->statusesList();
 
-            if ($response->isSuccessful()) { 
+            if ($response->isSuccessful()) {
                 return $response['statuses'];
             } else {
                 return [];
@@ -369,7 +369,7 @@ class Retail extends Component
      * @return boolean
      */
 
-    public function ordersCreate($apiClient, array $data, $site = null) 
+    public function ordersCreate($apiClient, array $data, $site = null)
     {
         $client = new \RetailCrm\ApiClient(
             $apiClient['retailApiUrl'],
@@ -380,11 +380,11 @@ class Retail extends Component
         try{
             $response = $client->request->ordersCreate($data, $site);
 
-            if ($response->isSuccessful()) { 
+            if ($response->isSuccessful()) {
                 return $response;
             } else {
 
-                Yii::error([ 
+                Yii::error([
                     'error' => 'Ошибка создания заказа',
                     'number' => $data['number']
                 ], "Ошибка создания заказа");
@@ -410,7 +410,7 @@ class Retail extends Component
         try{
             $response = $client->request->ordersPaymentCreate($data, $site);
 
-            if ($response->isSuccessful()) { 
+            if ($response->isSuccessful()) {
                 return $response;
             } else {
                 return $response;
@@ -432,7 +432,7 @@ class Retail extends Component
 
         try{
             $response = $client->request->ordersPaymentEdit($data, $by, $site);
-            if ($response->isSuccessful()) { 
+            if ($response->isSuccessful()) {
                 return $response;
             } else {
                 return false;
@@ -464,8 +464,8 @@ class Retail extends Component
 
         try{
             $response = $client->request->customFieldsCreate($entity, $data);
-            
-            if ($response->isSuccessful()) { 
+
+            if ($response->isSuccessful()) {
                 return true;
             } else {
                 return false;
@@ -495,7 +495,7 @@ class Retail extends Component
         try{
 
             $response = $client->request->customFieldsGet($entity, $code);
-            if ($response->isSuccessful()) { 
+            if ($response->isSuccessful()) {
                 return $response;
             } else {
                 return false;
@@ -515,7 +515,7 @@ class Retail extends Component
 
     public function storeProducts($apiClient, array $filter)
     {
-        
+
         $client = new \RetailCrm\ApiClient(
             $apiClient['retailApiUrl'],
             $apiClient['retailApiKey'],
@@ -525,7 +525,7 @@ class Retail extends Component
         try{
             $response = $client->request->storeProducts($filter, $page = null, $limit = null);
 
-            if ($response->isSuccessful()) { 
+            if ($response->isSuccessful()) {
                 return $response['products'];
             } else {
                 return false;
@@ -533,11 +533,11 @@ class Retail extends Component
 
         } catch (\RetailCrm\Exception\CurlException $e) {
             Yii::error($e, "apiUrl: " . $apiClient['retailApiUrl'] . ". " . $e->getMessage());
-            
+
             return false;
         }
     }
-    
+
     /**
      * Получение списка клиентов, удовлетворяющих заданному фильтру
      * @param $apiClient - ['retailApiUrl' => $url, 'retailApiKey' => $apiKey]
@@ -545,7 +545,7 @@ class Retail extends Component
      */
 
     public function customersList($apiClient, array $filter, $page = null, $limit = null) {
-        
+
         $client = new \RetailCrm\ApiClient(
             $apiClient['retailApiUrl'],
             $apiClient['retailApiKey'],
@@ -555,7 +555,7 @@ class Retail extends Component
         try{
             $response = $client->request->customersList($filter, $page, $limit);
 
-            if ($response->isSuccessful()) { 
+            if ($response->isSuccessful()) {
                 return $response['customers'];
             } else {
                 return false;
@@ -563,7 +563,7 @@ class Retail extends Component
 
         } catch (\RetailCrm\Exception\CurlException $e) {
             Yii::error($e, "apiUrl: " . $apiClient['retailApiUrl'] . ". " . $e->getMessage());
-            
+
             return false;
         }
 
@@ -571,7 +571,7 @@ class Retail extends Component
     }
 
     public function ordersHistory($apiClient, array $filter, $page = null, $limit = null) {
-        
+
         $client = new \RetailCrm\ApiClient(
             $apiClient['retailApiUrl'],
             $apiClient['retailApiKey'],
@@ -581,8 +581,8 @@ class Retail extends Component
         try{
             $response = $client->request->ordersHistory($filter, $page = null, $limit = null);
 
-            if ($response->isSuccessful()) { 
-                
+            if ($response->isSuccessful()) {
+
                 return [
                     $response['history'] ?? false,
                     $response['pagination'] ?? false
@@ -597,7 +597,7 @@ class Retail extends Component
 
         } catch (\RetailCrm\Exception\CurlException $e) {
             Yii::error($e, "apiUrl: " . $apiClient['retailApiUrl'] . ". " . $e->getMessage());
-            
+
             return [
                 false,
                 false
@@ -635,7 +635,7 @@ class Retail extends Component
         try{
             $response = $client->request->ordersGet($id, $by, $site);
 
-            if ($response->isSuccessful()) { 
+            if ($response->isSuccessful()) {
                 return $response['order'] ?? [];
             } else {
                 return [];
@@ -670,7 +670,7 @@ class Retail extends Component
         }
     }
 
-    public function ordersList($apiClient, array $filter = [], $page = null, $limit = null) 
+    public function ordersList($apiClient, array $filter = [], $page = null, $limit = null)
     {
         $client = new \RetailCrm\ApiClient(
             $apiClient['retailApiUrl'],
@@ -680,7 +680,7 @@ class Retail extends Component
 
         try{
             $response = $client->request->ordersList($filter, $page, $limit);
-            
+
             if ($response->isSuccessful()) {
                 return $response;
             } else {
