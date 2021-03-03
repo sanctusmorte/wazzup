@@ -44,7 +44,7 @@ class RetailController extends Controller
                     return http_response_code(200);
                 } else {
                     $message = json_decode($data, 1);
-                    Yii::error($message, 'wazzup_telegram_log');
+                   // Yii::error($message, 'wazzup_telegram_log');
                     if (isset($message['type'])) {
                         $this->retailTransportMgService->handleMessageFromRetail($message, $existSetting);
                         $response = [
