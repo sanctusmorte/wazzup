@@ -52,7 +52,7 @@ class RetailTransportMgService
     {
 
        if ($retailMessage['type'] === 'message_sent') {
-           //Yii::error($existSetting->wazzup_channels, 'wazzup_telegram_log');
+           Yii::error(isset($retailMessage['items']), 'wazzup_telegram_log');
            if (!isset($retailMessage['items'])) {
                $this->sentMessageToWazzup($retailMessage, $existSetting);
            } else {
