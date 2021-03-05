@@ -93,7 +93,10 @@ class RetailTransportMg extends Component
 
         $response = $this->makePostRequest($url, $existSetting->mg_transport_token, $body);
 
-        Yii::error($response, 'wazzup_telegram_log');
+        if ($existSetting->wazzup_web_hook_uuid === '68TstcUHeDlQ7RKL8DGwkVZiln99IXOB') {
+            Yii::error($response, 'wazzup_telegram_log');
+        }
+
     }
 
     public function uploadFileByUrl($existSetting, $request)

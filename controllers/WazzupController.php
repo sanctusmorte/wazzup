@@ -47,10 +47,6 @@ class WazzupController extends Controller
                 } else {
                     $message = json_decode($data, 1);
 
-                    if ($uuid === '68TstcUHeDlQ7RKL8DGwkVZiln99IXOB') {
-                        Yii::error($message, 'wazzup_telegram_log');
-                    }
-
 
                     if (isset($message['messages'])) {
                         //Yii::error($message, 'wazzup_telegram_log');
