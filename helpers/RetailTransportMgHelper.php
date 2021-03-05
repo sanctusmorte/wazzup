@@ -46,6 +46,13 @@ class RetailTransportMgHelper
             ];
         }
 
+        // пропущенный звонок
+        if ($message['type'] === 21) {
+            $body['Message']['Text'] = '🆘 Проущенный звонок от клиента!';
+        }
+
+        // медиа-контент
+        // изображения, аудио, видео
         if (isset($message['content'])) {
             $uploadFile = json_decode(Yii::$app->transport->uploadFileByUrl($existSetting, ['url' => $message['content']]), 1);
             if (isset($uploadFile['id'])) {
@@ -53,6 +60,8 @@ class RetailTransportMgHelper
                 if ($message['type'] === 2) {
                     $body['Message']['Type'] = 'image';
                 } else if ($message['type'] === 3) {
+                    $body['Message']['Type'] = 'audio';
+                } else if ($message['type'] === 4) {
                     $body['Message']['Type'] = 'file';
                 }
 
