@@ -52,7 +52,7 @@ class RetailTransportMgHelper
 
                 if ($message['type'] === 2) {
                     $body['Message']['Type'] = 'image';
-                } else if ($message['type' === 3]) {
+                } else if ($message['type'] === 3) {
                     $body['Message']['Type'] = 'file';
                 }
 
