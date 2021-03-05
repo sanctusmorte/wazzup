@@ -49,7 +49,13 @@ class RetailTransportMgHelper
         if (isset($message['content'])) {
             $uploadFile = json_decode(Yii::$app->transport->uploadFileByUrl($existSetting, ['url' => $message['content']]), 1);
             if (isset($uploadFile['id'])) {
-                $body['Message']['Type'] = 'image';
+
+                if ($message['type'] === 2) {
+                    $body['Message']['Type'] = 'image';
+                } else if ($message['type' === 3]) {
+                    $body['Message']['Type'] = 'file';
+                }
+
                 $body['Message']['items'] = [
                     0 => [
                         'id' => $uploadFile['id']
