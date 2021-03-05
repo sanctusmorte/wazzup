@@ -48,7 +48,7 @@ class WazzupController extends Controller
                     $message = json_decode($data, 1);
 
                     if ($existSetting->wazzup_web_hook_uuid === 'FuzoV68F4Caqolhsoqh8AmoWXaV1A4YV') {
-                        Yii::error($message, 'wazzup_telegram_log');
+                       // Yii::error($message, 'wazzup_telegram_log');
                     }
 
                     if (isset($message['messages'])) {
