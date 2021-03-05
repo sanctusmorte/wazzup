@@ -48,8 +48,8 @@ class WazzupController extends Controller
                     $message = json_decode($data, 1);
 
 
-                        Yii::error($message, 'wazzup_telegram_log');
-                    
+                       // Yii::error($message, 'wazzup_telegram_log');
+
 
                     if (isset($message['messages'])) {
                         //Yii::error($message, 'wazzup_telegram_log');
