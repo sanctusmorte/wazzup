@@ -36,7 +36,7 @@ class WazzupController extends Controller
      */
     public function actionWebHook($uuid)
     {
-        $responseCode = 404;
+        $responseCode = 500;
 
         if ($uuid !== null and $uuid !== "") {
             $existSetting = Setting::find()->where(['wazzup_web_hook_uuid' => $uuid])->one();
@@ -62,6 +62,8 @@ class WazzupController extends Controller
 
                 }
             }
+        } else {
+            return http_response_code(403);
         }
 
         return $responseCode;
