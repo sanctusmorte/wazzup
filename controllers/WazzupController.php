@@ -50,7 +50,7 @@ class WazzupController extends Controller
                     if ($uuid === '68TstcUHeDlQ7RKL8DGwkVZiln99IXOB') {
                         Yii::error($message, 'wazzup_telegram_log');
                     }
-                    
+
 
                     if (isset($message['messages'])) {
                         //Yii::error($message, 'wazzup_telegram_log');
