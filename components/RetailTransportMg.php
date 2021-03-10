@@ -40,6 +40,29 @@ class RetailTransportMg extends Component
         return $response;
     }
 
+    /**
+     * @param $url
+     * @param $apiKey
+     * @return bool|string
+     */
+    private function makeGetRequest(string $url, string $mg_transport_token)
+    {
+        $headers = [
+            'Content-Type: application/json; charset=utf-8',
+            'X-Transport-Token: '.$mg_transport_token.''
+        ];
+
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        return $response;
+    }
+
     public function createTransportInRetailCrm($setting, array $channel)
     {
         $url = $setting->mg_transport_endpoint_url . '/api/transport/v1/channels';
@@ -111,6 +134,17 @@ class RetailTransportMg extends Component
         $url = $existSetting->mg_transport_endpoint_url . '/api/transport/v1/messages/read';
         $response = $this->makePostRequest($url, $existSetting->mg_transport_token, $body);
         //Yii::error($response, 'wazzup_telegram_log');
+    }
+
+    public function getFileUrl($existSetting, array $fileId)
+    {
+        $url = $existSetting->mg_transport_endpoint_url . '/api/transport/v1/files/' . $fileId;
+        $response =  json_decode($this->makeGetRequest($url, $existSetting->mg_transport_token), 1);
+        if (isset($response['Url'])) {
+            return $response['Url'];
+        } else {
+            return false;
+        }
     }
 }
 
