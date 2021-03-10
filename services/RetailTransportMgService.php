@@ -71,9 +71,11 @@ class RetailTransportMgService
         if (count($retailMessage['data']['items']) > 0) {
             foreach ($retailMessage['data']['items'] as $file) {
                 if (isset($file['height']) and isset($file['width'])) {
-                    $imageUrl = 'https://s3.eu-central-1.amazonaws.com/mg-node-files/files/2844/' . $file['id'];
 
-                    $this->sentImageToWazzup($retailMessage, $existSetting, $imageUrl);
+                    $findFileUrl = Yii::$app->transport->getFileUrl($existSetting, $file['id']);
+                    if ($findFileUrl !== null) {
+                        $this->sentImageToWazzup($retailMessage, $existSetting, $findFileUrl);
+                    }
                 }
             }
         }
@@ -85,9 +87,8 @@ class RetailTransportMgService
 
         if ($data !== null) {
             $body = $this->wazzupHelper->generateMessageForImage($data, $retailMessage, $imageUrl);
-            Yii::error($retailMessage, 'wazzup_telegram_log');
+
             $result = Yii::$app->wazzup->sentMessage($existSetting->wazzup_api_key, $body);
-            Yii::error($result, 'wazzup_telegram_log');
         }
     }
 
