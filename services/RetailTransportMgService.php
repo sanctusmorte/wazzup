@@ -73,6 +73,7 @@ class RetailTransportMgService
                 if (isset($file['height']) and isset($file['width'])) {
 
                     $findFileUrl = Yii::$app->transport->getFileUrl($existSetting, $file['id']);
+                    Yii::error($findFileUrl, 'wazzup_telegram_log');
                     if ($findFileUrl !== null) {
                         $this->sentImageToWazzup($retailMessage, $existSetting, $findFileUrl);
                     }
