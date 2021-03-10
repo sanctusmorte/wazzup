@@ -12,6 +12,12 @@ class m200827_113825_create_setting_table extends Migration
      */
     public function safeUp()
     {
+        $tableOptions = null;
+
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
+        }
+
         $this->createTable('{{%setting}}', [
             'id' => $this->primaryKey(),
             'client_id' => $this->string(32)->unique()->notNull(),
@@ -30,7 +36,7 @@ class m200827_113825_create_setting_table extends Migration
 
             'is_active' => $this->boolean(),
             'is_freeze' => $this->boolean(),
-        ]);
+        ], $tableOptions);
     }
 
     /**
