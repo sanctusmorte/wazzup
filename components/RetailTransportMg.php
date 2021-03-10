@@ -136,7 +136,7 @@ class RetailTransportMg extends Component
         //Yii::error($response, 'wazzup_telegram_log');
     }
 
-    public function getFileUrl($existSetting, array $fileId)
+    public function getFileUrl($existSetting, $fileId)
     {
         $url = $existSetting->mg_transport_endpoint_url . '/api/transport/v1/files/' . $fileId;
         $response =  json_decode($this->makeGetRequest($url, $existSetting->mg_transport_token), 1);
