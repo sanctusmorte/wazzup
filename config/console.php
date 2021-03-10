@@ -8,8 +8,7 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => [
         'log',
-        'queue',
-        'logsis'
+        'queue'
     ],
     'controllerNamespace' => 'app\commands',
     'aliases' => [
