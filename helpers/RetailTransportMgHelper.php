@@ -79,6 +79,8 @@ class RetailTransportMgHelper
             $uploadFile = json_decode(Yii::$app->transport->uploadFileByUrl($existSetting, ['url' => $message['instPost']['imageSrc']]), 1);
             if (isset($uploadFile['id'])) {
                 $body['Message']['external_id'] = 'response_from_post' . $body['Message']['external_id'];
+                $body['Customer']['external_id'] = 'response_from_post' . $body['Message']['external_id'];
+                $body['Customer']['nickname'] = '[Сообщение из поста]' . $body['Message']['external_id'];
                 $body['Message']['Type'] = 'image';
                 $body['Message']['Note'] = '';
                 $body['Message']['items'] = [
