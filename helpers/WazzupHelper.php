@@ -24,6 +24,10 @@ class WazzupHelper
             'text' => $retailMessage['data']['content']
         ];
 
+        if (isset($retailMessage['data']['quote_external_id'])) {
+            $body['$retailMessage'] = $retailMessage['data']['quote_external_id'];
+        }
+
         return $body;
     }
 
