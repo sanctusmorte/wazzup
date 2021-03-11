@@ -74,7 +74,7 @@ class RetailTransportMgHelper
         }
 
         if (isset($message['instPost'])) {
-            $body['Message']['Type'] = 'system';
+            $body['Message']['Caption'] = 'awdwad';
             $body['Message']['Text'] = 'сообщение из поста';
             //$uploadFile = json_decode(Yii::$app->transport->uploadFileByUrl($existSetting, ['url' => $message['instPost']['imageSrc']]), 1);
             if (isset($uploadFile['id'])) {
