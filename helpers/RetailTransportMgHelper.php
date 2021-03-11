@@ -82,7 +82,7 @@ class RetailTransportMgHelper
                 $body['Customer']['external_id'] = 'response_from_post' . $body['Customer']['external_id'];
                 $body['Customer']['nickname'] = '[Пост] ' . $body['Customer']['nickname'];
                 $body['Message']['Type'] = 'image';
-                $body['Message']['Note'] = '[Комментарий клиента из поста (<a href="'.$message['instPost']['src'].'">)] ';
+                $body['Message']['Note'] = '[Комментарий клиента из поста ('.$message['instPost']['src'].')] ';
                 $body['Message']['items'] = [
                     0 => [
                         'id' => $uploadFile['id'],
