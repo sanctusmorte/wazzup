@@ -25,7 +25,7 @@ class WazzupHelper
         ];
 
         if (isset($retailMessage['data']['quote_external_id'])) {
-            $body['$retailMessage'] = $retailMessage['data']['quote_external_id'];
+            $body['refMessageId'] = $retailMessage['data']['quote_external_id'];
         }
 
         return $body;
