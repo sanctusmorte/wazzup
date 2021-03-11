@@ -74,15 +74,17 @@ class RetailTransportMgHelper
         }
 
         if (isset($message['instPost'])) {
-            $uploadFile = json_decode(Yii::$app->transport->uploadFileByUrl($existSetting, ['url' => $message['instPost']['imageSrc']]), 1);
+            $body['Message']['Type'] = 'system';
+            $body['Message']['Text'] = 'сообщение из поста';
+            //$uploadFile = json_decode(Yii::$app->transport->uploadFileByUrl($existSetting, ['url' => $message['instPost']['imageSrc']]), 1);
             if (isset($uploadFile['id'])) {
-                $body['Message']['Type'] = 'image';
-                $body['Message']['items'] = [
-                    0 => [
-                        'id' => $uploadFile['id'],
-                        'сaption' => 'test'
-                    ],
-                ];
+                $body['Message']['Type'] = 'system';
+//                $body['Message']['items'] = [
+//                    0 => [
+//                        'id' => $uploadFile['id'],
+//                        'сaption' => 'test'
+//                    ],
+//                ];
             }
         }
 
