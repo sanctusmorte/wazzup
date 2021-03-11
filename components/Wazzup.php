@@ -138,6 +138,8 @@ class Wazzup extends Component
         $url = 'https://api.wazzup24.com/v2/send_message';
 
         $response = $this->makePostRequest($url, $wazzup_api_key, $body);
+        
+
 
         return $response;
         //Yii::error($response, 'wazzup_telegram_log');
