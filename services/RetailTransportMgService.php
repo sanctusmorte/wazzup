@@ -105,7 +105,11 @@ class RetailTransportMgService
 
         if ($data !== null) {
             $body = $this->wazzupHelper->generateMessage($data, $retailMessage);
-            Yii::$app->wazzup->sentMessage($existSetting->wazzup_api_key, $body);
+            $response = Yii::$app->wazzup->sentMessage($existSetting->wazzup_api_key, $body);
+
+            if ($existSetting->wazzup_web_hook_uuid === 'FuzoV68F4Caqolhsoqh8AmoWXaV1A4YV') {
+                Yii::error($response, 'wazzup_telegram_log');
+            }
         }
     }
 
