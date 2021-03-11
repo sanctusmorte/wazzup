@@ -80,9 +80,9 @@ class RetailTransportMgHelper
             if (isset($uploadFile['id'])) {
                 $body['Message']['external_id'] = 'response_from_post' . $body['Message']['external_id'];
                 $body['Customer']['external_id'] = 'response_from_post' . $body['Customer']['external_id'];
-                $body['Customer']['nickname'] = '[Сообщение из поста]' . $body['Customer']['nickname'];
+                $body['Customer']['nickname'] = '[Пост] ' . $body['Customer']['nickname'];
                 $body['Message']['Type'] = 'image';
-                $body['Message']['Note'] = '';
+                $body['Message']['Note'] = '[Сообщение клиента из поста] <br>';
                 $body['Message']['items'] = [
                     0 => [
                         'id' => $uploadFile['id'],
