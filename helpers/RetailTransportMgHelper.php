@@ -79,10 +79,10 @@ class RetailTransportMgHelper
                 $body['Message']['Type'] = 'image';
                 $body['Message']['items'] = [
                     0 => [
-                        'id' => $uploadFile['id']
+                        'id' => $uploadFile['id'],
+                        'Caption' => '[Пост в instagram]' . "<br>" . $message['text']
                     ],
                 ];
-                $body['Message']['Caption'] = '[Пост в instagram]' . "<br>" . $message['text'];
             }
         }
 
