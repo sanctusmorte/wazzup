@@ -21,7 +21,8 @@ class RetailTransportMgHelper
             'Message' => [
                 'external_id' => $message['messageId'],
                 'Type' => 'text',
-                'Text' => $message['text']
+                'Text' => $message['text'],
+                'Note' => 'awdawd'
             ],
             'Customer' => [
                 'external_id' => $message['chatId'],
