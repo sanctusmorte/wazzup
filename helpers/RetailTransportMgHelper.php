@@ -83,7 +83,7 @@ class RetailTransportMgHelper
                 $body['Message']['items'] = [
                     0 => [
                         'id' => $uploadFile['id'],
-                        'text' => 'text test'
+                        'Caption' => json_encode('awd')
                     ],
                 ];
             }
