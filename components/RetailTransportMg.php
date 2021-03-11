@@ -22,7 +22,7 @@ class RetailTransportMg extends Component
     private function makePostRequest(string $url, string $mg_transport_token, array $body)
     {
         $headers = [
-            'Content-Type: application/json; charset=utf-8',
+            'Content-Type: text/plan; charset=utf-8',
             'X-Transport-Token: '.$mg_transport_token.''
         ];
 
