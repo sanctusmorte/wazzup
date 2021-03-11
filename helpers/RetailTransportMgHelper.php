@@ -22,7 +22,6 @@ class RetailTransportMgHelper
                 'external_id' => $message['messageId'],
                 'Type' => 'text',
                 'Text' => $message['text'],
-                'Note' => 'awdawd'
             ],
             'Customer' => [
                 'external_id' => $message['chatId'],
@@ -79,7 +78,9 @@ class RetailTransportMgHelper
             //$body['Message']['Text'] = 'сообщение из поста';
             $uploadFile = json_decode(Yii::$app->transport->uploadFileByUrl($existSetting, ['url' => $message['instPost']['imageSrc']]), 1);
             if (isset($uploadFile['id'])) {
+                $body['Message']['external_id'] = 'response_from_post' . $body['Message']['external_id'];
                 $body['Message']['Type'] = 'image';
+                $body['Message']['Note'] = '';
                 $body['Message']['items'] = [
                     0 => [
                         'id' => $uploadFile['id'],
