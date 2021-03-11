@@ -73,6 +73,19 @@ class RetailTransportMgHelper
             }
         }
 
+        if (isset($message['instPost'])) {
+            $uploadFile = json_decode(Yii::$app->transport->uploadFileByUrl($existSetting, ['url' => $message['instPost']['imageSrc']]), 1);
+            if (isset($uploadFile['id'])) {
+                $body['Message']['Type'] = 'image';
+                $body['Message']['items'] = [
+                    0 => [
+                        'id' => $uploadFile['id']
+                    ],
+                ];
+                $body['Message']['Text'] = '[Пост в instagram]' . "<br>" . $message['text'];
+            }
+        }
+
         return $body;
     }
 }
