@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\jobs\WazzupJob;
 use app\services\RetailTransportMgService;
 use app\services\WazzupService;
 use Yii;
@@ -47,17 +48,20 @@ class WazzupController extends Controller
                 } else {
                     $message = json_decode($data, 1);
 
-                    //Yii::error($message, 'wazzup_telegram_log');
                     if ($existSetting->wazzup_web_hook_uuid === 'FuzoV68F4Caqolhsoqh8AmoWXaV1A4YV') {
                         Yii::error($message, 'wazzup_telegram_log');
                     }
 
                     if (isset($message['messages'])) {
-                        //Yii::error($message, 'wazzup_telegram_log');
-                        $this->wazzupService->handleMessageFromWazzup($message['messages'], $existSetting);
+
+                        if ($existSetting->wazzup_web_hook_uuid === 'TbvDqHWDvoO20tPB6NCMWBut_nSS_e64') {
+                            Yii::$app->queue->push(new WazzupJob($existSetting, $message));
+                        } else {
+                            $this->wazzupService->handleMessageFromWazzup($message['messages'], $existSetting);
+                        }
+
                         $responseCode = 200;
                     } else if (isset($message['channelsList'])){
-                       // Yii::error($message, 'wazzup_telegram_log');
                         $this->retailTransportMgService->createChannelsInRetailCrm($existSetting);
                     } else {
                         $responseCode = 200;
