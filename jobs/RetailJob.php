@@ -9,9 +9,11 @@
 namespace app\jobs;
 
 use Yii;
+use yii\base\BaseObject;
+use yii\queue\JobInterface;
 
 
-class RetailJob extends \yii\base\BaseObject implements \yii\queue\Job
+class RetailJob extends BaseObject implements JobInterface
 {
     public $setting;
     public $message;

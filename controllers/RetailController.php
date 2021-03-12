@@ -37,7 +37,7 @@ class RetailController extends Controller
      */
     public function actionWebHook($uuid)
     {
-
+   
         if ($uuid !== null and $uuid !== "") {
 
             $existSetting = Setting::find()->where(['retail_crm_web_hook_uuid' => $uuid])->one();
