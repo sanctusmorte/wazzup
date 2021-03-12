@@ -23,23 +23,37 @@ $config = [
         'log' => [
             'targets' => [
                 [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'class' => 'sergeymakinen\yii\telegramlog\Target',
+                    'token' => '1681007089:AAEUAha-oFHjhXa8qA0sjhDF03FmS93sPtE',
+                    'levels' => ['error', 'info', 'warning'],
+                    'categories' => ['wazzup_telegram_log'],
+                    'chatId' => 90187076,
                 ],
             ],
+        ],
+        'db' => $db,
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => $routes,
+        ],
+        'retail' => [
+            'class' => app\components\Retail::class
+        ],
+        'wazzup' => [
+            'class' => app\components\Wazzup::class,
+        ],
+        'transport' => [
+            'class' => app\components\RetailTransportMg::class
+        ],
+        'retailTransportMgService' => [
+            'class' => app\components\RetailTransportMgService::class
         ],
         'queue' => [
             'class' => \yii\queue\file\Queue::class,
             'path' => '@app/runtime/queue',
             'as log' => \yii\queue\LogBehavior::class,
         ],
-        'retail' => [
-            'class' => app\components\Retail::class
-        ],
-        'retailTransportMgService' => [
-            'class' => app\components\RetailTransportMgService::class
-        ],
-        'db' => $db,
     ],
     'params' => $params,
 ];
