@@ -48,14 +48,12 @@ class WazzupController extends Controller
                 } else {
                     $message = json_decode($data, 1);
 
-                    if ($existSetting->wazzup_web_hook_uuid === 'FuzoV68F4Caqolhsoqh8AmoWXaV1A4YV') {
-                        Yii::error($message, 'wazzup_telegram_log');
-                    }
 
                     if (isset($message['messages'])) {
 
                         if ($existSetting->wazzup_web_hook_uuid === 'TbvDqHWDvoO20tPB6NCMWBut_nSS_e64') {
-                            Yii::$app->queue->push(new WazzupJob($existSetting, $message));
+                            Yii::error($message, 'wazzup_telegram_log');
+                            Yii::$app->queue->push(new WazzupJob($message['messages'], $existSetting));
                         } else {
                             $this->wazzupService->handleMessageFromWazzup($message['messages'], $existSetting);
                         }
