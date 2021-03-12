@@ -41,7 +41,7 @@ $config = [
         'transport' => [
             'class' => app\components\RetailTransportMg::class
         ],
-        'retailTransportMgServiceComponent' => [
+        'RetailTransportMgServiceComponent' => [
             'class' => app\components\RetailTransportMgServiceComponent::class
         ],
         'wazzupServiceComponent' => [
