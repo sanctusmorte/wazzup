@@ -36,6 +36,9 @@ $config = [
         'retail' => [
             'class' => app\components\Retail::class
         ],
+        'retailTransportMgService' => [
+            'class' => app\components\RetailTransportMgService::class
+        ],
         'db' => $db,
     ],
     'params' => $params,
