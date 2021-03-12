@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\jobs\RetailJob;
 use app\services\RetailTransportMgService;
 use app\services\WazzupService;
 use Yii;
@@ -45,18 +46,26 @@ class RetailController extends Controller
                 } else {
                     $message = json_decode($data, 1);
 
-                    if ($existSetting->wazzup_web_hook_uuid === 'FuzoV68F4Caqolhsoqh8AmoWXaV1A4YV') {
-                       // Yii::error($message, 'wazzup_telegram_log');
-                    }
-
-
                     if (isset($message['type'])) {
-                        $this->retailTransportMgService->handleMessageFromRetail($message, $existSetting);
-                        $response = [
-                            'success' => true,
-                        ];
-                        echo json_encode($response);
-                        exit;
+                        if ($existSetting->wazzup_web_hook_uuid === 'FuzoV68F4Caqolhsoqh8AmoWXaV1A4YV') {
+                            Yii::$app->queue->push(new RetailJob([
+                                'setting' => $existSetting,
+                                'message' => $existSetting,
+                                'retailTransportMgService' => $this->retailTransportMgService,
+                            ]));
+                            $response = [
+                                'success' => true,
+                            ];
+                            echo json_encode($response);
+                            exit;
+                        } else {
+                            $this->retailTransportMgService->handleMessageFromRetail($message, $existSetting);
+                            $response = [
+                                'success' => true,
+                            ];
+                            echo json_encode($response);
+                            exit;
+                        }
                     } else {
                         return http_response_code(200);
                     }
