@@ -14,15 +14,15 @@ use yii\queue\JobInterface;
 use yii\queue\RetryableJobInterface;
 
 
-class RetailJob extends BaseObject implements RetryableJobInterface
+class WazzupJob extends BaseObject implements RetryableJobInterface
 {
     public $setting;
-    public $message;
+    public $messages;
 
-    public function __construct($setting, $message, array $config = [])
+    public function __construct($setting, $messages, array $config = [])
     {
         $this->setting = $setting;
-        $this->message = $message;
+        $this->messages = $messages;
         parent::__construct($config);
     }
 
@@ -38,6 +38,6 @@ class RetailJob extends BaseObject implements RetryableJobInterface
 
     public function execute($queue)
     {
-        $result = Yii::$app->retailTransportMgService->handleMessageFromRetail($this->message, $this->setting);
+        $result = Yii::$app->wazzupServiceComponent->handleMessageFromWazzup($this->messages, $this->setting);
     }
 }

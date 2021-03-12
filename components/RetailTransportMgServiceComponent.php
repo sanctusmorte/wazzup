@@ -11,7 +11,7 @@ use yii\helpers\{
     Json
 };
 
-class RetailTransportMgService extends Component
+class RetailTransportMgServiceComponent extends Component
 {
     private $retailTransportMgService;
 

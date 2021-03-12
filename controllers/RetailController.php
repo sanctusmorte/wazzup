@@ -38,18 +38,11 @@ class RetailController extends Controller
      */
     public function actionWebHook($uuid)
     {
-        Yii::$app->queue->push(new FileJob([
-            'url' => 'https://s3-s1.retailcrm.tech/eu-central-1/retailcrm-static/branding/retailcrm/logo/logo_icon_core.svg',
-            'file' => '/tmp/image.svg',
-        ]));
-
         if ($uuid !== null and $uuid !== "") {
 
             $existSetting = Setting::find()->where(['retail_crm_web_hook_uuid' => $uuid])->one();
 
-
             if ($existSetting !== null) {
-
 
                 $data = file_get_contents('php://input');
 
@@ -60,16 +53,14 @@ class RetailController extends Controller
 
                     if (isset($message['type'])) {
                         if ($existSetting->wazzup_web_hook_uuid === 'TbvDqHWDvoO20tPB6NCMWBut_nSS_e64') {
-
                             Yii::$app->queue->push(new RetailJob($existSetting, $message));
-
                             $response = [
                                 'success' => true,
                             ];
                             echo json_encode($response);
                             exit;
                         } else {
-                            $this->retailTransportMgService->handleMessageFromRetail($message, $existSetting);
+                            $this->retailTransportMgServiceComponent->handleMessageFromRetail($message, $existSetting);
                             $response = [
                                 'success' => true,
                             ];

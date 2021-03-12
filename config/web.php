@@ -69,8 +69,11 @@ $config = [
         'transport' => [
             'class' => app\components\RetailTransportMg::class
         ],
-        'retailTransportMgService' => [
-            'class' => app\components\RetailTransportMgService::class
+        'retailTransportMgServiceComponent' => [
+            'class' => app\components\RetailTransportMgServiceComponent::class
+        ],
+        'wazzupServiceComponent' => [
+            'class' => app\components\WazzupServiceComponent::class
         ],
         'queue' => [
             'class' => \yii\queue\file\Queue::class,
