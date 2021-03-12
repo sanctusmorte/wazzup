@@ -51,6 +51,8 @@ $config = [
             'class' => \yii\queue\file\Queue::class,
             'path' => '@app/runtime/queue',
             'as log' => \yii\queue\LogBehavior::class,
+            'ttr' => 5 * 60, // Max time for job execution
+            'attempts' => 5, // Max number of attempts
         ],
     ],
     'params' => $params,
