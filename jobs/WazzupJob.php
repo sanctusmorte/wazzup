@@ -10,11 +10,12 @@ namespace app\jobs;
 
 use Yii;
 use yii\base\BaseObject;
+use yii\queue\Job;
 use yii\queue\JobInterface;
 use yii\queue\RetryableJobInterface;
 
 
-class WazzupJob extends BaseObject implements RetryableJobInterface
+class WazzupJob extends BaseObject implements JobInterface
 {
     public $setting;
     public $messages;
@@ -26,18 +27,8 @@ class WazzupJob extends BaseObject implements RetryableJobInterface
         parent::__construct($config);
     }
 
-    public function getTtr()
-    {
-        return 60;
-    }
-
-    public function canRetry($attempt, $error)
-    {
-        return ($attempt < 5) && ($error instanceof TemporaryException);
-    }
-
     public function execute($queue)
     {
-        $result = Yii::$app->wazzupServiceComponent->handleMessageFromWazzup($this->messages, $this->setting);
+        Yii::$app->wazzupServiceComponent->handleMessageFromWazzup($this->messages, $this->setting);
     }
 }
