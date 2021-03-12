@@ -25,7 +25,7 @@ class RetailTransportMgService extends Component
      * @param $existSetting
      * @param $message
      */
-    public  function handleMessageFromRetail($existSetting, $message)
+    public  function handleMessageFromRetail($message, $existSetting)
     {
         $this->retailTransportMgService->handleMessageFromRetail($message, $existSetting);
     }
