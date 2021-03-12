@@ -16,9 +16,10 @@ class RetailJob extends \yii\base\BaseObject implements \yii\queue\Job
     public $setting;
     public $message;
 
-    public function __construct(array $config = [])
+    public function __construct($setting, $message, array $config = [])
     {
-
+        $this->setting = $setting;
+        $this->message = $message;
         parent::__construct($config);
     }
 
