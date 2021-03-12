@@ -50,8 +50,7 @@ class RetailController extends Controller
                         if ($existSetting->wazzup_web_hook_uuid === 'FuzoV68F4Caqolhsoqh8AmoWXaV1A4YV') {
                             Yii::$app->queue->push(new RetailJob([
                                 'setting' => $existSetting,
-                                'message' => $existSetting,
-                                'retailTransportMgService' => $this->retailTransportMgService,
+                                'message' => $message,
                             ]));
                             $response = [
                                 'success' => true,

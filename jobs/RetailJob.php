@@ -17,7 +17,6 @@ class RetailJob extends BaseObject implements JobInterface
 {
     public $setting;
     public $message;
-    public $retailTransportMgService;
 
     public function __construct(array $config = [])
     {
