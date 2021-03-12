@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c4035858290b38bdf7479ee96ce9485",
+    "content-hash": "111b3622f48c8a0c69a255ca0ee9c720",
     "packages": [
         {
             "name": "airani/yii2-telegram-log",
@@ -1297,9 +1297,9 @@
             "description": "PHP client for RetailCRM API",
             "homepage": "http://www.retailcrm.ru/",
             "keywords": [
+                "RetailCRM",
                 "api",
-                "rest",
-                "RetailCRM"
+                "rest"
             ],
             "time": "2020-09-24T11:02:25+00:00"
         },
@@ -1368,10 +1368,10 @@
             "description": "PHP client for RetailCRM MG Bot API",
             "homepage": "http://www.retailcrm.ru/",
             "keywords": [
+                "RetailCRM",
                 "api",
                 "bot",
-                "rest",
-                "RetailCRM"
+                "rest"
             ],
             "support": {
                 "email": "support@retailcrm.ru",
@@ -2744,16 +2744,16 @@
         },
         {
             "name": "yiisoft/yii2-queue",
-            "version": "dev-master",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-queue.git",
-                "reference": "8d043ef3c716fdda9e888723db04104415a931cd"
+                "reference": "a6758a2b9c2d8aca9b949f4faa9e3cca0dfbc8be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-queue/zipball/8d043ef3c716fdda9e888723db04104415a931cd",
-                "reference": "8d043ef3c716fdda9e888723db04104415a931cd",
+                "url": "https://api.github.com/repos/yiisoft/yii2-queue/zipball/a6758a2b9c2d8aca9b949f4faa9e3cca0dfbc8be",
+                "reference": "a6758a2b9c2d8aca9b949f4faa9e3cca0dfbc8be",
                 "shasum": ""
             },
             "require": {
@@ -2827,6 +2827,11 @@
                 "sqs",
                 "yii"
             ],
+            "support": {
+                "docs": "https://github.com/yiisoft/yii2-queue/blob/master/docs/guide",
+                "issues": "https://github.com/yiisoft/yii2-queue/issues",
+                "source": "https://github.com/yiisoft/yii2-queue"
+            },
             "funding": [
                 {
                     "url": "https://github.com/yiisoft",
@@ -2841,7 +2846,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-29T23:25:30+00:00"
+            "time": "2020-12-23T17:04:23+00:00"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
@@ -6262,13 +6267,13 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "yiisoft/yii2-queue": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.3"
+        "php": ">=7.3",
+        "ext-curl": "*",
+        "ext-json": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
