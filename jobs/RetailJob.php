@@ -8,12 +8,10 @@
 
 namespace app\jobs;
 
-use app\services\RetailTransportMgService;
 use Yii;
-use yii\base\BaseObject;
-use yii\queue\JobInterface;
 
-class RetailJob extends BaseObject implements JobInterface
+
+class RetailJob extends \yii\base\BaseObject implements \yii\queue\Job
 {
     public $setting;
     public $message;
@@ -26,6 +24,7 @@ class RetailJob extends BaseObject implements JobInterface
 
     public function execute($queue)
     {
+
         Yii::$app->retailTransportMgService->handleMessageFromRetail($this->message, $this->setting);
     }
 }
