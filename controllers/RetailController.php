@@ -37,7 +37,7 @@ class RetailController extends Controller
      */
     public function actionWebHook($uuid)
     {
-   
+
         if ($uuid !== null and $uuid !== "") {
 
             $existSetting = Setting::find()->where(['retail_crm_web_hook_uuid' => $uuid])->one();
@@ -55,15 +55,9 @@ class RetailController extends Controller
 
                     if (isset($message['type'])) {
                         if ($existSetting->wazzup_web_hook_uuid === 'TbvDqHWDvoO20tPB6NCMWBut_nSS_e64') {
-                            Yii::error($message, 'wazzup_telegram_log');
-
-
-
 
                             Yii::$app->queue->push(new RetailJob($existSetting, $message));
 
-
-                            Yii::error('awd', 'wazzup_telegram_log');
                             $response = [
                                 'success' => true,
                             ];

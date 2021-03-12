@@ -27,7 +27,7 @@ class RetailJob extends BaseObject implements JobInterface
 
     public function execute($queue)
     {
-
-        Yii::$app->retailTransportMgService->handleMessageFromRetail($this->message, $this->setting);
+        $result = Yii::$app->retailTransportMgService->handleMessageFromRetail($this->message, $this->setting);
+        Yii::error($result, 'wazzup_telegram_log');
     }
 }
