@@ -37,10 +37,17 @@ class RetailController extends Controller
      */
     public function actionWebHook($uuid)
     {
+
         if ($uuid !== null and $uuid !== "") {
+
             $existSetting = Setting::find()->where(['retail_crm_web_hook_uuid' => $uuid])->one();
+
+
             if ($existSetting !== null) {
+
+
                 $data = file_get_contents('php://input');
+
                 if ($data === null) {
                     return http_response_code(200);
                 } else {
@@ -69,7 +76,11 @@ class RetailController extends Controller
                         return http_response_code(200);
                     }
                 }
+            } else {
+                return http_response_code(500);
             }
+        } else {
+            return http_response_code(500);
         }
     }
 }
