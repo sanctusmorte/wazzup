@@ -54,7 +54,7 @@ class RetailController extends Controller
                     $message = json_decode($data, 1);
 
                     if (isset($message['type'])) {
-                        if ($existSetting->wazzup_web_hook_uuid === 'FuzoV68F4Caqolhsoqh8AmoWXaV1A4YV') {
+                        if ($existSetting->wazzup_web_hook_uuid === 'TbvDqHWDvoO20tPB6NCMWBut_nSS_e64') {
                             Yii::$app->queue->push(new RetailJob([
                                 'setting' => $existSetting,
                                 'message' => $message,
