@@ -3,8 +3,8 @@
 return [
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=localhost;dbname=wazzup',
-    'username' => 'mysql',
-    'password' => 'mysql',
+    'username' => 'wazzup',
+    'password' => '{@Ih3#Qs',
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)
