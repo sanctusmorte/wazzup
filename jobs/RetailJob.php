@@ -11,10 +11,9 @@ namespace app\jobs;
 use Yii;
 use yii\base\BaseObject;
 use yii\queue\JobInterface;
-use yii\queue\RetryableJobInterface;
 
 
-class RetailJob extends BaseObject implements RetryableJobInterface
+class RetailJob extends BaseObject implements JobInterface
 {
     public $setting;
     public $message;
@@ -25,19 +24,9 @@ class RetailJob extends BaseObject implements RetryableJobInterface
         $this->message = $message;
         parent::__construct($config);
     }
-
-    public function getTtr()
-    {
-        return 60;
-    }
-
-    public function canRetry($attempt, $error)
-    {
-        return ($attempt < 5) && ($error instanceof TemporaryException);
-    }
-
+    
     public function execute($queue)
     {
-        $result = Yii::$app->retailTransportMgService->handleMessageFromRetail($this->message, $this->setting);
+        Yii::$app->retailTransportMgService->handleMessageFromRetail($this->message, $this->setting);
     }
 }
