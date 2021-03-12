@@ -60,7 +60,7 @@ class RetailController extends Controller
                             echo json_encode($response);
                             exit;
                         } else {
-                            $this->retailTransportMgServiceComponent->handleMessageFromRetail($message, $existSetting);
+                            $this->retailTransportMgService->handleMessageFromRetail($message, $existSetting);
                             $response = [
                                 'success' => true,
                             ];
