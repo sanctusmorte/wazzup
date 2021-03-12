@@ -70,7 +70,7 @@ $config = [
             'class' => app\components\RetailTransportMg::class
         ],
         'RetailTransportMgServiceComponent' => [
-            'class' => app\components\RetailTransportMgServiceComponent::class
+            'class' => app\components\RetailTransportMgServiceComponent::class,
         ],
         'wazzupServiceComponent' => [
             'class' => app\components\WazzupServiceComponent::class
@@ -79,6 +79,8 @@ $config = [
             'class' => \yii\queue\file\Queue::class,
             'path' => '@app/runtime/queue',
             'as log' => \yii\queue\LogBehavior::class,
+            'ttr' => 5 * 60, // Max time for job execution
+            'attempts' => 5, // Max number of attempts
         ],
     ],
     'params' => $params,
