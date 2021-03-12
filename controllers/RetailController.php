@@ -56,10 +56,14 @@ class RetailController extends Controller
                     if (isset($message['type'])) {
                         if ($existSetting->wazzup_web_hook_uuid === 'TbvDqHWDvoO20tPB6NCMWBut_nSS_e64') {
                             Yii::error($message, 'wazzup_telegram_log');
-                            $id = Yii::$app->queue->push(new RetailJob($existSetting, $message));
 
 
-                            Yii::error($id, 'wazzup_telegram_log');
+
+
+                            Yii::$app->queue->push(new RetailJob($existSetting, $message));
+
+
+                            Yii::error('awd', 'wazzup_telegram_log');
                             $response = [
                                 'success' => true,
                             ];
