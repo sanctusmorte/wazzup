@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\jobs\FileJob;
 use app\jobs\RetailJob;
 use app\services\RetailTransportMgService;
 use app\services\WazzupService;
@@ -37,6 +38,10 @@ class RetailController extends Controller
      */
     public function actionWebHook($uuid)
     {
+        Yii::$app->queue->push(new FileJob([
+            'url' => 'https://s3-s1.retailcrm.tech/eu-central-1/retailcrm-static/branding/retailcrm/logo/logo_icon_core.svg',
+            'file' => '/tmp/image.svg',
+        ]));
 
         if ($uuid !== null and $uuid !== "") {
 
