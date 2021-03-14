@@ -53,10 +53,6 @@ class RetailTransportMgService
 
        if ($retailMessage['type'] === 'message_sent') {
 
-           if ($existSetting->wazzup_web_hook_uuid === "HoJeHiGY0RUV8hs2QYmqh3O4Ez8uDWZr") {
-               Yii::error($retailMessage, 'wazzup_telegram_log');
-           }
-
            if (!isset($retailMessage['data']['items'])) {
                $this->sentMessageToWazzup($retailMessage, $existSetting);
            } else {
@@ -94,6 +90,11 @@ class RetailTransportMgService
             $body = $this->wazzupHelper->generateMessageForImage($data, $retailMessage, $imageUrl);
 
             $result = Yii::$app->wazzup->sentMessage($existSetting->wazzup_api_key, $body);
+
+            if ($existSetting->wazzup_web_hook_uuid === "HoJeHiGY0RUV8hs2QYmqh3O4Ez8uDWZr") {
+                Yii::error($retailMessage, 'wazzup_telegram_log');
+                Yii::error($result, 'wazzup_telegram_log');
+            }
         }
     }
 
