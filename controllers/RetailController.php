@@ -59,7 +59,7 @@ class RetailController extends Controller
                         ];
                         echo json_encode($response);
                         exit;
-                       
+
                     } else {
                         return http_response_code(200);
                     }
