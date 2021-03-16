@@ -41,6 +41,33 @@ class RetailTransportMg extends Component
     }
 
     /**
+     * @param string $url
+     * @param string $mg_transport_token
+     * @param array $body
+     * @return bool|string
+     */
+    private function makePutRequest(string $url, string $mg_transport_token, array $body)
+    {
+        $headers = [
+            'Content-Type: application/text; charset=utf-8',
+            'X-Transport-Token: '.$mg_transport_token.''
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_PUT, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, Json::encode($body));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $response;
+    }
+
+    /**
      * @param $url
      * @param $apiKey
      * @return bool|string
@@ -123,6 +150,17 @@ class RetailTransportMg extends Component
 
         return json_decode($response, 1);
     }
+
+    public function updateTemplateInRetailCrm($setting, array $template)
+    {
+        $url = $setting->mg_transport_endpoint_url . '/api/transport/v1/channels/'.$template['channelId'].'/templates/'.$template['code'].'';
+
+        $response =  $this->makePutRequest($url, $setting->mg_transport_token, $template['templateInfo']);
+
+        return json_decode($response, 1);
+    }
+
+
 
     public function sentMessageToRetailCrm($existSetting,$body)
     {

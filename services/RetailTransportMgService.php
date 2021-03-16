@@ -55,6 +55,16 @@ class RetailTransportMgService
         }
     }
 
+    public function updateTemplates($setting)
+    {
+        $existTemplates = $this->wazzupTemplates->getTemplatesByClientId($setting->client_id);
+        if (count($existTemplates) > 0) {
+            foreach ($existTemplates as $existTemplate) {
+                Yii::$app->transport->updateTemplateInRetailCrm($setting, $existTemplate);
+            }
+        }
+    }
+
     /**
      * Обрабатываем сообщение из RetailCRM и проверяем тип ("type") сообщения
      * @param $retailMessage
