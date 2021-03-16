@@ -49,6 +49,7 @@ class WazzupService
         }
     }
 
+
     /**
      * Посылаем сообщение из Wazzup в RetailCRM
      * @param $message

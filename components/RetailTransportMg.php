@@ -102,10 +102,24 @@ class RetailTransportMg extends Component
                     'Email' => 'both',
                     'Phone' => 'both',
                 ],
+                'customer_external_id' => 'phone',
+                'sending_policy' => [
+                    'new_customer' => 'template',
+                    'after_reply_timeout' => 'template'
+                ],
             ],
         ];
 
         $response =  $this->makePostRequest($url, $setting->mg_transport_token, $body);
+
+        return json_decode($response, 1);
+    }
+
+    public function createTemplateInRetailCrm($setting, array $template)
+    {
+        $url = $setting->mg_transport_endpoint_url . '/api/transport/v1/channels/'.$template['channelId'].'/templates';
+
+        $response =  $this->makePostRequest($url, $setting->mg_transport_token, $template['templateInfo']);
 
         return json_decode($response, 1);
     }

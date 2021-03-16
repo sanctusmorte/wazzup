@@ -13,12 +13,14 @@ class RetailTransportMgService
     private $settingService;
     private $retailTransportMgHelper;
     private $wazzupHelper;
+    private $wazzupTemplates;
 
-    public function __construct(SettingService $settingService, RetailTransportMgHelper $retailTransportMgHelper, WazzupHelper $wazzupHelper)
+    public function __construct(SettingService $settingService, RetailTransportMgHelper $retailTransportMgHelper, WazzupHelper $wazzupHelper, WazzupTemplates $wazzupTemplates)
     {
         $this->settingService = $settingService;
         $this->retailTransportMgHelper = $retailTransportMgHelper;
         $this->wazzupHelper = $wazzupHelper;
+        $this->wazzupTemplates = $wazzupTemplates;
     }
 
     public function createChannelsInRetailCrm($setting)
@@ -41,6 +43,16 @@ class RetailTransportMgService
         }
 
         $this->setChannelsToSetting($setting, $needChannelsToSave);
+    }
+
+    public function createTemplates($setting)
+    {
+        $existTemplates = $this->wazzupTemplates->getTemplatesByClientId($setting->client_id);
+        if (count($existTemplates) > 0) {
+            foreach ($existTemplates as $existTemplate) {
+                Yii::$app->transport->createTemplateInRetailCrm($setting, $existTemplate);
+            }
+        }
     }
 
     /**
