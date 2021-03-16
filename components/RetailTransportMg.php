@@ -153,7 +153,7 @@ class RetailTransportMg extends Component
 
     public function updateTemplateInRetailCrm($setting, array $template)
     {
-        $url = $setting->mg_transport_endpoint_url . '/api/transport/v1/channels/'.$template['channelId'].'/templates/'.$template['code'].'';
+        $url = $setting->mg_transport_endpoint_url . '/api/transport/v1/channels/'.$template['channelId'].'/templates/'.$template['Code'].'';
 
         $response =  $this->makePutRequest($url, $setting->mg_transport_token, $template['templateInfo']);
 
