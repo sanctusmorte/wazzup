@@ -128,5 +128,22 @@ class SettingController extends Controller
         return ActiveForm::validate($needSetting);
     }
 
+    /**
+     * @return string
+     */
+    public function actionActivity()
+    {
+        $clientId = Yii::$app->request->post('clientId') ?? Yii::$app->session->get('clientId');
+        $postActivity = Yii::$app->request->post('activity', '{}');
+
+        if ($clientId && $postActivity) {
+            $this->settingService->moduleActivity($clientId, $postActivity);
+        }
+
+        return \yii\helpers\Json::encode([
+            'success' => true
+        ]);
+    }
+
 
 }

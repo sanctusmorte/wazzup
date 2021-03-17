@@ -251,4 +251,34 @@ class SettingService extends Component
         $existSetting->wazzup_channels = json_encode($needChannels);
     }
 
+
+    /**
+     * Активация / диактивация заморозка / разморозка модуля
+     *
+     * @param string
+     * @param string
+     * @return boolean
+     */
+    public function moduleActivity($clientId, $postActivity): bool
+    {
+        $activity = json_decode($postActivity, true);
+        $existSetting = $this->getSettingById($clientId);
+
+        if ($existSetting !== null) {
+            try {
+                $existSetting->is_active = $activity['active'] ? 1 : 0;
+                $existSetting->is_freeze = $activity['freeze'] ? 1 : 0;
+                $existSetting->save();
+
+                return true;
+
+            } catch(\Exception $th) {
+                Yii::error($th->getMessage(), "Ошибка сохранения синхронизации модуля. ClientId: $clientId");
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    }
 }
