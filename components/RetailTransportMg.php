@@ -149,7 +149,7 @@ class RetailTransportMg extends Component
 
         $response =  $this->makePostRequest($url, $setting->mg_transport_token, $template['templateInfo']);
 
-        Yii::error([$template, $response], 'wazzup_telegram_log');
+        //Yii::error([$template, $response], 'wazzup_telegram_log');
     }
 
     public function updateTemplateInRetailCrm($setting, array $template)
@@ -160,7 +160,7 @@ class RetailTransportMg extends Component
         $response = $this->makePutRequest($url, $setting->mg_transport_token, $template['templateInfo']);
 
 
-        Yii::error([$template, $response], 'wazzup_telegram_log');
+//        Yii::error([$template, $response], 'wazzup_telegram_log');
     }
 
 
