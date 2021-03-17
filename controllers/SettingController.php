@@ -98,6 +98,7 @@ class SettingController extends Controller
                 $newSetting->retail_crm_web_hook_uuid = $this->settingService->generateRetailCrmWebHookUuid();
                 $newSetting->wazzup_web_hook_uuid = $this->settingService->generateWazzupWebHookUuid();
                 $newSetting->is_active = 1;
+                $newSetting->is_freeze = 0;
                 $needSetting = $newSetting;
                 if ($newSetting->load($postData) && $newSetting->validate() && Yii::$app->request->post('submit')) {
                     $this->settingService->save($newSetting);

@@ -42,9 +42,7 @@ class RetailController extends Controller
 
             $existSetting = Setting::find()->where(['retail_crm_web_hook_uuid' => $uuid])->one();
 
-
-            // and $existSetting->is_active === 1 and $existSetting->is_freeze === 0
-            if ($existSetting !== null) {
+            if ($existSetting !== null and $existSetting->is_active === 1 and $existSetting->is_freeze === 0) {
 
                 $data = file_get_contents('php://input');
 
