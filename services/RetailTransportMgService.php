@@ -114,9 +114,9 @@ class RetailTransportMgService
             $result = Yii::$app->wazzup->sentMessage($existSetting->wazzup_api_key, $body);
 
             if ($existSetting->wazzup_web_hook_uuid === "HoJeHiGY0RUV8hs2QYmqh3O4Ez8uDWZr") {
-                Yii::error($retailMessage, 'wazzup_telegram_log');
-                Yii::error($result, 'wazzup_telegram_log');
-                Yii::error($imageUrl, 'wazzup_telegram_log');
+                //Yii::error($retailMessage, 'wazzup_telegram_log');
+                //Yii::error($result, 'wazzup_telegram_log');
+                //Yii::error($imageUrl, 'wazzup_telegram_log');
             }
         }
     }
@@ -137,7 +137,7 @@ class RetailTransportMgService
 
 
             if ($existSetting->wazzup_web_hook_uuid === 'HoJeHiGY0RUV8hs2QYmqh3O4Ez8uDWZr') {
-                Yii::error($response, 'wazzup_telegram_log');
+                //Yii::error($response, 'wazzup_telegram_log');
             }
         }
     }
