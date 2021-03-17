@@ -136,6 +136,8 @@ class SettingController extends Controller
         $clientId = Yii::$app->request->post('clientId') ?? Yii::$app->session->get('clientId');
         $postActivity = Yii::$app->request->post('activity', '{}');
 
+        Yii::error([$clientId, $postActivity], 'wazzup_telegram_log');
+
         if ($clientId && $postActivity) {
             $this->settingService->moduleActivity($clientId, $postActivity);
         }
