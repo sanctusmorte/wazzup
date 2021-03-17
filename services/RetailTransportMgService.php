@@ -63,7 +63,8 @@ class RetailTransportMgService
         $existTemplates = $this->wazzupTemplates->getTemplatesByClientId($setting->client_id);
         if (count($existTemplates) > 0) {
             foreach ($existTemplates as $existTemplate) {
-                Yii::$app->queue->push(new TemplateUpdateJob($setting, $existTemplate));
+                //Yii::$app->transport->updateTemplateInRetailCrm($setting, $existTemplate);
+               Yii::$app->queue->push(new TemplateUpdateJob($setting, $existTemplate));
             }
         }
     }
