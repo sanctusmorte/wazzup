@@ -48,9 +48,7 @@ class WazzupController extends Controller
                 } else {
                     $message = json_decode($data, 1);
 
-
                     if (isset($message['messages'])) {
-                        
 
                         Yii::$app->queue->push(new WazzupJob($existSetting, $message['messages']));
 
