@@ -5,6 +5,8 @@ namespace app\services;
 
 use app\helpers\RetailTransportMgHelper;
 use app\helpers\WazzupHelper;
+use app\jobs\TemplateCreatelJob;
+use app\jobs\TemplateUpdateJob;
 use app\models\Setting;
 use Yii;
 
@@ -50,6 +52,7 @@ class RetailTransportMgService
         $existTemplates = $this->wazzupTemplates->getTemplatesByClientId($setting->client_id);
         if (count($existTemplates) > 0) {
             foreach ($existTemplates as $existTemplate) {
+                Yii::$app->queue->push(new TemplateCreatelJob($setting, $existTemplate));
                 Yii::$app->transport->createTemplateInRetailCrm($setting, $existTemplate);
             }
         }
@@ -60,7 +63,7 @@ class RetailTransportMgService
         $existTemplates = $this->wazzupTemplates->getTemplatesByClientId($setting->client_id);
         if (count($existTemplates) > 0) {
             foreach ($existTemplates as $existTemplate) {
-                Yii::$app->transport->updateTemplateInRetailCrm($setting, $existTemplate);
+                Yii::$app->queue->push(new TemplateUpdateJob($setting, $existTemplate));
             }
         }
     }
