@@ -579,7 +579,7 @@ class WazzupTemplates
                         ]
                     ],
                     30 => [
-                        "channelId" => 12,
+                        "channelId" => 5,
                         "templateInfo" => [
                             "Code" => 'Ne_zvonit_Moskva_Piter_2',
                             "Name" => '/Не звонить Москва/Питер',
