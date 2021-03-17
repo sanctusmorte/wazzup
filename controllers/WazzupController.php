@@ -50,13 +50,10 @@ class WazzupController extends Controller
 
 
                     if (isset($message['messages'])) {
-                        if ($existSetting->is_active === 1 and $existSetting->is_freeze === 0) {
-                            Yii::$app->queue->push(new WazzupJob($existSetting, $message['messages']));
-                        }
+                        Yii::$app->queue->push(new WazzupJob($existSetting, $message['messages']));
                         $responseCode = 200;
                     } else if (isset($message['channelsList'])){
                         $this->retailTransportMgService->createChannelsInRetailCrm($existSetting);
-                        $responseCode = 200;
                     } else {
                         $responseCode = 200;
                     }
