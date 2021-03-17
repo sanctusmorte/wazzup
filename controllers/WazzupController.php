@@ -50,6 +50,7 @@ class WazzupController extends Controller
 
 
                     if (isset($message['messages'])) {
+                        
 
                         Yii::$app->queue->push(new WazzupJob($existSetting, $message['messages']));
 
