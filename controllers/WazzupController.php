@@ -41,7 +41,7 @@ class WazzupController extends Controller
 
         if ($uuid !== null and $uuid !== "") {
             $existSetting = Setting::find()->where(['wazzup_web_hook_uuid' => $uuid])->one();
-            if ($existSetting !== null) {
+            if ($existSetting !== null ) {
                 $data = file_get_contents('php://input');
                 if ($data === null or $data === '{"messages":[],"channels":[],"statuses":[]}') {
                     $responseCode = 200;
@@ -50,12 +50,13 @@ class WazzupController extends Controller
 
 
                     if (isset($message['messages'])) {
-
-                        Yii::$app->queue->push(new WazzupJob($existSetting, $message['messages']));
-
+                        if ($existSetting->is_active === 1 and $existSetting->is_freeze === 0) {
+                            Yii::$app->queue->push(new WazzupJob($existSetting, $message['messages']));
+                        }
                         $responseCode = 200;
                     } else if (isset($message['channelsList'])){
                         $this->retailTransportMgService->createChannelsInRetailCrm($existSetting);
+                        $responseCode = 200;
                     } else {
                         $responseCode = 200;
                     }
