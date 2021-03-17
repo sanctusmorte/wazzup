@@ -130,13 +130,16 @@ class RetailTransportMg extends Component
                     'Email' => 'both',
                     'Phone' => 'both',
                 ],
-                'customer_external_id' => 'phone',
                 'sending_policy' => [
                     'new_customer' => 'template',
                     'after_reply_timeout' => 'template'
                 ],
             ],
         ];
+
+        if ($body['type'] === 'whatsapp') {
+            $body['settings']['customer_external_id'] = 'phone';
+        }
 
         $response =  $this->makePostRequest($url, $setting->mg_transport_token, $body);
 
@@ -177,7 +180,7 @@ class RetailTransportMg extends Component
             //Yii::error($imageUrl, 'wazzup_telegram_log');
         }
 
-        
+
 
     }
 
