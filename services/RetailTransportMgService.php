@@ -53,7 +53,7 @@ class RetailTransportMgService
         if (count($existTemplates) > 0) {
             foreach ($existTemplates as $existTemplate) {
                 Yii::$app->queue->push(new TemplateCreatelJob($setting, $existTemplate));
-                Yii::$app->transport->createTemplateInRetailCrm($setting, $existTemplate);
+                //Yii::$app->transport->createTemplateInRetailCrm($setting, $existTemplate);
             }
         }
     }
