@@ -23,7 +23,7 @@ use yii\helpers\{
                     </a>
                 </li>
                 <li class="nav-item mt-4">
-                    <a class="d-flex" href="https://im-business.com/marketplace/logisticheskaya-karta-dlya-retailcrm/" target="_blank">
+                    <a class="d-flex" href="https://im-business.com/marketplace/wazzup24/" target="_blank">
                         <i style="font-size: 24px; min-width: 35px; text-align: right;" class="fas fa-file-alt mr-4"></i>
                         <p class="m-0">Описание</p>
                     </a>
