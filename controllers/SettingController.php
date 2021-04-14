@@ -79,7 +79,6 @@ class SettingController extends Controller
 
     public function actionSave()
     {
-
         $clientId = $this->settingService->getSettingId();
 
         $postData = Yii::$app->request->post();
