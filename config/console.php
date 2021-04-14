@@ -28,6 +28,7 @@ $config = [
                     'levels' => ['error', 'info', 'warning'],
                     'categories' => ['wazzup_telegram_log'],
                     'chatId' => 90187076,
+                    'logVars' => []
                 ],
             ],
         ],
