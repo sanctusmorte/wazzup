@@ -24,9 +24,13 @@ class WazzupHelper
             'text' => $retailMessage['data']['content']
         ];
 
+        Yii::error($retailMessage, 'wazzup_telegram_log');
+
         if (isset($retailMessage['data']['quote_external_id'])) {
             $body['refMessageId'] = $retailMessage['data']['quote_external_id'];
         }
+
+        Yii::error($body, 'wazzup_telegram_log');
 
         return $body;
     }
