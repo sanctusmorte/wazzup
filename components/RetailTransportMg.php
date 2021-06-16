@@ -68,6 +68,35 @@ class RetailTransportMg extends Component
         return $response;
     }
 
+
+    /**
+     * @param string $url
+     * @param string $mg_transport_token
+     * @param array $body
+     * @return bool|string
+     */
+    private function makePathRequest(string $url, string $mg_transport_token, array $body)
+    {
+        $headers = [
+            'Content-Type: application/json; charset=utf-8',
+            'X-Transport-Token: '.$mg_transport_token.''
+        ];
+
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, Json::encode($body));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $response;
+    }
+
     /**
      * @param $url
      * @param $apiKey
@@ -174,6 +203,20 @@ class RetailTransportMg extends Component
 
         $response = $this->makePostRequest($url, $existSetting->mg_transport_token, $body);
 
+        if ($existSetting->wazzup_web_hook_uuid === "6bKBm96yQqmQR3BlriTupzHXiSIHcjVU") {
+            Yii::error([$body, $response], 'wazzup_telegram_log');
+            //Yii::error($result, 'wazzup_telegram_log');
+            //Yii::error($imageUrl, 'wazzup_telegram_log');
+        }
+
+    }
+
+    public function editMessageToRetailCrm($existSetting, $messageId, $body)
+    {
+        $url = $existSetting->mg_transport_endpoint_url . '/api/transport/v1/messages/'.$messageId;
+
+        $response = $this->makePathRequest($url, $existSetting->mg_transport_token, $body);
+
         Yii::error($response, 'wazzup_telegram_log');
 
 
@@ -182,8 +225,6 @@ class RetailTransportMg extends Component
             //Yii::error($result, 'wazzup_telegram_log');
             //Yii::error($imageUrl, 'wazzup_telegram_log');
         }
-
-
 
     }
 

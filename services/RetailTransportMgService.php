@@ -77,7 +77,10 @@ class RetailTransportMgService
     public function handleMessageFromRetail(array $retailMessage, $existSetting)
     {
 
-       if ($retailMessage['type'] === 'message_sent') {
+        Yii::error($retailMessage, 'wazzup_telegram_log');
+
+
+        if ($retailMessage['type'] === 'message_sent') {
 
            if (!isset($retailMessage['data']['items'])) {
                $this->sentMessageToWazzup($retailMessage, $existSetting);
@@ -139,12 +142,12 @@ class RetailTransportMgService
             $body = $this->wazzupHelper->generateMessage($data, $retailMessage);
             $response = Yii::$app->wazzup->sentMessage($existSetting->wazzup_api_key, $body);
 
-            Yii::error($response, 'wazzup_telegram_log');
-
 
             if ($existSetting->wazzup_web_hook_uuid === 'HoJeHiGY0RUV8hs2QYmqh3O4Ez8uDWZr') {
                 //Yii::error($response, 'wazzup_telegram_log');
             }
+
+            return $response;
         }
     }
 
