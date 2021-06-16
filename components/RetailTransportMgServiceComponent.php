@@ -27,7 +27,7 @@ class RetailTransportMgServiceComponent extends Component
      */
     public  function handleMessageFromRetail($message, $existSetting)
     {
-        Yii::error($message, 'wazzup_telegram_log');
+       // Yii::error($message, 'wazzup_telegram_log');
 
         $this->retailTransportMgService->handleMessageFromRetail($message, $existSetting);
     }
