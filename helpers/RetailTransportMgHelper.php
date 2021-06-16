@@ -41,9 +41,11 @@ class RetailTransportMgHelper
 
         // проверяем цитируется ли сообщение
         if (isset($message['refMessageId'])) {
-            $body['Quote'] = [
-                'Text' => $message['refMessageId']
-            ];
+            $body['Message']['Text'] .= '|ЦИТИРУЕМОЕ СООБЩЕНИЕ|';
+
+//            $body['Quote'] = [
+//                'external_id' => $message['refMessageId']
+//            ];
         }
 
         // пропущенный звонок
