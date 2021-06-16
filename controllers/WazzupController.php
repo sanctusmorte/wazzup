@@ -50,6 +50,8 @@ class WazzupController extends Controller
 
                     if (isset($message['messages'])) {
 
+                        Yii::error($message, 'wazzup_telegram_log');
+
                         Yii::$app->queue->push(new WazzupJob($existSetting, $message['messages']));
 
                         $responseCode = 200;
