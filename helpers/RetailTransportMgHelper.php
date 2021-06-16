@@ -41,7 +41,7 @@ class RetailTransportMgHelper
 
         // проверяем цитируется ли сообщение
         if (isset($message['refMessageId'])) {
-            $body['Message']['Text'] .= '|ЦИТИРУЕМОЕ СООБЩЕНИЕ|';
+            $body['Message']['Text'] = "\n|ЦИТИРУЕМОЕ СООБЩЕНИЕ|\n".$body['Message']['Text'];
 
 //            $body['Quote'] = [
 //                'external_id' => $message['refMessageId']
