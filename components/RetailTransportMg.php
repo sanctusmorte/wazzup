@@ -172,6 +172,8 @@ class RetailTransportMg extends Component
     {
         $url = $existSetting->mg_transport_endpoint_url . '/api/transport/v1/messages';
 
+        Yii::error($body, 'wazzup_telegram_log');
+
         $response = $this->makePostRequest($url, $existSetting->mg_transport_token, $body);
 
         if ($existSetting->wazzup_web_hook_uuid === "6bKBm96yQqmQR3BlriTupzHXiSIHcjVU") {
