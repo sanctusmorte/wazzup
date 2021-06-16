@@ -42,7 +42,7 @@ class RetailTransportMgHelper
         // проверяем цитируется ли сообщение
         if (isset($message['refMessageId'])) {
             $body['Quote'] = [
-                'external_id' => $message['refMessageId']
+                'Text' => $message['refMessageId']
             ];
         }
 
