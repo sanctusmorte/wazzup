@@ -76,10 +76,7 @@ class RetailTransportMgService
      */
     public function handleMessageFromRetail(array $retailMessage, $existSetting)
     {
-
-        Yii::error($retailMessage, 'wazzup_telegram_log');
-
-
+        
         if ($retailMessage['type'] === 'message_sent') {
 
            if (!isset($retailMessage['data']['items'])) {
