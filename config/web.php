@@ -1,5 +1,7 @@
 <?php
 
+use yii\log\FileTarget;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 $routes = require __DIR__ . '/routes.php';
@@ -46,12 +48,19 @@ $config = [
         'log' => [
             'targets' => [
                 [
-                    'class' => 'sergeymakinen\yii\telegramlog\Target',
-                    'token' => '1811682036:AAFVfpWAFe8HsWnFdnCyZrrdubMlsnFy5P8',
-                    'levels' => ['error', 'info', 'warning'],
-                    'categories' => ['wazzup_telegram_log'],
-                    'chatId' => 812076348,
-                    'logVars' => []
+                    'class' => FileTarget::class,
+                    'levels' => ['error', 'warning'],
+                    'logFile' => '@runtime/logs/error.log',
+                    'fileMode' => 0777,
+                    'dirMode' => 0777,
+                ],
+                [
+                    'class' => FileTarget::class,
+                    'levels' => ['error', 'warning', 'info', 'trace'],
+                    'logFile' => '@runtime/logs/debug.log',
+                    'maxLogFiles' => 10,
+                    'fileMode' => 0777,
+                    'dirMode' => 0777,
                 ],
             ],
         ],
@@ -82,6 +91,8 @@ $config = [
             'as log' => \yii\queue\LogBehavior::class,
             'ttr' => 5 * 60, // Max time for job execution
             'attempts' => 10, // Max number of attempts
+            'dirMode' => 0777,
+            'fileMode' => 0777,
         ],
     ],
     'params' => $params,

@@ -57,7 +57,6 @@ class WazzupService
      */
     public function sentMessageToRetailCrm($message, $existSetting)
     {
-
         $needChannelId = $this->settingService->getChannelDataByChannelId($message['channelId'], $existSetting);
         if ($needChannelId !== null) {
             $body =  $this->retailTransportMgHelper->generateMessage($message, $needChannelId, $existSetting);

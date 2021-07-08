@@ -29,6 +29,7 @@ class WazzupJob extends BaseObject implements JobInterface
 
     public function execute($queue)
     {
+        Yii::info($this->messages, __CLASS__);
         Yii::$app->wazzupServiceComponent->handleMessageFromWazzup($this->messages, $this->setting);
     }
 }

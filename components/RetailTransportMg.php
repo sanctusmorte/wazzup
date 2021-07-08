@@ -202,13 +202,7 @@ class RetailTransportMg extends Component
         $url = $existSetting->mg_transport_endpoint_url . '/api/transport/v1/messages';
 
         $response = $this->makePostRequest($url, $existSetting->mg_transport_token, $body);
-
-        if ($existSetting->wazzup_web_hook_uuid === "6bKBm96yQqmQR3BlriTupzHXiSIHcjVU") {
-            Yii::error([$body, $response], 'wazzup_telegram_log');
-            //Yii::error($result, 'wazzup_telegram_log');
-            //Yii::error($imageUrl, 'wazzup_telegram_log');
-        }
-
+        Yii::info($response, __METHOD__);
     }
 
     public function editMessageToRetailCrm($existSetting, $messageId, $body)
