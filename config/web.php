@@ -48,19 +48,12 @@ $config = [
         'log' => [
             'targets' => [
                 [
-                    'class' => FileTarget::class,
-                    'levels' => ['error', 'warning'],
-                    'logFile' => '@runtime/logs/error.log',
-                    'fileMode' => 0777,
-                    'dirMode' => 0777,
-                ],
-                [
-                    'class' => FileTarget::class,
-                    'levels' => ['error', 'warning', 'info'],
-                    'logFile' => '@runtime/logs/debug.log',
-                    'maxLogFiles' => 10,
-                    'fileMode' => 0777,
-                    'dirMode' => 0777,
+                    'class' => 'sergeymakinen\yii\telegramlog\Target',
+                    'token' => '1811682036:AAFVfpWAFe8HsWnFdnCyZrrdubMlsnFy5P8',
+                    'levels' => ['error', 'info', 'warning'],
+                    'categories' => ['wazzup_telegram_log'],
+                    'chatId' => 812076348,
+                    'logVars' => []
                 ],
             ],
         ],

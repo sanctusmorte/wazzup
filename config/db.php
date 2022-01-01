@@ -1,14 +1,19 @@
 <?php
 
-return [
+$local = [
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=localhost;dbname=wazzup',
-    'username' => 'wazzup',
-    'password' => '{@Ih3#Qs',
+    'username' => 'mysql',
+    'password' => 'mysql',
     'charset' => 'utf8',
-
-    // Schema cache options (for production environment)
-    //'enableSchemaCache' => true,
-    //'schemaCacheDuration' => 60,
-    //'schemaCache' => 'cache',
 ];
+
+$prod = [
+    'class' => 'yii\db\Connection',
+    'dsn' => 'mysql:host=localhost;dbname=wazzup',
+    'username' => 'userflights',
+    'password' => 'Maks_123654789',
+    'charset' => 'utf8',
+];
+
+return $prod;
