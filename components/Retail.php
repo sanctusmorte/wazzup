@@ -387,7 +387,7 @@ class Retail extends Component
                 Yii::error([
                     'error' => 'Ошибка создания заказа',
                     'number' => $data['number']
-                ], "Ошибка создания заказа");
+                ], __METHOD__);
 
                 return $response;
             }
@@ -416,7 +416,7 @@ class Retail extends Component
                 return $response;
             }
         } catch (\RetailCrm\Exception\CurlException $e) {
-            Yii::error($e, $e->getMessage());
+            Yii::error($e, __METHOD__);
 
             return false;
         }
@@ -439,7 +439,7 @@ class Retail extends Component
             }
 
         } catch (\RetailCrm\Exception\CurlException $e) {
-            Yii::error($e, $e->getMessage());
+            Yii::error($e, __METHOD__);
 
             return false;
         }
@@ -471,7 +471,7 @@ class Retail extends Component
                 return false;
             }
         } catch (\RetailCrm\Exception\CurlException $e) {
-            Yii::error($e, $e->getMessage());
+            Yii::error($e, __METHOD__);
 
             return false;
         }
@@ -501,7 +501,7 @@ class Retail extends Component
                 return false;
             }
         } catch (\RetailCrm\Exception\CurlException $e) {
-            Yii::error($e, $e->getMessage());
+            Yii::error($e, __METHOD__);
 
             return false;
         }
@@ -532,7 +532,7 @@ class Retail extends Component
             }
 
         } catch (\RetailCrm\Exception\CurlException $e) {
-            Yii::error($e, "apiUrl: " . $apiClient['retailApiUrl'] . ". " . $e->getMessage());
+            Yii::error($e, "apiUrl: " . $apiClient['retailApiUrl']);
 
             return false;
         }
@@ -562,7 +562,7 @@ class Retail extends Component
             }
 
         } catch (\RetailCrm\Exception\CurlException $e) {
-            Yii::error($e, "apiUrl: " . $apiClient['retailApiUrl'] . ". " . $e->getMessage());
+            Yii::error($e, "apiUrl: " . $apiClient['retailApiUrl']);
 
             return false;
         }
@@ -596,7 +596,7 @@ class Retail extends Component
             }
 
         } catch (\RetailCrm\Exception\CurlException $e) {
-            Yii::error($e, "apiUrl: " . $apiClient['retailApiUrl'] . ". " . $e->getMessage());
+            Yii::error($e, "apiUrl: " . $apiClient['retailApiUrl']);
 
             return [
                 false,
@@ -619,7 +619,7 @@ class Retail extends Component
             echo "<pre>"; print_r($response); die;
 
         } catch (\RetailCrm\Exception\CurlException $e) {
-            Yii::error($e, $e->getMessage());
+            Yii::error($e, __METHOD__);
             throw new ServerErrorHttpException($e->getMessage());
         }
     }
@@ -641,7 +641,7 @@ class Retail extends Component
                 return [];
             }
         } catch (\RetailCrm\Exception\CurlException $e) {
-            Yii::error($e, "apiUrl: " . $apiClient['retailApiUrl'] . ". " . $e->getMessage());
+            Yii::error($e, "apiUrl: " . $apiClient['retailApiUrl']);
 
             return [];
             // throw new ServerErrorHttpException($e->getMessage());
@@ -665,7 +665,7 @@ class Retail extends Component
                 return false;
             }
         } catch (\RetailCrm\Exception\CurlException $e) {
-            Yii::error($e, $e->getMessage());
+            Yii::error($e, __METHOD__);
             throw new ServerErrorHttpException($e->getMessage());
         }
     }
@@ -688,7 +688,7 @@ class Retail extends Component
             }
 
         } catch (\RetailCrm\Exception\CurlException $e) {
-            Yii::error($e, $e->getMessage());
+            Yii::error($e, __METHOD__);
             throw new ServerErrorHttpException($e->getMessage());
         }
     }
@@ -711,7 +711,7 @@ class Retail extends Component
             }
 
         } catch (\RetailCrm\Exception\CurlException $e) {
-            Yii::error($e, $e->getMessage());
+            Yii::error($e, __METHOD__);
             throw new ServerErrorHttpException($e->getMessage());
         }
     }
@@ -742,7 +742,7 @@ class Retail extends Component
             }
 
         } catch (\RetailCrm\Exception\CurlException $e) {
-            Yii::error($e, $e->getMessage());
+            Yii::error($e, __METHOD__);
             throw new ServerErrorHttpException($e->getMessage());
         }
     }
@@ -765,7 +765,7 @@ class Retail extends Component
             }
 
         } catch (\RetailCrm\Exception\CurlException $e) {
-            Yii::error($e, $e->getMessage());
+            Yii::error($e, __METHOD__);
             throw new ServerErrorHttpException($e->getMessage());
         }
     }

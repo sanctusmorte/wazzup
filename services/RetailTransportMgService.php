@@ -33,6 +33,12 @@ class RetailTransportMgService
 
         if ($channels !== false) {
             foreach ($channels as $channel) {
+                if(isset($channel['state']) && $channel['state'] === 'blocked'){
+                    continue;
+                }
+                if(in_array($channel['transport'], ['waba', 'wapi'])){
+                    $channel['transport'] = 'whatsapp';
+                }
                 $createChannel = Yii::$app->transport->createTransportInRetailCrm($setting, $channel);
                 if (isset($createChannel['id'])) {
                     $needChannelsToSave[] = [
@@ -117,11 +123,9 @@ class RetailTransportMgService
 
             $result = Yii::$app->wazzup->sentMessage($existSetting->wazzup_api_key, $body);
 
-            if ($existSetting->wazzup_web_hook_uuid === "HoJeHiGY0RUV8hs2QYmqh3O4Ez8uDWZr") {
                 //Yii::error($retailMessage, 'wazzup_telegram_log');
-                //Yii::error($result, 'wazzup_telegram_log');
+                Yii::info($result, __METHOD__);
                 //Yii::error($imageUrl, 'wazzup_telegram_log');
-            }
         }
     }
 
@@ -139,10 +143,7 @@ class RetailTransportMgService
             $body = $this->wazzupHelper->generateMessage($data, $retailMessage);
             $response = Yii::$app->wazzup->sentMessage($existSetting->wazzup_api_key, $body);
 
-
-            if ($existSetting->wazzup_web_hook_uuid === 'HoJeHiGY0RUV8hs2QYmqh3O4Ez8uDWZr') {
-                //Yii::error($response, 'wazzup_telegram_log');
-            }
+            Yii::info($response, __METHOD__);
 
             return $response;
         }

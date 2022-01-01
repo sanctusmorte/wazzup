@@ -23,6 +23,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'log' => [
+            'traceLevel' => 3,
             'targets' => [
                 [
                     'class' => FileTarget::class,
@@ -33,7 +34,7 @@ $config = [
                 ],
                 [
                     'class' => FileTarget::class,
-                    'levels' => ['error', 'warning', 'info', 'trace'],
+                    'levels' => ['error', 'warning', 'info'],
                     'logFile' => '@runtime/logs/console/debug.log',
                     'maxLogFiles' => 10,
                     'fileMode' => 0777,

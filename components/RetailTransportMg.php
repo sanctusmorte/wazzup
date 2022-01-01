@@ -1,6 +1,7 @@
 <?php
 namespace app\components;
 
+use app\models\Setting;
 use Yii;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
@@ -120,6 +121,11 @@ class RetailTransportMg extends Component
         return $response;
     }
 
+    /**
+     * @param Setting $setting
+     * @param array $channel
+     * @return mixed
+     */
     public function createTransportInRetailCrm($setting, array $channel)
     {
         $url = $setting->mg_transport_endpoint_url . '/api/transport/v1/channels';
@@ -230,7 +236,7 @@ class RetailTransportMg extends Component
     {
         $url = $existSetting->mg_transport_endpoint_url . '/api/transport/v1/messages/read';
         $response = $this->makePostRequest($url, $existSetting->mg_transport_token, $body);
-        //Yii::error($response, 'wazzup_telegram_log');
+        Yii::info($response, __METHOD__);
     }
 
     public function getFileUrl($existSetting, $fileId)
@@ -238,6 +244,7 @@ class RetailTransportMg extends Component
         $url = $existSetting->mg_transport_endpoint_url . '/api/transport/v1/files/' . $fileId;
         $response =  json_decode($this->makeGetRequest($url, $existSetting->mg_transport_token), 1);
         if (isset($response['Url'])) {
+            Yii::info($response, __METHOD__);
             return $response['Url'];
         } else {
             return false;

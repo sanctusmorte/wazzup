@@ -27,6 +27,7 @@ class RetailJob extends BaseObject implements JobInterface
 
     public function execute($queue)
     {
+        Yii::info(var_export($this->message, true), __CLASS__);
         Yii::$app->RetailTransportMgServiceComponent->handleMessageFromRetail($this->message, $this->setting);
     }
 }

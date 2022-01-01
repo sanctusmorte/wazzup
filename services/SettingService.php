@@ -1,15 +1,9 @@
 <?php
 namespace app\services;
 
+use app\models\Setting;
 use Yii;
 use yii\base\Component;
-use yii\helpers\{
-    Url,
-    Json
-};
-use app\models\{
-    Setting,
-};
 
 class SettingService extends Component
 {
@@ -273,7 +267,7 @@ class SettingService extends Component
                 return true;
 
             } catch(\Exception $th) {
-                Yii::error($th->getMessage(), "Ошибка сохранения синхронизации модуля. ClientId: $clientId");
+                Yii::error($th, "Ошибка сохранения синхронизации модуля. ClientId: $clientId");
                 return false;
             }
         } else {
