@@ -116,7 +116,7 @@ class SettingController extends Controller
                     $existSetting->wazzup_web_hook_uuid = $this->settingService->generateWazzupWebHookUuid();
                     $this->settingService->save($existSetting);
                     $this->retailTransportMgService->createChannelsInRetailCrm($existSetting);
-                    $this->retailTransportMgService->createTemplates($existSetting);
+                    //$this->retailTransportMgService->createTemplates($existSetting);
                     $this->retailTransportMgService->updateTemplates($existSetting);
                     $this->wazzupService->putUrlWebHook($existSetting);
                     return $this->redirect(['/setting/index']);
