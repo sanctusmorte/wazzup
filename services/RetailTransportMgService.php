@@ -56,6 +56,10 @@ class RetailTransportMgService
     public function createTemplates($setting)
     {
         $existTemplates = $this->wazzupTemplates->getTemplatesByClientId($setting->client_id);
+
+        var_dump($existTemplates);
+        exit;
+
         if (count($existTemplates) > 0) {
             foreach ($existTemplates as $existTemplate) {
                 //Yii::$app->queue->push(new TemplateCreatelJob($setting, $existTemplate));
