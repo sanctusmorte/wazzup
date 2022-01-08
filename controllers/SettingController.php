@@ -92,6 +92,10 @@ class SettingController extends Controller
             $existSetting = $this->settingService->getSettingById($clientId);
 
             if ($existSetting === null) {
+
+                var_dump('test');
+                exit;
+
                 $newSetting = new Setting();
                 $newSetting->client_id = $clientId;
                 $newSetting->retail_crm_web_hook_uuid = $this->settingService->generateRetailCrmWebHookUuid();
@@ -109,6 +113,10 @@ class SettingController extends Controller
                     return $this->redirect(['/setting/index']);
                 }
             } else {
+
+                var_dump('test2');
+                exit;
+
                 $needSetting = $existSetting;
                 if ($existSetting->load($postData) && $existSetting->validate() && Yii::$app->request->post('submit')) {
                     $needSetting->is_active = 1;
