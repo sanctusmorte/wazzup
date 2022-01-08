@@ -72,8 +72,8 @@ class SettingService extends Component
             'integrationCode' => 'wazzup-transport',
             'code' => 'wazzup-transport',
             'clientId' => $setting->client_id,
-            'baseUrl' => 'https://wazzup.imb-service.ru',
-            'accountUrl' => 'https://wazzup.imb-service.ru/setting',
+            'baseUrl' => 'http://45.141.78.228',
+            'accountUrl' => 'http://45.141.78.228/setting',
             'active' => true,
             'freeze' => false,
             'name' => 'Wazzup',
@@ -82,7 +82,7 @@ class SettingService extends Component
             ],
             'integrations' => [
                 'mgTransport' => [
-                    "webhookUrl" => 'https://wazzup.imb-service.ru/retail/web-hook?uuid='.$setting->retail_crm_web_hook_uuid.''
+                    "webhookUrl" => 'http://45.141.78.228/retail/web-hook?uuid='.$setting->retail_crm_web_hook_uuid.''
                 ]
             ],
         ];
