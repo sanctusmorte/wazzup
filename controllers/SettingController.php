@@ -102,8 +102,8 @@ class SettingController extends Controller
                 if ($newSetting->load($postData) && $newSetting->validate() && Yii::$app->request->post('submit')) {
                     $this->settingService->save($newSetting);
                     $this->retailTransportMgService->createChannelsInRetailCrm($newSetting);
-                    //$this->retailTransportMgService->createTemplates($newSetting);
-                    //$this->retailTransportMgService->updateTemplates($newSetting);
+                    $this->retailTransportMgService->createTemplates($newSetting);
+                    $this->retailTransportMgService->updateTemplates($newSetting);
                     $this->wazzupService->putUrlWebHook($newSetting);
                     Yii::$app->session->set('clientId', $newSetting->client_id);
                     return $this->redirect(['/setting/index']);
@@ -116,8 +116,8 @@ class SettingController extends Controller
                     $existSetting->wazzup_web_hook_uuid = $this->settingService->generateWazzupWebHookUuid();
                     $this->settingService->save($existSetting);
                     $this->retailTransportMgService->createChannelsInRetailCrm($existSetting);
-                    //$this->retailTransportMgService->createTemplates($existSetting);
-                    //$this->retailTransportMgService->updateTemplates($existSetting);
+                    $this->retailTransportMgService->createTemplates($existSetting);
+                    $this->retailTransportMgService->updateTemplates($existSetting);
                     $this->wazzupService->putUrlWebHook($existSetting);
                     return $this->redirect(['/setting/index']);
                 }
