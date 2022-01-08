@@ -56,10 +56,14 @@ class RetailTransportMgService
     public function createTemplates($setting)
     {
         $existTemplates = $this->wazzupTemplates->getTemplatesByClientId($setting->client_id);
+
+        var_dump($existTemplates);
+        exit;
+
         if (count($existTemplates) > 0) {
             foreach ($existTemplates as $existTemplate) {
-                Yii::$app->queue->push(new TemplateCreatelJob($setting, $existTemplate));
-                //Yii::$app->transport->createTemplateInRetailCrm($setting, $existTemplate);
+                //Yii::$app->queue->push(new TemplateCreatelJob($setting, $existTemplate));
+                Yii::$app->transport->createTemplateInRetailCrm($setting, $existTemplate);
             }
         }
     }
@@ -69,8 +73,8 @@ class RetailTransportMgService
         $existTemplates = $this->wazzupTemplates->getTemplatesByClientId($setting->client_id);
         if (count($existTemplates) > 0) {
             foreach ($existTemplates as $existTemplate) {
-                //Yii::$app->transport->updateTemplateInRetailCrm($setting, $existTemplate);
-               Yii::$app->queue->push(new TemplateUpdateJob($setting, $existTemplate));
+                Yii::$app->transport->updateTemplateInRetailCrm($setting, $existTemplate);
+                //Yii::$app->queue->push(new TemplateUpdateJob($setting, $existTemplate));
             }
         }
     }
