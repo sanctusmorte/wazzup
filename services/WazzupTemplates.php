@@ -639,6 +639,10 @@ class WazzupTemplates
         $needTemplates = [];
 
         $allTemplates = $this->getAllTemplates();
+
+        var_dump($allTemplates);
+        exit;
+
         if (isset($allTemplates[trim($clientId)])) {
             if ($allTemplates[trim($clientId)]['templates_active'] === true) {
                 $needTemplates =  $allTemplates[trim($clientId)]['templates'];
