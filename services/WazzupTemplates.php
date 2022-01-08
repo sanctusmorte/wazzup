@@ -10,29 +10,25 @@ class WazzupTemplates
     {
         return [
             // тестово на локалке
-            'LefGAK37KO9iB3290r3nXxZYkyRdaDue' => [
-                'clientId' => 'LefGAK37KO9iB3290r3nXxZYkyRdaDue',
+            'taZRdm-GodKTb41kkGxDvLYjj44BNSif' => [
+                'clientId' => 'taZRdm-GodKTb41kkGxDvLYjj44BNSif',
                 'templates_active' => true,
                 'templates' => [
-                    30 => [
-                        "channelId" => 12,
+                    0 => [
+                        "channelId" => 5,
                         "templateInfo" => [
-                            "Code" => 'Ne_zvonit_Moskva_Piter_2',
-                            "Name" => '/Не звонить Москва/Питер',
+                            "Code" => 'first_message',
+                            "Name" => 'First message',
                             "Enabled" => true,
                             "Type" => "text",
                             "Template" => [
+                                "Hi, ",
                                 json_decode('{"var" : "first_name"}', 1),
-                                ", здравствуйте!",
+
                                 "\n",
-                                "Вас приветствует интернет-магазин Epsom.pro🛀 Меня зовут ",
+                                "This is ",
                                 json_decode('{"var" : "custom"}', 1),
-                                "\n",
-                                "Вы сделали заказ в нашем магазине, хочу обсудить доставку.",
-                                "\n",
-                                "Вы сделали заказ на нашем сайте, хочу обсудить доставку. Вам удобно будет забрать в бесплатном пункте самовывоза или курьера отправить? Стоимость доставки курьером ",
-                                json_decode('{"var" : "custom"}', 1),
-                                " руб."
+                                "from TheMaxFlights",
                             ]
                         ]
                     ],
