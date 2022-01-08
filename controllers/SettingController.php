@@ -146,6 +146,5 @@ class SettingController extends Controller
             'success' => true
         ]);
     }
-
-
+    
 }
