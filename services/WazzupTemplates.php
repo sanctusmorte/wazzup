@@ -43,9 +43,6 @@ class WazzupTemplates
      */
     public function getTemplatesByClientId($clientId): array
     {
-        var_dump($clientId);
-        exit;
-
         $needTemplates = [];
 
         $allTemplates = $this->getAllTemplates();
