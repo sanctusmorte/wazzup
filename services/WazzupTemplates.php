@@ -30,7 +30,7 @@ class WazzupTemplates
                                // json_decode('{"var" : "custom"}', 1),
                                 "\n",
                                 "\n",
-                                "I will be your personal manager and help you book a ticket at a discounted price.",
+                                "We received your request and will be working on it.",
                                 "\n",
                                 "\n",
                                 "How would it be more convenient for you to receive our offer? Via email or here?"
