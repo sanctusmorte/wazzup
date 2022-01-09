@@ -109,16 +109,17 @@ class SettingController extends Controller
                     return $this->redirect(['/setting/index']);
                 }
             } else {
+
                 $needSetting = $existSetting;
                 if ($existSetting->load($postData) && $existSetting->validate() && Yii::$app->request->post('submit')) {
                    // $needSetting->is_active = 1;
                   //  $existSetting->retail_crm_web_hook_uuid = $this->settingService->generateRetailCrmWebHookUuid();
                   //  $existSetting->wazzup_web_hook_uuid = $this->settingService->generateWazzupWebHookUuid();
-                    $this->settingService->save($existSetting);
-                   // $this->retailTransportMgService->createChannelsInRetailCrm($existSetting);
-                    //$this->retailTransportMgService->createTemplates($existSetting);
+                  //  $this->settingService->save($existSetting);
+                    $this->retailTransportMgService->createChannelsInRetailCrm($existSetting);
+                    $this->retailTransportMgService->createTemplates($existSetting);
                     $this->retailTransportMgService->updateTemplates($existSetting);
-                  //  $this->wazzupService->putUrlWebHook($existSetting);
+                  //$this->wazzupService->putUrlWebHook($existSetting);
                     return $this->redirect(['/setting/index']);
                 }
             }

@@ -2,10 +2,15 @@
 namespace app\components;
 
 use app\models\Setting;
+use RetailCrm\Mg\Bot\Model\Request\ChannelsRequest;
 use Yii;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
 use yii\web\ServerErrorHttpException;
+
+use RetailCrm\Common\Exception;
+use RetailCrm\Mg\Bot\Client;
+use RetailCrm\Mg\Bot\Model\Request\DialogAssignRequest;
 
 use yii\helpers\{
     Url,
@@ -23,7 +28,7 @@ class RetailTransportMg extends Component
     private function makePostRequest(string $url, string $mg_transport_token, array $body)
     {
         $headers = [
-            'Content-Type: application/text; charset=utf-8',
+           // 'Content-Type: application/text; charset=utf-8',
             'X-Transport-Token: '.$mg_transport_token.''
         ];
 
@@ -50,10 +55,9 @@ class RetailTransportMg extends Component
     private function makePutRequest(string $url, string $mg_transport_token, array $body)
     {
         $headers = [
-            'Content-Type: application/json; charset=utf-8',
+           // 'Content-Type: application/json; charset=utf-8',
             'X-Transport-Token: '.$mg_transport_token.''
         ];
-
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -185,7 +189,7 @@ class RetailTransportMg extends Component
     {
         $url = $setting->mg_transport_endpoint_url . '/api/transport/v1/channels/'.$template['channelId'].'/templates';
 
-        $response =  $this->makePostRequest($url, $setting->mg_transport_token, $template['templateInfo']);
+        $response = $this->makePostRequest($url, $setting->mg_transport_token, $template['templateInfo']);
 
         //Yii::error([$template, $response], 'wazzup_telegram_log');
     }
@@ -193,7 +197,6 @@ class RetailTransportMg extends Component
     public function updateTemplateInRetailCrm($setting, array $template)
     {
         $url = $setting->mg_transport_endpoint_url . '/api/transport/v1/channels/'.$template['channelId'].'/templates/'.$template['templateInfo']['Code'].'';
-
 
         $response = $this->makePutRequest($url, $setting->mg_transport_token, $template['templateInfo']);
 

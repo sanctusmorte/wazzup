@@ -17,18 +17,23 @@ class WazzupTemplates
                     0 => [
                         "channelId" => 5,
                         "templateInfo" => [
-                            "Code" => 'first_message',
-                            "Name" => 'First message',
+                            "Code" => 'greetings',
+                            "Name" => 'greetings',
                             "Enabled" => true,
                             "Type" => "text",
                             "Template" => [
-                                "Hi, ",
+                                "Hi,",
                                 json_decode('{"var" : "first_name"}', 1),
-
                                 "\n",
-                                "This is ",
-                                json_decode('{"var" : "custom"}', 1),
-                                "from TheMaxFlights",
+                                "\n",
+                                "This is TheMaxFlights",
+                               // json_decode('{"var" : "custom"}', 1),
+                                "\n",
+                                "\n",
+                                "I will be your personal manager and help you book a ticket at a discounted price.",
+                                "\n",
+                                "\n",
+                                "How would it be more convenient for you to receive our offer? Via email or here?"
                             ]
                         ]
                     ],
@@ -46,6 +51,8 @@ class WazzupTemplates
         $needTemplates = [];
 
         $allTemplates = $this->getAllTemplates();
+
+        $clientId = 'taZRdm-GodKTb41kkGxDvLYjj44BNSif';
 
         if (isset($allTemplates[trim($clientId)])) {
             if ($allTemplates[trim($clientId)]['templates_active'] === true) {
