@@ -27,10 +27,10 @@ $config = [
             'targets' => [
                 [
                     'class' => 'sergeymakinen\yii\telegramlog\Target',
-                    'token' => '181168203nFdnCyZrrdubMlsnFy5P8',
+                    'token' => '1624346229:AAFidCu_JZujDAW4O09-JpP5JAzRGbJcs5k',
                     'levels' => ['error', 'info', 'warning'],
                     'categories' => ['wazzup_telegram_log'],
-                    'chatId' => 812076348,
+                    'chatId' => 90187076,
                     'logVars' => []
                 ],
             ],

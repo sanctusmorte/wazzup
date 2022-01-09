@@ -43,6 +43,7 @@ class WazzupController extends Controller
             $existSetting = Setting::find()->where(['wazzup_web_hook_uuid' => $uuid])->one();
             if ($existSetting !== null) {
                 $data = file_get_contents('php://input');
+                Yii::error(json_encode($data), 'wazzup_telegram_log');
                 if ($data === null or $data === '{"messages":[],"channels":[],"statuses":[]}') {
                     $responseCode = 200;
                 } else {
