@@ -119,7 +119,7 @@ class SettingController extends Controller
                     $this->retailTransportMgService->createChannelsInRetailCrm($existSetting);
                     $this->retailTransportMgService->createTemplates($existSetting);
                     $this->retailTransportMgService->updateTemplates($existSetting);
-                  //$this->wazzupService->putUrlWebHook($existSetting);
+                    $this->wazzupService->putUrlWebHook($existSetting);
                     return $this->redirect(['/setting/index']);
                 }
             }

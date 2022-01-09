@@ -109,7 +109,7 @@ class Wazzup extends Component
         $url = 'https://api.wazzup24.com/v2/webhooks';
 
         $body = [
-            'url' => 'https://wazzup.imb-service.ru/wazzup/web-hook?uuid='.$setting->wazzup_web_hook_uuid.'',
+            'url' => 'http://45.141.78.228/wazzup/web-hook?uuid='.$setting->wazzup_web_hook_uuid.'',
         ];
 
         $this->makePutRequest($url, $setting->wazzup_api_key, $body);
