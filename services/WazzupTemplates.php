@@ -22,8 +22,9 @@ class WazzupTemplates
                             "Enabled" => true,
                             "Type" => "text",
                             "Template" => [
-                                "Hi,",
+                                "Hi ",
                                 json_decode('{"var" : "first_name"}', 1),
+                                ",",
                                 "\n",
                                 "\n",
                                 "This is TheMaxFlights",
