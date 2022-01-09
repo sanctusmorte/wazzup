@@ -10,7 +10,7 @@ class WazzupTemplates
     {
         return [
             // тестово на локалке
-            'taZRdm-GodKTb41kkGxDvLYjj44BNSif' => [
+            '999' => [
                 'clientId' => 'taZRdm-GodKTb41kkGxDvLYjj44BNSif',
                 'templates_active' => true,
                 'templates' => [
@@ -54,9 +54,9 @@ class WazzupTemplates
 
         $clientId = 'taZRdm-GodKTb41kkGxDvLYjj44BNSif';
 
-        if (isset($allTemplates[trim($clientId)])) {
-            if ($allTemplates[trim($clientId)]['templates_active'] === true) {
-                $needTemplates =  $allTemplates[trim($clientId)]['templates'];
+        if (isset($allTemplates[999])) {
+            if ($allTemplates[999]['templates_active'] === true) {
+                $needTemplates =  $allTemplates[999]['templates'];
             }
         }
 
