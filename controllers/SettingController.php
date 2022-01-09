@@ -111,7 +111,7 @@ class SettingController extends Controller
             } else {
                 $needSetting = $existSetting;
                 if ($existSetting->load($postData) && $existSetting->validate() && Yii::$app->request->post('submit')) {
-                    $needSetting->is_active = 1;
+                   // $needSetting->is_active = 1;
                   //  $existSetting->retail_crm_web_hook_uuid = $this->settingService->generateRetailCrmWebHookUuid();
                   //  $existSetting->wazzup_web_hook_uuid = $this->settingService->generateWazzupWebHookUuid();
                     $this->settingService->save($existSetting);
@@ -146,5 +146,5 @@ class SettingController extends Controller
             'success' => true
         ]);
     }
-    
+
 }
